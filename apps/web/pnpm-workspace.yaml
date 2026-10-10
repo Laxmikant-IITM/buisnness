@@ -1,0 +1,5 @@
+allowBuilds:
+  # Prisma generates the application client and native query engine required by this app.
+  '@prisma/client': true
+  '@prisma/engines': true
+  prisma: true
