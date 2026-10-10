@@ -13,7 +13,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('error');
-    if (code === 'google_config') setError('Google sign-in needs its OAuth credentials configured for this deployment.');
+    if (code === 'google_config') setError('Supabase Auth could not start Google sign-in. Check the Supabase URL, public key, and Google provider settings.');
     else if (code === 'google') setError('Google sign-in did not complete. Please try again.');
   }, []);
 

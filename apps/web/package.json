@@ -2,6 +2,7 @@
   "name": "lms-web",
   "version": "0.1.0",
   "private": true,
+  "engines": { "node": ">=22" },
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
@@ -17,6 +18,7 @@
     "@capacitor/core": "^8.3.4",
     "@capacitor/screen-orientation": "^8.0.1",
     "@prisma/client": "5.22.0",
+    "@supabase/ssr": "0.12.7",
     "bcryptjs": "^3.0.3",
     "googleapis": "^171.4.0",
     "jose": "^6.2.2",

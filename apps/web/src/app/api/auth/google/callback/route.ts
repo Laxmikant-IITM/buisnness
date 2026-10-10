@@ -1,81 +1,42 @@
-import { timingSafeEqual } from 'node:crypto';
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { createRemoteJWKSet, jwtVerify } from 'jose';
 import { createSessionToken, roleForVerifiedGoogleEmail, GOOGLE_EMAIL_ROLES } from '@/lib/auth';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { prisma } from '@/lib/db';
 
-const GOOGLE_KEYS = createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/certs'));
-const STATE_COOKIE = 'google_oauth_state';
-const NONCE_COOKIE = 'google_oauth_nonce';
-const VERIFIER_COOKIE = 'google_oauth_verifier';
-
-function matches(left: string | undefined, right: string | null) {
-  if (!left || !right) return false;
-  const a = Buffer.from(left);
-  const b = Buffer.from(right);
-  return a.length === b.length && timingSafeEqual(a, b);
-}
-
 function signInError(request: Request) {
-  const response = NextResponse.redirect(new URL('/sign-in?error=google', request.url));
-  for (const name of [STATE_COOKIE, NONCE_COOKIE, VERIFIER_COOKIE]) response.cookies.set(name, '', { path: '/', maxAge: 0 });
-  return response;
+  return NextResponse.redirect(new URL('/sign-in?error=google', request.url));
 }
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
-  const cookieStore = await cookies();
-  if (!matches(cookieStore.get(STATE_COOKIE)?.value, url.searchParams.get('state')) || !code) {
-    return signInError(request);
-  }
-
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const redirectUri = process.env.GOOGLE_REDIRECT_URI;
-  const verifier = cookieStore.get(VERIFIER_COOKIE)?.value;
-  const nonce = cookieStore.get(NONCE_COOKIE)?.value;
-  if (!clientId || !clientSecret || !redirectUri || !verifier || !nonce) return signInError(request);
+  if (!code) return signInError(request);
 
   try {
-    const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      cache: 'no-store',
-      body: new URLSearchParams({
-        code,
-        client_id: clientId,
-        client_secret: clientSecret,
-        redirect_uri: redirectUri,
-        grant_type: 'authorization_code',
-        code_verifier: verifier,
-      }),
-    });
-    if (!tokenResponse.ok) return signInError(request);
-    const tokenBody: unknown = await tokenResponse.json();
-    if (!tokenBody || typeof tokenBody !== 'object' || !('id_token' in tokenBody) || typeof tokenBody.id_token !== 'string') {
-      return signInError(request);
-    }
+    const supabase = await createSupabaseServerClient();
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+    if (exchangeError) return signInError(request);
 
-    const { payload } = await jwtVerify(tokenBody.id_token, GOOGLE_KEYS, {
-      issuer: ['https://accounts.google.com', 'accounts.google.com'],
-      audience: clientId,
-    });
+    // getUser() verifies the session with Supabase Auth rather than trusting browser-supplied identity data.
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    const email = user?.email?.trim().toLowerCase();
+    const hasGoogleIdentity = user?.identities?.some((identity) => identity.provider === 'google');
     if (
-      payload.nonce !== nonce ||
-      typeof payload.sub !== 'string' ||
-      typeof payload.email !== 'string' ||
-      payload.email_verified !== true
+      userError ||
+      !user ||
+      (!hasGoogleIdentity && user.app_metadata.provider !== 'google') ||
+      !user.email_confirmed_at ||
+      !email
     ) return signInError(request);
 
-    const email = payload.email.trim().toLowerCase();
     const assignedRole = GOOGLE_EMAIL_ROLES[email];
-    const accountName = typeof payload.name === 'string' && payload.name.trim()
-      ? payload.name.trim().slice(0, 120)
+    const metadata = user.user_metadata as Record<string, unknown> | undefined;
+    const profileName = metadata?.full_name ?? metadata?.name;
+    const accountName = typeof profileName === 'string' && profileName.trim()
+      ? profileName.trim().slice(0, 120)
       : email.split('@')[0];
 
-    const user = await prisma.$transaction(async (tx) => {
+    const account = await prisma.$transaction(async (tx) => {
       const existing = await tx.user.findUnique({ where: { email } });
       if (!existing) {
         return tx.user.create({
@@ -96,9 +57,15 @@ export async function GET(request: Request) {
       });
     });
 
-    if (!user.isActive) return signInError(request);
-    const token = await createSessionToken({ userId: user.id, email: user.email, role: user.role }, user.tokenVersion);
-    const response = NextResponse.redirect(new URL(user.role === 'STUDENT' ? '/learning' : '/manager', request.url));
+    // This app uses its own short-lived HttpOnly session after Supabase verifies the identity.
+    await supabase.auth.signOut({ scope: 'local' });
+    if (!account.isActive) return signInError(request);
+
+    const token = await createSessionToken(
+      { userId: account.id, email: account.email, role: account.role },
+      account.tokenVersion,
+    );
+    const response = NextResponse.redirect(new URL(account.role === 'STUDENT' ? '/learning' : '/manager', request.url));
     response.cookies.set('lms_session', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -106,10 +73,9 @@ export async function GET(request: Request) {
       path: '/',
       maxAge: 60 * 60 * 24 * 7,
     });
-    for (const name of [STATE_COOKIE, NONCE_COOKIE, VERIFIER_COOKIE]) response.cookies.set(name, '', { path: '/', maxAge: 0 });
     return response;
   } catch (error) {
-    console.error('Google sign-in failed', error);
+    console.error('Supabase Google sign-in failed', error);
     return signInError(request);
   }
 }
