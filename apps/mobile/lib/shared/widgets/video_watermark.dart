@@ -62,13 +62,13 @@ class _FloatingVideoWatermarkState extends State<FloatingVideoWatermark> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(widget.opacity * 0.4),
+            color: Colors.black.withValues(alpha: widget.opacity * 0.4),
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
             widget.userText,
             style: TextStyle(
-              color: Colors.white.withOpacity(widget.opacity),
+              color: Colors.white.withValues(alpha: widget.opacity),
               fontSize: 11,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.8,

@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
+import '../../../core/api/lesson_progress_service.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_typography.dart';
 
@@ -30,6 +31,7 @@ class SecureYouTubePlayer extends StatefulWidget {
     required this.videoId,
     this.isLive = false,
     this.title,
+    this.contentId,
     this.aspectRatio = 16 / 9,
     this.autoplay = false,
     this.onEnded,
@@ -38,6 +40,7 @@ class SecureYouTubePlayer extends StatefulWidget {
   final String videoId;
   final bool isLive;
   final String? title;
+  final String? contentId;
   final double aspectRatio;
   final bool autoplay;
   final VoidCallback? onEnded;
@@ -64,6 +67,8 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
 
   Duration _position = Duration.zero;
   Duration _duration = Duration.zero;
+  int _lastSavedPosition = -10;
+  bool _savingPosition = false;
 
   // Quality state ─ populated once we successfully fetch the StreamManifest.
   // [_availableQualities] is the list of muxed (audio+video) stream variants
@@ -113,7 +118,8 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
           // exact label is present in this video's manifest.
           final saved = await _loadQualityPref();
           final chosen = _pickStream(saved);
-          _currentQuality = saved == _kYtQualityAuto ? _kYtQualityAuto : chosen.qualityLabel;
+          _currentQuality =
+              saved == _kYtQualityAuto ? _kYtQualityAuto : chosen.qualityLabel;
           streamUrl = chosen.url.toString();
           live = false;
         } catch (_) {
@@ -127,7 +133,11 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
 
       if (_disposed) return;
       _isLive = live;
-      await _attachController(streamUrl, resume: Duration.zero);
+      final savedPosition = !live && widget.contentId != null
+          ? await LessonProgressService.readPosition(widget.contentId!)
+          : 0;
+      await _attachController(streamUrl,
+          resume: Duration(seconds: savedPosition));
     } on VideoUnplayableException catch (e) {
       _setError('This video is unavailable. ($e)');
     } catch (e) {
@@ -203,6 +213,7 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
       final v = controller.value;
       if (v.position != _position) {
         setState(() => _position = v.position);
+        if (!_isLive) _savePlaybackPosition(v.position);
       }
     });
   }
@@ -293,19 +304,39 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
     final buffering = v.isBuffering;
     final ended = v.duration.inMilliseconds > 0 &&
         v.position >= v.duration - const Duration(milliseconds: 250);
-    if (next != _isPlaying ||
-        buffering != _buffering ||
-        ended != _ended) {
+    if (!_isLive) _savePlaybackPosition(v.position);
+    if (next != _isPlaying || buffering != _buffering || ended != _ended) {
       setState(() {
         _isPlaying = next;
         _buffering = buffering;
         if (ended && !_ended) {
           _ended = true;
+          _savePlaybackPosition(v.position, force: true);
           widget.onEnded?.call();
         } else if (!ended && _ended) {
           _ended = false;
         }
       });
+    }
+  }
+
+  Future<void> _savePlaybackPosition(Duration position,
+      {bool force = false}) async {
+    final contentId = widget.contentId;
+    final seconds = position.inSeconds;
+    if (contentId == null ||
+        contentId.isEmpty ||
+        _savingPosition ||
+        seconds <= 0 ||
+        (!force && seconds < _lastSavedPosition + 10)) {
+      return;
+    }
+    _savingPosition = true;
+    _lastSavedPosition = seconds;
+    try {
+      await LessonProgressService.savePosition(contentId, seconds);
+    } finally {
+      _savingPosition = false;
     }
   }
 
@@ -360,8 +391,7 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
-      await SystemChrome.setEnabledSystemUIMode(
-          SystemUiMode.immersiveSticky);
+      await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     }
     if (!mounted) return;
     setState(() => _isFullscreen = !_isFullscreen);
@@ -371,6 +401,10 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
   @override
   void dispose() {
     _disposed = true;
+    final position = _player?.value.position;
+    if (position != null && !_isLive) {
+      _savePlaybackPosition(position, force: true);
+    }
     _pollTimer?.cancel();
     _hideTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
@@ -386,8 +420,7 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
     _yt?.close();
     if (_isFullscreen) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        SystemChrome.setPreferredOrientations(
-            [DeviceOrientation.portraitUp]);
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       });
     }
@@ -418,7 +451,6 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
             )
           else
             const SizedBox.expand(),
-
           if (_buffering && _errorMsg == null)
             const Center(
               child: SizedBox(
@@ -430,7 +462,6 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
                 ),
               ),
             ),
-
           if (_errorMsg != null)
             Center(
               child: Padding(
@@ -445,7 +476,6 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
                 ),
               ),
             ),
-
           Positioned.fill(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
@@ -453,7 +483,6 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
               child: const SizedBox.expand(),
             ),
           ),
-
           if (_errorMsg == null)
             IgnorePointer(
               ignoring: !_showControls,
@@ -468,20 +497,17 @@ class _SecureYouTubePlayerState extends State<SecureYouTubePlayer>
                   position: _position,
                   duration: _duration,
                   qualityLabel: _qualityDisplayLabel(),
-                  canChangeQuality:
-                      !_isLive && _availableQualities.isNotEmpty,
+                  canChangeQuality: !_isLive && _availableQualities.isNotEmpty,
                   onPlayPause: _togglePlay,
                   onSeek: _seekTo,
                   onFullscreen: _toggleFullscreen,
                   onSkip: _isLive
                       ? null
-                      : (sec) =>
-                          _seekTo(_position + Duration(seconds: sec)),
+                      : (sec) => _seekTo(_position + Duration(seconds: sec)),
                   onPickQuality: () => _showQualitySheet(context),
                 ),
               ),
             ),
-
           if (_ended)
             Positioned.fill(
               child: Container(
@@ -585,8 +611,7 @@ class _TopBar extends StatelessWidget {
         children: [
           if (isLive)
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: AppColors.danger,
                 borderRadius: BorderRadius.circular(50),
@@ -686,8 +711,7 @@ class _CircleAction extends StatelessWidget {
         child: SizedBox(
           width: size,
           height: size,
-          child: Icon(icon,
-              color: AppColors.textInverse, size: iconSize),
+          child: Icon(icon, color: AppColors.textInverse, size: iconSize),
         ),
       ),
     );
@@ -738,19 +762,15 @@ class _BottomBar extends StatelessWidget {
                 thumbColor: AppColors.textInverse,
                 overlayColor: Color(0x33FFFFFF),
                 trackHeight: 3,
-                thumbShape:
-                    RoundSliderThumbShape(enabledThumbRadius: 7),
+                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 7),
               ),
               child: Slider(
                 value: position.inMilliseconds
                     .clamp(0, duration.inMilliseconds.clamp(1, 1 << 31))
                     .toDouble(),
                 min: 0,
-                max: duration.inMilliseconds
-                    .clamp(1, 1 << 31)
-                    .toDouble(),
-                onChanged: (v) =>
-                    onSeek(Duration(milliseconds: v.round())),
+                max: duration.inMilliseconds.clamp(1, 1 << 31).toDouble(),
+                onChanged: (v) => onSeek(Duration(milliseconds: v.round())),
               ),
             ),
           Row(
@@ -797,9 +817,7 @@ class _BottomBar extends StatelessWidget {
               IconButton(
                 onPressed: onFullscreen,
                 icon: Icon(
-                  isFullscreen
-                      ? Icons.fullscreen_exit
-                      : Icons.fullscreen,
+                  isFullscreen ? Icons.fullscreen_exit : Icons.fullscreen,
                   color: AppColors.textInverse,
                 ),
               ),
@@ -901,17 +919,12 @@ class _Row extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(10),
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             children: [
               Icon(
-                selected
-                    ? Icons.check_circle
-                    : Icons.radio_button_unchecked,
-                color: selected
-                    ? AppColors.brand
-                    : const Color(0x99FFFFFF),
+                selected ? Icons.check_circle : Icons.radio_button_unchecked,
+                color: selected ? AppColors.brand : const Color(0x99FFFFFF),
                 size: 18,
               ),
               const SizedBox(width: 12),

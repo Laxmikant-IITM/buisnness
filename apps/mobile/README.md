@@ -1,7 +1,17 @@
-# LMS mobile app
+# Northstar Learning for Android
 
-This is a fresh Flutter app foundation. It has no migrated users, course data,
-production URLs, OAuth client IDs, or existing-project assets.
+This Flutter app uses the LMS production API and Supabase Auth project already
+connected to the web app. Learner courses, lesson metadata, enrollment checks,
+and saved progress come from the live LMS database through server APIs. The
+mobile app does not connect to Postgres directly and contains no database or
+session-signing secret.
+
+Google login uses Supabase OAuth with the Android deep link
+`com.northstar.learning.lms_mobile://login-callback`. Add that exact URL to the
+Supabase project's **Authentication → URL Configuration → Additional Redirect
+URLs** before testing Google sign-in. The Google provider must be enabled in
+that same Supabase project. Supabase and LMS sessions are stored using Android
+encrypted storage.
 
 ## Video player code
 
@@ -31,15 +41,16 @@ then follow its documented service dependency.
   `youtube_explode_dart` resolves YouTube streams and SharedPreferences stores
   each player's quality selection.
 
-The API origin is intentionally configurable and defaults to a local address.
-For an Android emulator, point it at the host with:
+The app defaults to the production LMS origin. For local Android-emulator
+development, point the API at the host machine with:
 
 ```sh
 flutter run --dart-define=API_BASE_URL=http://10.0.2.2:3000
 ```
 
-Use the new backend's own HTTPS origin for a deployed build. Never put secrets
-or OAuth client IDs in this mobile configuration.
+The Supabase URL and publishable key are public client configuration. Never put
+database passwords, Supabase secret/service-role keys, or the LMS session
+signing secret in this mobile configuration.
 
 ## Debugging playback
 
@@ -54,7 +65,6 @@ or OAuth client IDs in this mobile configuration.
 4. If both players fail, check device network permissions, the API origin,
    authentication storage, and platform video playback support first.
 
-The Android/iOS shells and an original learner preview live in this app. The
-preview is sample-only and is not a sign-in or live course experience. Northstar
-is a temporary design label. Integrate the preserved widgets only after the new
-course access and learning flows are implemented.
+The learner home uses the same paper, forest, and lime design tokens as the web
+learning area. Manager accounts can open the existing manager workspace in the
+browser; course and user-management actions remain protected by the web API.

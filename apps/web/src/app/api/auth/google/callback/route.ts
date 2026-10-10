@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { createSessionToken, roleForVerifiedGoogleEmail, GOOGLE_EMAIL_ROLES } from '@/lib/auth';
+import { createSessionToken } from '@/lib/auth';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
-import { prisma } from '@/lib/db';
+import { provisionGoogleAccount } from '@/lib/google-account';
 
 function signInError(request: Request) {
   return NextResponse.redirect(new URL('/sign-in?error=google', request.url));
@@ -29,32 +29,11 @@ export async function GET(request: Request) {
       !email
     ) return signInError(request);
 
-    const assignedRole = GOOGLE_EMAIL_ROLES[email];
     const metadata = user.user_metadata as Record<string, unknown> | undefined;
     const profileName = metadata?.full_name ?? metadata?.name;
-    const accountName = typeof profileName === 'string' && profileName.trim()
-      ? profileName.trim().slice(0, 120)
-      : email.split('@')[0];
-
-    const account = await prisma.$transaction(async (tx) => {
-      const existing = await tx.user.findUnique({ where: { email } });
-      if (!existing) {
-        return tx.user.create({
-          data: { email, name: accountName, role: roleForVerifiedGoogleEmail(email), isActive: true },
-          select: { id: true, email: true, role: true, isActive: true, tokenVersion: true },
-        });
-      }
-
-      const roleChanged = Boolean(assignedRole && existing.role !== assignedRole);
-      return tx.user.update({
-        where: { id: existing.id },
-        data: {
-          ...(assignedRole ? { role: assignedRole } : {}),
-          ...(!existing.name.trim() ? { name: accountName } : {}),
-          ...(roleChanged ? { tokenVersion: { increment: 1 } } : {}),
-        },
-        select: { id: true, email: true, role: true, isActive: true, tokenVersion: true },
-      });
+    const account = await provisionGoogleAccount({
+      email,
+      name: typeof profileName === 'string' ? profileName : null,
     });
 
     // This app uses its own short-lived HttpOnly session after Supabase verifies the identity.

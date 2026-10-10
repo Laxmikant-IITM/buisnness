@@ -10,6 +10,7 @@ import 'package:video_player/video_player.dart';
 import '../../../config/api_config.dart';
 import '../../../core/auth/token_storage.dart';
 import '../../../core/downloads/download_db.dart';
+import '../../../core/api/lesson_progress_service.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_typography.dart';
 
@@ -49,6 +50,8 @@ class _SecureDrivePlayerState extends State<SecureDrivePlayer> {
   ChewieController? _chewie;
   String? _error;
   bool _ended = false;
+  int _lastSavedPosition = -10;
+  bool _savingPosition = false;
 
   // Quality state — populated from /api/content/<id>/variants on first load.
   // [_qualities] is the list of available labels from the manager (e.g.
@@ -119,8 +122,10 @@ class _SecureDrivePlayerState extends State<SecureDrivePlayer> {
     _qualities = available;
     _currentQuality = available.contains(saved) ? saved : _kDriveQualityAuto;
 
+    final savedPosition =
+        await LessonProgressService.readPosition(widget.contentId);
     await _loadStreamForQuality(_currentQuality,
-        resume: Duration.zero, wasPlaying: widget.autoplay);
+        resume: Duration(seconds: savedPosition), wasPlaying: widget.autoplay);
   }
 
   Future<bool> _loadLocalVideo(File file) async {
@@ -449,9 +454,30 @@ class _SecureDrivePlayerState extends State<SecureDrivePlayer> {
     }
     final dur = v.value.duration;
     final pos = v.value.position;
+    if (pos.inSeconds >= _lastSavedPosition + 10) {
+      _savePlaybackPosition(pos);
+    }
     if (!_ended && dur.inMilliseconds > 0 && pos >= dur) {
       _ended = true;
+      _savePlaybackPosition(pos, force: true);
       widget.onEnded?.call();
+    }
+  }
+
+  Future<void> _savePlaybackPosition(Duration position,
+      {bool force = false}) async {
+    final seconds = position.inSeconds;
+    if (_savingPosition ||
+        seconds <= 0 ||
+        (!force && seconds < _lastSavedPosition + 10)) {
+      return;
+    }
+    _savingPosition = true;
+    _lastSavedPosition = seconds;
+    try {
+      await LessonProgressService.savePosition(widget.contentId, seconds);
+    } finally {
+      _savingPosition = false;
     }
   }
 
@@ -472,6 +498,8 @@ class _SecureDrivePlayerState extends State<SecureDrivePlayer> {
 
   @override
   void dispose() {
+    final position = _video?.value.position;
+    if (position != null) _savePlaybackPosition(position, force: true);
     _video?.removeListener(_listener);
     _chewie?.dispose();
     _video?.dispose();
