@@ -2,7 +2,8 @@
 
 This module adds an initial assessment backend to the new LMS project. It uses
 the new LMS database and session; it does not import Exam GenZ code or data.
-No database migration is included or applied.
+The initial migration file exists in `prisma/migrations/`, but it has not been
+applied to a database.
 
 ## Supported question formats
 
@@ -46,8 +47,8 @@ Requests use JSON. Question creation accepts `{ prompt, type, explanation?, diff
 
 ## Integration gaps before launch
 
-These handlers define the initial API contract; the UI and Flutter client still
-need to call them. The schema needs a reviewed initial migration against the
+These handlers define the initial API contract; the quiz UI and Flutter client
+still need to call them. Review and apply the initial migration against the
 new empty database before the endpoints can run against persistent data. The
 course authoring flow must create/publish courses and assign scoped staff.
 Add question edit/archive and quiz revision workflows before content owners

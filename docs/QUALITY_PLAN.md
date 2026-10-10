@@ -6,9 +6,9 @@ This plan defines the acceptance gates for the combined course, quiz, commerce, 
 
 The web app is a sample UI preview, not an operational learning product. The Prisma schema has foundations for users, role-scoped course access, courses, offerings, enrollments, coupons, orders, payment events, questions, quizzes, and attempts. Authorization helpers and API foundations exist for course-scoped question/quiz work and protected video playback.
 
-**Known release gaps:** sign-in and account-management flows; role creation/assignment and a complete permission matrix; real catalog and course administration screens/APIs; offering, coupon, checkout, payment verification/webhooks, refund, and enrollment-grant workflows; quiz learner UI, answer save/submit, scoring, results, and answer autosave; course-to-player integration; mobile sign-in/course APIs; PWA/install experience; production operations. Schema presence is not evidence that a workflow is implemented or safe to launch.
+**Known release gaps:** role creation/assignment and complete permission matrix; user and course management screens/APIs; real catalog, offer, coupon, checkout, payment verification/webhooks, refund, and enrollment-grant workflows; quiz learner UI; mobile sign-in/course APIs; production rate limiting, monitoring, deployment, and end-to-end database evidence. Schema presence is not evidence that a workflow is implemented or safe to launch. Sign-in/session endpoints and first-owner bootstrap exist, but no database or credentials are configured in this workspace.
 
-Current quiz foundation covers question creation/listing, quiz creation/listing, draft quiz editing, question ordering, publishing snapshots, learner quiz retrieval, and starting an enrolled learner attempt. The current contract accepts single-choice questions only. No answer save, submit, score, or result endpoint is present yet.
+Current quiz foundation covers question creation/listing, quiz creation/listing, draft quiz editing, question ordering, publishing snapshots, learner quiz retrieval, enrolled attempts, answer autosave, server-side scoring, submission, and results. Supported formats are single choice, multi-select (exact-set scoring), and true/false. The learner-facing quiz interface and database-backed test evidence are still missing.
 
 ## Test fixture and execution rules
 
@@ -35,11 +35,11 @@ For API checks, use authenticated sessions for the exact role under test, call t
 
 Acceptance scenarios:
 
-1. Sign in as each role, call an allowed route, and confirm the correct scoped data is returned. **GAP:** complete sign-in UI/API and role-management workflows.
+1. Sign in as each role, call an allowed route, and confirm the correct scoped data is returned. Sign-in UI/API and one-time initial Super Manager bootstrap exist; **GAP:** account creation/role assignment workflows and complete role coverage.
 2. As assigned Admin A, list and mutate Course A; repeat against Course B and assert `403` (or non-disclosing `404`) and no database change. Repeat for Instructor, Student, and an unknown role.
 3. Attempt role escalation directly through the API: Manager creating a Super Manager, Admin granting any role, Instructor changing their own role, and Student changing any role must all fail with no state change. **GAP:** role creation/assignment APIs and fine-grained Manager vs Super Manager capabilities.
 4. Disable an account and revoke/increment its session version; its next web and Flutter protected request must fail. Change a user's role while a session exists; the next protected request must use the new role, not stale token claims.
-5. Verify session logout, expiration, password reset/change, concurrent sessions, CSRF/origin protections for cookie-authenticated mutations, and brute-force throttling. **GAP:** operational sign-in lifecycle and its acceptance suite.
+5. Verify session logout, expiration, password reset/change, concurrent sessions, CSRF/origin protections for cookie-authenticated mutations, and brute-force throttling. Logout is implemented; **GAP:** password recovery/change, rate limits, and database-backed session acceptance suite.
 
 ## 2. Catalog, publishing, enrollment, and commerce
 
@@ -68,7 +68,7 @@ Acceptance scenarios:
 7. Cover all supported question types and scoring edge cases: unanswered, wrong, exact, duplicate choice IDs, invalid choice IDs, numerical tolerance boundaries, case/spacing in short answers, partial credit if enabled, negative marking if enabled, zero-point/comprehension passages, and total-score floor. Reconcile displayed score to persisted answers and attempt summary.
 8. Confirm results and progress are private to the learner and authorized course staff; pagination and exports never leak other-course data.
 
-**Current status:** schema includes `Question`, `QuestionChoice`, `Quiz`, `QuizItem`, `QuizAttempt`, and `QuizAnswer`; routes exist for course question/quiz reads and authoring, draft edit, quiz item replacement, publish, learner quiz retrieval, and starting an attempt. Current question input supports single-choice only. **GAP:** learner UI, answer autosave, submission, server scoring/results, explanations/reveal policy, other question types, attempt review, course lesson placement, and automated negative-access coverage.
+**Current status:** routes exist for question/quiz reads and authoring, draft edit, item replacement, publishing snapshots, learner quiz retrieval, attempt start/read/autosave/submit, and server scoring/results. Single-choice, multi-select, and true/false are supported. **GAP:** learner quiz UI, answer reveal policy controls, question revisions, course lesson placement, database-backed concurrency tests, and automated negative-access coverage.
 
 ## 4. Preserved web and Flutter video behavior
 
@@ -83,7 +83,7 @@ Acceptance scenarios:
 5. A learner's position is saved to their own record and restored on the same account; another learner cannot read or overwrite it. Instructor progress remains read-only. Verify 0, negative, fractional, very large, and malformed positions are handled safely.
 6. Flutter stores tokens securely, sends the same backend authorization, clears local identity on logout, and never embeds server credentials. Offline player file lookup must not accidentally grant new server content access.
 
-**Current status:** player source, support routes, and progress model exist; the learning shell does not yet connect a real course lesson to the players, and login/content provisioning are incomplete. **GAP:** end-to-end playback on real accounts/devices and production Drive configuration. Preserve unchanged player files under `apps/web/src/features/learning/video-player/` and `apps/mobile/lib/shared/widgets/`.
+**Current status:** learner dashboard reads active enrollment and saved progress, and a protected lesson route opens the unchanged web player from a course lesson. **GAP:** end-to-end playback against a configured database and real Drive/YouTube accounts; Flutter login/course integration and device validation remain. Preserve unchanged player files under `apps/web/src/features/learning/video-player/` and `apps/mobile/lib/shared/widgets/`.
 
 ## 5. Responsive behavior and accessibility
 
@@ -98,7 +98,7 @@ Acceptance scenarios:
 5. Screen-reader: semantic headings/landmarks, accessible names, current/selected states, error associations, status announcements, quiz option state, progress labels, and captions/transcripts where available. Decorative graphics are ignored.
 6. Check contrast, reduced-motion preference, minimum touch targets, responsive reflow, and no color-only meaning. Test Safari iOS, Chrome Android, desktop Chrome/Safari/Firefox/Edge where supported.
 
-**Current status:** CSS has desktop/tablet/mobile layouts and a mobile bottom navigation preview; it has not been verified at the viewport matrix or with assistive technology. **GAP:** real flows, responsive/accessibility acceptance runs, and PWA/install/offline requirements if the product is to be installable.
+**Current status:** landing, learner, and manager shells have responsive layouts and button-based mobile navigation. The manager and learner pages were checked at 320, 390, 768, and 1440 CSS pixels with no document-width overflow. **GAP:** keyboard/screen-reader and real-device checks, remaining flows, and PWA/install/offline requirements if the product is to be installable.
 
 ## 6. Security, reliability, and operations
 

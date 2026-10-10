@@ -74,14 +74,14 @@ Comments should record why a security boundary exists, what invariant must hold,
 
 ## Status and next build phases
 
-**Present:** responsive web and Flutter learner previews, platform shells, fresh schema draft, auth/session foundation, health endpoint, preserved player source, player support adapters, dependency lockfile, course-scoped question/quiz APIs, and documentation. Northstar is only a temporary design label.
+**Present:** responsive web and Flutter shells, sign-in with an HttpOnly session cookie, a one-time Super Manager bootstrap script, a learner dashboard backed by enrollments/progress, a lesson route guarded by course/content access and using the preserved web player, a role-scoped manager dashboard, the Prisma schema and an initial migration file, health endpoint, player support adapters, course-scoped quiz APIs, and documentation. The migration file has not been applied and no Supabase project is configured. Northstar is only a temporary design label.
 
-**Not yet implemented:** sign-up/sign-in screens and APIs, full permission matrix and role assignment workflows, catalog/course administration, checkout and verified payment flow, enrollment creation, manager dashboard, web/Flutter integration with quiz APIs, question edit/archive and quiz revision flows, analytics, integration between course content and player screens, email/receipts, deployment and production controls. Quiz schema changes have not been migrated to a database.
+**Not yet implemented:** self-registration and account recovery, manager user/role assignment screens and APIs, course/topic/lesson authoring screens, public catalog backed by the database, checkout and verified payment flow, enrollment creation, quiz learner UI, Flutter sign-in/course integration, question edit/archive and quiz revision flows, analytics, receipts, and production controls. No schema has been applied to a database.
 
 **Recommended order:**
 
 1. Confirm product name, initial roles, course offer rules, and what a paid enrollment grants.
-2. Review schema and security model, create a reviewed initial migration against a new local database.
+2. Review the initial migration, apply it to a dedicated empty database, then run all later changes through versioned migrations.
 3. Implement identity and role permissions; establish API contracts and error handling.
 4. Build manager course/offer/coupon workflows and the public catalog from the new design.
 5. Implement order creation, server-side pricing, payment verification, idempotent webhook processing, and enrollment grants.

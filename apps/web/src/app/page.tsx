@@ -41,9 +41,9 @@ export default function Home() {
         <button aria-current={view === "discover" ? "page" : undefined} className={view === "discover" ? "nav-active" : ""} onClick={() => goTo("discover")}>Home</button>
         <button aria-current={view === "courses" ? "page" : undefined} className={view === "courses" ? "nav-active" : ""} onClick={() => goTo("courses")}>Courses</button>
         <button aria-current={view === "quiz" ? "page" : undefined} className={view === "quiz" ? "nav-active" : ""} onClick={() => goTo("quiz")}>Practice</button>
-        <button aria-current={view === "learning" ? "page" : undefined} className={view === "learning" ? "nav-active" : ""} onClick={() => goTo("learning")}>My learning</button>
+        <a className="nav-route-link" href="/learning">My learning</a>
       </nav>
-      <div className="nav-cta"><span className="prototype-chip">PRODUCT PREVIEW</span><button className="button dark small" onClick={() => goTo("courses")}>Explore <span aria-hidden="true">↗</span></button></div>
+      <div className="nav-cta"><a className="nav-route-link" href="/sign-in">Sign in</a><a className="nav-route-link manager-route-link" href="/manager">Manager</a><span className="prototype-chip">PRODUCT PREVIEW</span><button className="button dark small" onClick={() => goTo("courses")}>Explore <span aria-hidden="true">↗</span></button></div>
     </header>
 
     {view === "discover" || view === "courses" ? <>
@@ -67,7 +67,8 @@ export default function Home() {
     <section className="closing"><div><p className="eyebrow">A NOTE FOR THE CURIOUS</p><h2>Good things grow<br/>with <i>practice.</i></h2></div><p>A fresh learning space is in the making. This preview shows the direction, not live courses, accounts, or offers.</p><button className="button outline" onClick={() => goTo("discover")}>Back to the top <span aria-hidden="true">↗</span></button></section>
     <footer><Brand /><span>New learning, thoughtfully made.</span><small>PRODUCT PREVIEW · 2026</small></footer>
     <nav className="mobile-nav" aria-label="Mobile navigation">
-      {([ ["discover", "⌂", "Home"], ["courses", "▤", "Courses"], ["quiz", "✳", "Practice"], ["learning", "◉", "Learning"] ] as [Section, string, string][]).map(([section, icon, label]) => <button key={section} aria-current={view === section ? "page" : undefined} className={view === section ? "current" : ""} onClick={() => goTo(section)}><b aria-hidden="true">{icon}</b>{label}</button>)}
+      {([ ["discover", "⌂", "Home"], ["courses", "▤", "Courses"], ["quiz", "✳", "Practice"] ] as [Section, string, string][]).map(([section, icon, label]) => <button key={section} aria-current={view === section ? "page" : undefined} className={view === section ? "current" : ""} onClick={() => goTo(section)}><b aria-hidden="true">{icon}</b>{label}</button>)}
+      <a href="/learning"><b aria-hidden="true">◉</b>Learning</a>
     </nav>
   </main>;
 }

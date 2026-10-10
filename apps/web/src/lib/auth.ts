@@ -11,6 +11,18 @@ export interface Session {
   role: string;
 }
 
+/** Roles granted only after Google's verified email claim matches the account. */
+export const GOOGLE_EMAIL_ROLES: Record<string, string> = {
+  'lkiitmng2428@gmail.com': 'MANAGER',
+  'pay.laxmikant@gmail.com': 'SUPER_MANAGER',
+  'team.alphaiitian@gmail.com': 'ADMIN',
+  'care.alpha.iitian@gmail.com': 'STUDENT',
+};
+
+export function roleForVerifiedGoogleEmail(email: string) {
+  return GOOGLE_EMAIL_ROLES[email.trim().toLowerCase()] ?? 'STUDENT';
+}
+
 function getSessionKey() {
   const secret = process.env.SESSION_SECRET;
   // Fail closed: production must supply a unique 32+ character secret.
@@ -110,6 +122,8 @@ export async function canAccessCourseContent(
     return hasCourseStaffAccess(userId, courseId);
   }
   if (role !== 'STUDENT') return false;
+  // Learners must meet both course-publication and active-enrollment rules before opening content.
+  if (!(await canAccessCourse(userId, role, courseId))) return false;
   return isStudentEnrolledInContent(userId, contentId, courseId);
 }
 

@@ -4,7 +4,10 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // Vercel's Supabase integration supplies a pooled Prisma URL for runtime
+  // traffic and a direct URL for schema migrations.
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 // Roles are strings rather than an enum so adding a future business role does

@@ -4,11 +4,11 @@ A new learning product is being built in this folder. It combines a course store
 
 ## What exists now
 
-- `apps/web`: Next.js app shell, sample responsive storefront/dashboard preview, PostgreSQL/Prisma schema foundation, session/access helpers, health endpoint, and preserved web playback modules plus the support APIs they call.
+- `apps/web`: Next.js product preview, learner and manager dashboards, sign-in API/UI, Prisma data model and an initial migration file, session/access helpers, health endpoint, and preserved web playback modules plus the support APIs they call.
 - `apps/mobile`: Android/iOS Flutter shell, original learner preview screen, preserved Drive and YouTube player modules, and the small support services those modules import.
 - `docs`: code ownership, playback dependency map, setup boundaries, and implementation status.
 
-Northstar is a temporary design label, not a confirmed product name. The web course cards and both learner dashboard previews use sample content. Sign-in, course publishing, checkout, payment webhooks, enrollments, and manager workflows are not implemented yet. The schema is a starting model, not a deployed database.
+Northstar is a temporary design label, not a confirmed product name. The public course cards still use sample content. The learner dashboard reads active enrollments and progress, and its lesson route uses the preserved player after access checks. The manager dashboard reads role-scoped course, learner, enrollment, quiz, and order summaries. The initial migration is a file only: it has not been applied to a database, and no Supabase project or data connection is configured here. Checkout, payment webhooks, enrollment grants, course editing, and user/role management screens remain unimplemented.
 
 ## Product boundaries
 
@@ -42,10 +42,11 @@ LMS/
 ## Local setup
 
 1. Install a supported Node.js LTS release and Flutter SDK.
-2. In `apps/web`, copy `.env.example` to `.env.local`, then fill only new local/test credentials. Point `DATABASE_URL` to a new empty PostgreSQL database.
-3. Install web dependencies, generate the Prisma client, and apply migrations only after reviewing the schema.
+2. In `apps/web`, copy `.env.example` to `.env.local`, then fill only new local/test credentials. Point `POSTGRES_PRISMA_URL` and `POSTGRES_URL_NON_POOLING` to this product's Supabase project.
+3. Install web dependencies and generate the Prisma client. Review and apply `prisma/migrations/` only against this product's new empty local/test database; no migration has been run by this project setup.
 4. Set the Flutter `API_BASE_URL` to the local web backend. Android emulator users can use `http://10.0.2.2:3000`; other environments need their reachable host URL.
-5. Do not use either reference project's production credentials or data.
+5. After applying the reviewed initial migration to the new database, create the first platform owner with `db:bootstrap-super-manager`, setting `BOOTSTRAP_SUPER_MANAGER_EMAIL`, `BOOTSTRAP_SUPER_MANAGER_NAME`, and `BOOTSTRAP_SUPER_MANAGER_PASSWORD` (16+ characters) in the local environment. The bootstrap refuses to create another Super Manager.
+6. Do not use either reference project's production credentials or data.
 
 ## Current implementation status
 
