@@ -56,7 +56,7 @@ const ROLE_SHORTCUTS: RoleShortcut[] = [
       'Orchestrate all courses and proctored exams',
     ],
     cannotDo: ['No limitations — highest authority tier'],
-    destination: '/manager',
+    destination: '/dashboard',
     demoEmail: 'supermanager@northstar.demo',
   },
   {
@@ -74,7 +74,7 @@ const ROLE_SHORTCUTS: RoleShortcut[] = [
     cannotDo: [
       'Cannot demote Super Managers or access platform root secrets',
     ],
-    destination: '/manager/exams',
+    destination: '/dashboard',
     demoEmail: 'manager@northstar.demo',
   },
   {
@@ -91,7 +91,7 @@ const ROLE_SHORTCUTS: RoleShortcut[] = [
     cannotDo: [
       'Cannot manage global platform users or candidate proctor locks',
     ],
-    destination: '/manager/courses',
+    destination: '/dashboard',
     demoEmail: 'admin@northstar.demo',
   },
   {
@@ -109,7 +109,7 @@ const ROLE_SHORTCUTS: RoleShortcut[] = [
       'Read-only on course pricing and workspace publishing settings',
       'Cannot access platform user management',
     ],
-    destination: '/manager',
+    destination: '/dashboard',
     demoEmail: 'instructor@northstar.demo',
   },
   {
@@ -130,7 +130,7 @@ const ROLE_SHORTCUTS: RoleShortcut[] = [
       'Strictly barred from all /manager workspaces (403 Forbidden)',
       'Cannot view exam answer keys or candidate telemetry',
     ],
-    destination: '/learning',
+    destination: '/dashboard',
     demoEmail: 'student@northstar.demo',
   },
 ];
@@ -161,8 +161,8 @@ export default function SignInPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to switch role.');
 
-      router.replace(data.redirectTo || shortcut.destination);
-      router.refresh();
+      // Hard document navigation ensures updated session cookie is attached to SSR layout
+      window.location.href = data.redirectTo || shortcut.destination || '/dashboard';
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Login failed. Try again.');
       setLoadingRole(null);
@@ -185,8 +185,7 @@ export default function SignInPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Sign-in failed. Try again.');
 
-      router.replace(data.role === 'STUDENT' ? '/learning' : '/manager');
-      router.refresh();
+      window.location.href = '/dashboard';
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Sign-in failed.');
     } finally {

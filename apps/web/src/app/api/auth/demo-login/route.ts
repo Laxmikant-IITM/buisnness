@@ -85,7 +85,7 @@ export async function POST(req: Request) {
       role: demoEntry.role,
       clearance: demoEntry.clearance,
     },
-    redirectTo: demoEntry.defaultPath,
+    redirectTo: '/dashboard',
   });
 
   // Set secure session cookie
