@@ -14,10 +14,8 @@ import { Sun, Moon } from 'lucide-react';
 
 export function ThemeToggle({ className = '' }: { className?: string }) {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const stored = localStorage.getItem('theme');
     if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
       setTheme('light');
@@ -44,18 +42,13 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     }
   };
 
-  if (!mounted) {
-    return (
-      <div className={`w-8 h-8 rounded-xl bg-stone-900 border border-stone-800 ${className}`} />
-    );
-  }
-
   return (
     <button
       type="button"
       onClick={toggleTheme}
+      title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-      className={`p-2 rounded-xl border transition-all duration-200 cursor-pointer ${
+      className={`p-2 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-center ${
         theme === 'dark'
           ? 'bg-stone-900 border-stone-800 text-amber-400 hover:bg-stone-850 hover:border-amber-500/40 shadow-sm'
           : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-100 hover:border-stone-400 shadow-sm'

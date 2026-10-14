@@ -19,9 +19,11 @@ import {
   Settings,
   Shield,
   LogOut,
+  ChevronDown,
 } from 'lucide-react';
 import { Avatar } from '../ui/avatar';
 import { ThemeToggle } from './theme-toggle';
+import { RoleSwitcher } from './role-switcher';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -139,6 +141,9 @@ export function Header({
           </kbd>
         </button>
 
+        {/* Role Quick Switcher */}
+        <RoleSwitcher currentRole={user.role} />
+
         {/* Theme appearance toggle */}
         <ThemeToggle />
 
@@ -159,16 +164,21 @@ export function Header({
 
         {/* User Avatar & Dropdown */}
         <DropdownMenu>
-          <DropdownMenuTrigger className="p-0.5 rounded-full ring-offset-2 hover:ring-2 hover:ring-neutral-200 transition-all">
+          <DropdownMenuTrigger className="flex items-center gap-2 p-1 rounded-xl bg-stone-900 border border-stone-800 hover:border-emerald-500/50 transition-all cursor-pointer">
             <Avatar
               name={user.name}
               src={user.avatarUrl}
               size="sm"
               status="online"
             />
+            <div className="hidden xl:flex flex-col text-left pr-1">
+              <span className="text-xs font-bold text-white font-display truncate max-w-[110px]">{user.name}</span>
+              <span className="text-[10px] text-stone-400 font-mono -mt-0.5">{user.role || 'STUDENT'}</span>
+            </div>
+            <ChevronDown className="w-3.5 h-3.5 text-stone-400 mr-1 hidden sm:inline" />
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="right" className="w-60 bg-[#0f1411] border border-stone-800 text-stone-200 shadow-xl">
+          <DropdownMenuContent align="right" className="w-64 bg-[#0f1411] border border-stone-800 text-stone-200 shadow-2xl p-1.5">
             <div className="px-3 py-2 border-b border-stone-800">
               <p className="text-xs font-bold text-white font-display truncate">
                 {user.name}
@@ -183,35 +193,47 @@ export function Header({
               )}
             </div>
 
-            <DropdownMenuLabel>Account</DropdownMenuLabel>
+            <DropdownMenuLabel>Account & Settings</DropdownMenuLabel>
 
             <DropdownMenuItem
-              icon={<User className="w-4 h-4" />}
+              icon={<User className="w-4 h-4 text-emerald-400" />}
               onClick={() => {}}
             >
-              <Link href="/profile" className="w-full">My Profile</Link>
+              <Link href="/profile" className="w-full">My Profile & ID</Link>
             </DropdownMenuItem>
 
             <DropdownMenuItem
-              icon={<Settings className="w-4 h-4" />}
+              icon={<Settings className="w-4 h-4 text-stone-400" />}
               onClick={() => {}}
             >
-              <Link href="/settings" className="w-full">Account Settings</Link>
+              <Link href="/profile" className="w-full">Account Settings</Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem
-              icon={<Shield className="w-4 h-4" />}
-              onClick={() => {}}
-            >
-              <Link href="/manager" className="w-full">Manager Console</Link>
-            </DropdownMenuItem>
+            {['SUPER_MANAGER', 'MANAGER', 'ADMIN'].includes((user.role || '').toUpperCase()) && (
+              <DropdownMenuItem
+                icon={<Shield className="w-4 h-4 text-amber-400" />}
+                onClick={() => {}}
+              >
+                <Link href="/manager" className="w-full">Manager Console</Link>
+              </DropdownMenuItem>
+            )}
 
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
               danger
-              icon={<LogOut className="w-4 h-4" />}
-              onClick={onSignOut}
+              icon={<LogOut className="w-4 h-4 text-rose-400" />}
+              onClick={async () => {
+                if (onSignOut) {
+                  onSignOut();
+                  return;
+                }
+                try {
+                  await fetch('/api/auth/logout', { method: 'POST' });
+                } finally {
+                  window.location.href = '/sign-in';
+                }
+              }}
             >
               Sign Out
             </DropdownMenuItem>

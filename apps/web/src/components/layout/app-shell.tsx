@@ -46,7 +46,7 @@ export function AppShell({
     <div className={`min-h-screen flex bg-[#090d0b] text-stone-100 font-sans selection:bg-emerald-800 selection:text-white ${className}`}>
       {/* Desktop Sidebar */}
       <div className="hidden lg:flex shrink-0">
-        <Sidebar userRole={user?.role} className="sticky top-0 h-screen" />
+        <Sidebar userRole={user?.role} userName={user?.name} className="sticky top-0 h-screen" />
       </div>
 
       {/* Mobile Drawer Overlay & Sidebar */}
@@ -66,7 +66,7 @@ export function AppShell({
             >
               <X className="w-5 h-5" />
             </button>
-            <Sidebar userRole={user?.role} className="h-full border-r-0" />
+            <Sidebar userRole={user?.role} userName={user?.name} className="h-full border-r-0" />
           </div>
         </div>
       )}

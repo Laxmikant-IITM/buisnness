@@ -7,7 +7,9 @@
  * Unified responsive navigation sidebar for the LMS SaaS shell.
  * Features:
  * - Single source of truth for Dashboard navigation (/dashboard).
+ * - Direct link to Courses & Lectures (/courses) for immediate syllabus/module discovery.
  * - Role-gated feature access: Management console only visible to staff roles.
+ * - User Profile & Quick Settings card with prominent 1-click Sign Out at bottom.
  * - Zero raw emojis: clean Lucide SVG icons.
  * - Active route detection and collapsible icon-only mode.
  */
@@ -33,6 +35,9 @@ import {
   Coins,
   Code2,
   Sliders,
+  User,
+  Settings,
+  LogOut,
 } from 'lucide-react';
 
 export interface NavItem {
@@ -45,6 +50,8 @@ export interface NavItem {
 export interface SidebarProps {
   /** Optional role to dynamically show or hide managerial tabs */
   userRole?: string;
+  /** Optional user name for bottom profile card */
+  userName?: string;
   /** Optional external control for collapsed state */
   isCollapsed?: boolean;
   /** Callback fired when collapse state toggles */
@@ -55,6 +62,7 @@ export interface SidebarProps {
 
 const coreNavItems: NavItem[] = [
   { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { title: 'Courses & Lectures', href: '/courses', icon: BookOpen },
   { title: 'Live Classes', href: '/live', icon: Video, badge: 'LIVE' },
   { title: 'Proctored Exams', href: '/exams', icon: ShieldCheck, badge: 'MOCK' },
   { title: 'Practice Papers', href: '/papers', icon: FileText },
@@ -83,6 +91,7 @@ const staffNavItems: NavItem[] = [
  */
 export function Sidebar({
   userRole = 'STUDENT',
+  userName = 'Learner',
   isCollapsed: controlledCollapsed,
   onToggleCollapse,
   className = '',
@@ -106,10 +115,21 @@ export function Sidebar({
     if (href === '/dashboard') {
       return pathname === '/dashboard' || pathname === '/app' || pathname === '/learning';
     }
+    if (href === '/courses') {
+      return pathname === '/courses' || pathname.startsWith('/courses/') || pathname.startsWith('/learning/');
+    }
     if (href === '/manager') {
       return pathname === '/manager';
     }
     return pathname === href || (href !== '/' && pathname.startsWith(href));
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } finally {
+      window.location.href = '/sign-in';
+    }
   };
 
   const renderSection = (sectionTitle: string, items: NavItem[]) => (
@@ -216,18 +236,75 @@ export function Sidebar({
         )}
       </div>
 
-      {/* Bottom Status Box */}
-      {!isCollapsed && (
-        <div className="p-3 m-3 rounded-xl bg-stone-900/80 border border-stone-800/90 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <p className="font-bold text-stone-200 font-display">Active Session</p>
+      {/* Bottom Profile, Settings & Sign Out Panel */}
+      <div className="p-3 border-t border-stone-800/80 bg-stone-950/70">
+        {!isCollapsed ? (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <Link
+                href="/profile"
+                className="flex items-center gap-2.5 p-1 rounded-xl hover:bg-stone-900 transition-colors group flex-1 min-w-0"
+              >
+                <div className="w-8 h-8 rounded-lg bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0">
+                  {userName ? userName.slice(0, 2).toUpperCase() : 'ST'}
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-bold text-white truncate group-hover:text-emerald-400 transition-colors">
+                    {userName || 'My Account'}
+                  </span>
+                  <span className="text-[10px] text-stone-500 font-mono truncate uppercase">
+                    {userRole || 'STUDENT'}
+                  </span>
+                </div>
+              </Link>
+
+              <button
+                type="button"
+                title="Sign out"
+                onClick={handleSignOut}
+                className="p-2 text-stone-400 hover:text-rose-400 hover:bg-stone-900 rounded-xl transition-colors cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-1.5 pt-1 font-mono text-[10px]">
+              <Link
+                href="/profile"
+                className="px-2 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-850 hover:text-white text-stone-300 text-center transition-colors flex items-center justify-center gap-1 border border-stone-800"
+              >
+                <User className="w-3 h-3 text-emerald-400" />
+                <span>Profile</span>
+              </Link>
+              <Link
+                href="/profile"
+                className="px-2 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-850 hover:text-white text-stone-300 text-center transition-colors flex items-center justify-center gap-1 border border-stone-800"
+              >
+                <Settings className="w-3 h-3 text-stone-400" />
+                <span>Settings</span>
+              </Link>
+            </div>
           </div>
-          <p className="text-[11px] text-stone-400 font-body mt-1">
-            {isStaff ? 'Staff management clearance verified.' : 'IIT Madras BS degree curriculum.'}
-          </p>
-        </div>
-      )}
+        ) : (
+          <div className="flex flex-col items-center gap-2">
+            <Link
+              href="/profile"
+              title="My Profile"
+              className="w-8 h-8 rounded-lg bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-xs flex items-center justify-center hover:scale-105 transition-transform"
+            >
+              {userName ? userName.slice(0, 2).toUpperCase() : 'ST'}
+            </Link>
+            <button
+              type="button"
+              title="Sign out"
+              onClick={handleSignOut}
+              className="p-1.5 text-stone-400 hover:text-rose-400 rounded-lg transition-colors cursor-pointer"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+      </div>
     </aside>
   );
 }
