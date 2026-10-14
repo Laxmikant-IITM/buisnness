@@ -253,7 +253,7 @@ export default function ManagerCoursesPage() {
   });
 
   return (
-    <div className="min-h-screen bg-stone-900 text-stone-100 p-6 md:p-10 font-sans">
+    <div className="space-y-8">
       {/* Header */}
       <header className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between pb-8 border-b border-stone-800 gap-4">
         <div>

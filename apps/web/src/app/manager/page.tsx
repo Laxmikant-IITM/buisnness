@@ -221,76 +221,8 @@ export default function ManagerDashboard() {
   }, [data?.courses, courseSearch]);
 
   return (
-    <div className="min-h-screen bg-[#090d0b] text-stone-100 font-sans selection:bg-emerald-800 selection:text-white">
-      {/* Top Navbar */}
-      <header className="border-b border-stone-800 bg-[#0c100d]/90 backdrop-blur-md sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2 group">
-              <span className="w-8 h-8 rounded-lg bg-emerald-950 border border-emerald-800 text-emerald-400 font-serif font-bold text-lg flex items-center justify-center transform group-hover:rotate-6 transition-transform">
-                n
-              </span>
-              <span className="font-extrabold text-lg tracking-tight text-white font-display">
-                northstar<span className="text-emerald-500">.</span>
-              </span>
-            </Link>
-
-            <nav className="hidden md:flex items-center gap-1 font-mono text-xs">
-              <Link
-                href="/manager"
-                className="px-3 py-1.5 rounded-md bg-stone-900 text-white font-semibold"
-              >
-                Overview
-              </Link>
-              <Link
-                href="/manager/courses"
-                className="px-3 py-1.5 rounded-md text-stone-400 hover:text-white hover:bg-stone-900 transition-colors"
-              >
-                Course Studio
-              </Link>
-              <Link
-                href="/manager/exams"
-                className="px-3 py-1.5 rounded-md text-stone-400 hover:text-white hover:bg-stone-900 transition-colors"
-              >
-                Exam Ops
-              </Link>
-              {data?.capabilities.manageUsers && (
-                <Link
-                  href="/manager/users"
-                  className="px-3 py-1.5 rounded-md text-stone-400 hover:text-white hover:bg-stone-900 transition-colors"
-                >
-                  People & Roles
-                </Link>
-              )}
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/80 text-[11px] font-mono text-emerald-300">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Anti-Cheat Telemetry Live (14ms)</span>
-            </div>
-
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-stone-900 border border-stone-800 text-xs font-mono">
-              <span className="text-stone-300">
-                {data ? roleNames[data.role] || data.role : 'Checking Session'}
-              </span>
-            </div>
-
-            {data ? (
-              <SignOutButton />
-            ) : (
-              <Link href="/sign-in" className="text-xs text-emerald-400 hover:underline font-mono">
-                Sign In
-              </Link>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* Main Body */}
-      <main className="max-w-7xl mx-auto px-6 py-10 space-y-8">
-        {/* Header Hero */}
+    <div className="space-y-8">
+      {/* Header Hero */}
         <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-stone-800 gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -729,7 +661,6 @@ export default function ManagerDashboard() {
             </div>
           )}
         </section>
-      </main>
     </div>
   );
 }

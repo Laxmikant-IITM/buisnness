@@ -17,6 +17,9 @@ import CourseDetailClient, {
   type DetailOffering,
 } from './course-detail-client';
 
+import { getFullSession } from '@/lib/auth';
+import { demoStore } from '@/lib/demo-store';
+
 interface PageProps {
   params: { slug: string };
 }
@@ -78,6 +81,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CourseDetailPage({ params }: PageProps) {
   const { slug } = params;
+  const session = await getFullSession();
+  const userRole = session?.role || 'STUDENT';
 
   let dbCourse = null;
   try {
@@ -102,7 +107,19 @@ export default async function CourseDetailPage({ params }: PageProps) {
     console.warn('[course-detail] Could not fetch course from DB, using fallback:', error);
   }
 
-  // If not found in DB, provide high quality fallback so the user can test the UI smoothly
+  // If not found in DB, check demoStore
+  if (!dbCourse) {
+    const storeCourse = demoStore.getCourses().find((c: any) => c.slug === slug || c.id === slug);
+    if (storeCourse) {
+      dbCourse = {
+        ...storeCourse,
+        offerings: storeCourse.offerings || [],
+        topics: storeCourse.topics || [],
+      };
+    }
+  }
+
+  // If not found in DB or demoStore, provide high quality fallback so the user can test the UI smoothly
   const courseData = dbCourse
     ? {
         id: dbCourse.id,
@@ -113,9 +130,9 @@ export default async function CourseDetailPage({ params }: PageProps) {
         teacherName: dbCourse.teacherName,
         courseCategory: dbCourse.courseCategory,
         term: dbCourse.term,
-        examStages: dbCourse.examStages,
+        examStages: dbCourse.examStages || ['Quiz 1', 'Quiz 2', 'End Term'],
         videoUrl: dbCourse.videoUrl,
-        tags: dbCourse.tags,
+        tags: dbCourse.tags || ['IITM BS'],
         liveUpgradePrice: dbCourse.liveUpgradePrice,
       }
     : {
@@ -135,8 +152,8 @@ export default async function CourseDetailPage({ params }: PageProps) {
       };
 
   const offeringsData: DetailOffering[] =
-    dbCourse && dbCourse.offerings.length > 0
-      ? dbCourse.offerings.map((o) => ({
+    dbCourse && dbCourse.offerings && dbCourse.offerings.length > 0
+      ? dbCourse.offerings.map((o: any) => ({
           id: o.id,
           name: o.name,
           accessType: o.accessType,
@@ -161,12 +178,12 @@ export default async function CourseDetailPage({ params }: PageProps) {
         ];
 
   const topicsData: DetailTopic[] =
-    dbCourse && dbCourse.topics.length > 0
-      ? dbCourse.topics.map((t) => ({
+    dbCourse && dbCourse.topics && dbCourse.topics.length > 0
+      ? dbCourse.topics.map((t: any) => ({
           id: t.id,
           title: t.title,
           order: t.order,
-          lessons: t.content.map((c) => ({
+          lessons: (t.content || []).map((c: any) => ({
             id: c.id,
             title: c.title,
             duration: c.duration,
@@ -187,6 +204,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
           course={courseData}
           topics={topicsData}
           offerings={offeringsData}
+          userRole={userRole}
         />
       </main>
     </div>

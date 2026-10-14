@@ -88,11 +88,11 @@ export function SiteNavbar({ initialUser, hideAnnouncement = false }: SiteNavbar
 
   const navLinks = [
     { label: 'Courses & Batches', href: '/courses' },
-    { label: 'Proctored Exams', href: '/exams' },
-    { label: 'Practice Papers', href: '/papers' },
+    { label: 'Resources', href: '/resources' },
+    { label: 'Careers & Jobs', href: '/careers', badge: 'HIRING' },
     { label: 'Grade Predictor', href: '/tools', badge: 'IITM' },
     { label: '1:1 Mentorship', href: '/one-to-one' },
-    { label: 'Verify Staff', href: '/verify' },
+    { label: 'Support & FAQ', href: '/support' },
   ];
 
   const isCurrent = (href: string) => {

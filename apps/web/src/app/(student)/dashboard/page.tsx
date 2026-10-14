@@ -338,13 +338,6 @@ export default async function UnifiedDashboardPage() {
           <h1 className="text-3xl font-black text-white tracking-tight font-display">
             Welcome back, {userName}
           </h1>
-          <p className="text-xs sm:text-sm text-stone-400 mt-1 max-w-2xl">
-            {isManagerRole
-              ? 'Platform operations console: monitor proctoring telemetry, course delivery, and enrollment health.'
-              : isInstructor
-              ? 'Instructor desk: manage assigned student cohorts, review homework, and host live problem sittings.'
-              : "Keep your momentum going. You're 3 lessons away from completing your weekly milestone."}
-          </p>
         </div>
 
         {/* Status Pill on Right */}
@@ -527,11 +520,8 @@ export default async function UnifiedDashboardPage() {
                 <span>OPERATIONAL MISSION CONTROL · PROCTORING & DELIVERY</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-white font-display">
-                Real-Time Anti-Cheat & Course Management
+                Anti-Cheat Telemetry & Course Studio
               </h2>
-              <p className="text-xs sm:text-sm text-stone-300">
-                Monitoring live candidate telemetry sessions across proctored rooms. Formula-safe results export and video lecture content synchronizer active.
-              </p>
               <div className="flex items-center gap-3 text-xs font-mono text-emerald-400 pt-1">
                 <span className="flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5" />
@@ -664,7 +654,6 @@ export default async function UnifiedDashboardPage() {
                   <h2 className="text-xl font-bold text-white font-display">
                     {isInstructor ? 'Assigned Teaching Cohorts' : 'Enrolled Courses'}
                   </h2>
-                  <p className="text-xs text-stone-400">Your active curriculum, progress, and lesson rooms.</p>
                 </div>
                 <Link href="/courses" className="text-xs text-emerald-400 hover:underline font-mono">
                   Browse Catalog →

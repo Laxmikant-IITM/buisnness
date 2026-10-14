@@ -37,6 +37,10 @@ import {
   FileCheck,
   Award,
   Coins,
+  BookOpen,
+  Briefcase,
+  HelpCircle,
+  FileText,
 } from 'lucide-react';
 
 import { SiteNavbar } from '@/components/layout/site-navbar';
@@ -150,7 +154,7 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Interactive Hero Telemetry Product Showcase Window */}
+          {/* Interactive Hero Product Showcase Window */}
           <div className="mt-12 max-w-5xl mx-auto rounded-2xl border border-stone-800 bg-stone-950 shadow-2xl overflow-hidden">
             {/* Window Chrome Header */}
             <div className="px-4 py-3 bg-stone-900/90 border-b border-stone-800 flex items-center justify-between">
@@ -159,35 +163,35 @@ export default async function Home() {
                 <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
                 <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
                 <span className="ml-2 text-xs font-mono text-stone-400">
-                  northstar-proctor-telemetry · terminal v2.4
+                  iitm-academic-hub · student workspace v2.4
                 </span>
               </div>
               <div className="flex items-center gap-2 font-mono text-[11px]">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-emerald-400 font-bold">PROCTOR SUITE ACTIVE</span>
+                <span className="text-emerald-400 font-bold">ACADEMIC HUB ACTIVE</span>
               </div>
             </div>
 
-            {/* Inner Live Telemetry Grid */}
+            {/* Inner Grid */}
             <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6 bg-gradient-to-b from-stone-950 to-stone-900/70">
-              {/* Telemetry Block 1: Real-time Proctoring Monitor */}
+              {/* Telemetry Block 1: Academic Study Resources */}
               <div className="p-4 rounded-xl bg-stone-900/80 border border-stone-800/80 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase text-stone-400">Anti-Cheat Telemetry</span>
-                  <ShieldAlert className="w-4 h-4 text-emerald-400" />
+                  <span className="text-xs font-mono uppercase text-stone-400">Academic Library & PYQs</span>
+                  <BookOpen className="w-4 h-4 text-emerald-400" />
                 </div>
                 <div className="space-y-2 text-xs font-mono">
                   <div className="flex justify-between py-1 border-b border-stone-800">
-                    <span className="text-stone-400">Fullscreen Enforced:</span>
-                    <span className="text-emerald-400 font-bold">LOCKED</span>
+                    <span className="text-stone-400">Math 1 Formula Sheet:</span>
+                    <span className="text-emerald-400 font-bold">2.4 MB (PDF)</span>
                   </div>
                   <div className="flex justify-between py-1 border-b border-stone-800">
-                    <span className="text-stone-400">Tab Blur Violations:</span>
-                    <span className="text-emerald-400 font-bold">0 / 3 (Normal)</span>
+                    <span className="text-stone-400">Solved Past Term PYQs:</span>
+                    <span className="text-emerald-400 font-bold">Terms 1 - 4 Available</span>
                   </div>
                   <div className="flex justify-between py-1">
-                    <span className="text-stone-400">KaTeX Calculator:</span>
-                    <span className="text-stone-200">Enabled (Scientific)</span>
+                    <span className="text-stone-400">Python Lab Solutions:</span>
+                    <span className="text-stone-200">50 Problems Verified</span>
                   </div>
                 </div>
               </div>
@@ -195,7 +199,7 @@ export default async function Home() {
               {/* Telemetry Block 2: IITM Reverse Target Predictor */}
               <div className="p-4 rounded-xl bg-stone-900/80 border border-stone-800/80 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase text-stone-400">IITM Formula Calc</span>
+                  <span className="text-xs font-mono uppercase text-stone-400">Target Grade Predictor</span>
                   <Calculator className="w-4 h-4 text-teal-400" />
                 </div>
                 <div className="space-y-1.5 text-xs">
@@ -211,20 +215,20 @@ export default async function Home() {
                 </div>
               </div>
 
-              {/* Telemetry Block 3: Sandboxed Piston Runner */}
+              {/* Telemetry Block 3: Careers & Internships */}
               <div className="p-4 rounded-xl bg-stone-900/80 border border-stone-800/80 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono uppercase text-stone-400">Piston Code Sandbox</span>
-                  <Code2 className="w-4 h-4 text-blue-400" />
+                  <span className="text-xs font-mono uppercase text-stone-400">Careers & Placements</span>
+                  <Briefcase className="w-4 h-4 text-cyan-400" />
                 </div>
                 <div className="space-y-1.5 text-xs font-mono">
                   <div className="text-stone-400 text-[11px]">
-                    $ python3 solution.py --run-tests
+                    IITM Alumni Network Openings:
                   </div>
                   <div className="p-2 rounded bg-black/60 border border-stone-800 text-[11px] space-y-1">
-                    <div className="text-emerald-400 font-bold">[PASS] Test Case 1: OK (12ms)</div>
-                    <div className="text-emerald-400 font-bold">[PASS] Test Case 2: OK (18ms)</div>
-                    <div className="text-emerald-400 font-bold">[PASS] Hidden Tests: 5/5 PASSED</div>
+                    <div className="text-emerald-400 font-bold truncate">● IITM Incubator: ₹35k/mo</div>
+                    <div className="text-cyan-400 font-bold truncate">● ML Associate: ₹12-16 LPA</div>
+                    <div className="text-stone-400 text-[10px]">Foundation & Diploma Mapped</div>
                   </div>
                 </div>
               </div>
@@ -238,7 +242,7 @@ export default async function Home() {
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-stone-500">Live Doubt Jam with TA Aryan:</span>
-                <span className="text-emerald-400 font-semibold">Join Meet (18m left)</span>
+                <span className="text-emerald-400 font-semibold">Join Room (18m left)</span>
               </div>
             </div>
           </div>
@@ -701,15 +705,15 @@ export default async function Home() {
 
                   <tr className="hover:bg-stone-900/30 transition-colors">
                     <td className="py-4 px-6 font-sans font-semibold text-white">
-                      Anti-Cheat Proctored Mock Rooms
+                      Exam-Pattern Mock Simulations & PYQs
                     </td>
                     <td className="py-4 px-6 bg-emerald-950/20 text-emerald-400 font-bold border-x border-emerald-800/20 flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <span>Tab-Blur Telemetry & Lock</span>
+                      <span>Exact TCS iON Exam Pattern</span>
                     </td>
                     <td className="py-4 px-6 text-stone-400 flex items-center gap-2">
                       <XCircle className="w-4 h-4 text-red-400" />
-                      <span>Zero Proctored Practice</span>
+                      <span>Zero Mock Practice</span>
                     </td>
                     <td className="py-4 px-6 text-stone-400 flex items-center gap-2">
                       <XCircle className="w-4 h-4 text-red-400" />
@@ -795,7 +799,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* IITM Academic Grading Toolkit Showcase */}
+      {/* IITM Academic Resources & Career Hub */}
       <section className="py-20 border-t border-stone-800/80 bg-[#070b09]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
@@ -803,19 +807,42 @@ export default async function Home() {
               FREE ACADEMIC TOOLKIT
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-display mt-2">
-              Official IITM Grading & Proctoring Suite.
+              Academic Resources, Placement & Support Hub.
             </h2>
             <p className="text-stone-400 text-sm sm:text-base mt-2">
-              Say goodbye to stressful Sunday exam calculations. Access the full suite of specialized tools
-              engineered exclusively for IIT Madras BS students.
+              Everything you need for your IIT Madras BS journey: downloadable formula cheatsheets, exact score predictors, and level-mapped job placements.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Tool 1 */}
+            {/* Tool 1: Academic Resources */}
             <div className="p-6 rounded-2xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 transition-all flex flex-col justify-between">
               <div>
                 <div className="p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/60 text-emerald-400 w-fit">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold text-white mt-4 font-display">
+                  Study Resources & Formula Sheets
+                </h3>
+                <p className="text-xs text-stone-400 mt-2 leading-relaxed">
+                  Download high-yield formula sheets, previous year solved question sets (PYQs), and algorithmic cheat sheets for all IITM BS courses.
+                </p>
+              </div>
+              <div className="pt-6">
+                <Link
+                  href="/resources"
+                  className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-bold"
+                >
+                  <span>Browse Free Library</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Tool 2: Grade Predictor */}
+            <div className="p-6 rounded-2xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 transition-all flex flex-col justify-between">
+              <div>
+                <div className="p-3 rounded-xl bg-teal-950/60 border border-teal-800/60 text-teal-400 w-fit">
                   <Calculator className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-white mt-4 font-display">
@@ -829,7 +856,7 @@ export default async function Home() {
               <div className="pt-6">
                 <Link
                   href="/tools"
-                  className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-bold"
+                  className="inline-flex items-center gap-1.5 text-xs text-teal-400 hover:text-teal-300 font-bold"
                 >
                   <span>Launch Predictor</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -837,51 +864,25 @@ export default async function Home() {
               </div>
             </div>
 
-            {/* Tool 2 */}
+            {/* Tool 3: Careers & Jobs */}
             <div className="p-6 rounded-2xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 transition-all flex flex-col justify-between">
               <div>
-                <div className="p-3 rounded-xl bg-amber-950/60 border border-amber-800/60 text-amber-400 w-fit">
-                  <ShieldAlert className="w-6 h-6" />
+                <div className="p-3 rounded-xl bg-cyan-950/60 border border-cyan-800/60 text-cyan-400 w-fit">
+                  <Briefcase className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-white mt-4 font-display">
-                  Proctored Exam Simulator
+                  Careers & Internships
                 </h3>
                 <p className="text-xs text-stone-400 mt-2 leading-relaxed">
-                  Full-screen exam room simulation replicating the exact TCS iON / IITM exam center interface.
-                  Equipped with tab-switch telemetry, scientific calculator, and KaTeX math formulas.
+                  Verified data science, machine learning, and software engineering opportunities from IITM Research Park incubators and alumni partner firms.
                 </p>
               </div>
               <div className="pt-6">
                 <Link
-                  href="/exams"
-                  className="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 font-bold"
+                  href="/careers"
+                  className="inline-flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 font-bold"
                 >
-                  <span>Open Mock Rooms</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Tool 3 */}
-            <div className="p-6 rounded-2xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 transition-all flex flex-col justify-between">
-              <div>
-                <div className="p-3 rounded-xl bg-blue-950/60 border border-blue-800/60 text-blue-400 w-fit">
-                  <Award className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold text-white mt-4 font-display">
-                  Staff Credential Verification
-                </h3>
-                <p className="text-xs text-stone-400 mt-2 leading-relaxed">
-                  Trust and transparency are paramount. Verify the credentials, IIT alumni certificates,
-                  and course accreditations of any instructor or teaching assistant instantly.
-                </p>
-              </div>
-              <div className="pt-6">
-                <Link
-                  href="/verify"
-                  className="inline-flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 font-bold"
-                >
-                  <span>Verify Instructor ID</span>
+                  <span>Explore Openings</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -1030,30 +1031,30 @@ export default async function Home() {
           <div>
             <div className="font-mono text-xs uppercase text-white font-bold mb-3">Academic Suite</div>
             <ul className="space-y-2 text-stone-400">
-              <li><Link href="/courses" className="hover:text-emerald-400">Featured Cohorts</Link></li>
+              <li><Link href="/courses" className="hover:text-emerald-400">Courses & Batches</Link></li>
+              <li><Link href="/resources" className="hover:text-emerald-400">Resources & PYQs</Link></li>
               <li><Link href="/tools" className="hover:text-emerald-400">IITM CGPA & Target Predictor</Link></li>
-              <li><Link href="/exams" className="hover:text-emerald-400">Proctored Exam Rooms</Link></li>
-              <li><Link href="/papers" className="hover:text-emerald-400">Practice Papers</Link></li>
+              <li><Link href="/careers" className="hover:text-emerald-400">Careers & Jobs</Link></li>
             </ul>
           </div>
 
           <div>
-            <div className="font-mono text-xs uppercase text-white font-bold mb-3">Interactive Learning</div>
+            <div className="font-mono text-xs uppercase text-white font-bold mb-3">Support & Community</div>
             <ul className="space-y-2 text-stone-400">
-              <li><Link href="/live" className="hover:text-emerald-400">Live Masterclasses</Link></li>
+              <li><Link href="/support" className="hover:text-emerald-400">24/7 Helpdesk & FAQ</Link></li>
               <li><Link href="/one-to-one" className="hover:text-emerald-400">1:1 Mentorship</Link></li>
-              <li><Link href="/ide/1" className="hover:text-emerald-400">Piston Coding Playground</Link></li>
+              <li><Link href="/live" className="hover:text-emerald-400">Live Doubt Clinics</Link></li>
               <li><Link href="/refer" className="hover:text-emerald-400">5% Referral Program</Link></li>
             </ul>
           </div>
 
           <div>
-            <div className="font-mono text-xs uppercase text-white font-bold mb-3">Security & Trust</div>
+            <div className="font-mono text-xs uppercase text-white font-bold mb-3">Portal & Workspace</div>
             <ul className="space-y-2 text-stone-400">
-              <li><Link href="/verify" className="hover:text-emerald-400">Verify Staff Credentials</Link></li>
-              <li><Link href="/manager" className="hover:text-emerald-400">Manager Console</Link></li>
+              <li><Link href="/dashboard" className="hover:text-emerald-400">Student Dashboard</Link></li>
+              <li><Link href="/verify" className="hover:text-emerald-400">Verify Faculty Credentials</Link></li>
+              <li><Link href="/manager" className="hover:text-emerald-400">Staff Console</Link></li>
               <li><span className="text-emerald-400 font-mono">● All Systems Operational</span></li>
-              <li><span className="text-stone-500 font-mono">Anti-Cheat Engine v2.4</span></li>
             </ul>
           </div>
         </div>

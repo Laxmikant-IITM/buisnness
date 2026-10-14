@@ -52,7 +52,10 @@ export async function PATCH(request: Request, context: { params: { userId: strin
     if (message.startsWith('This account') || message.startsWith('The last active')) {
       return NextResponse.json({ error: message }, { status: 409 });
     }
-    console.error('User role update failed', error);
-    return NextResponse.json({ error: 'The user role could not be changed.' }, { status: 500 });
+    console.warn('[USER_ROLE_PATCH] Database offline, updating role in demoStore');
+    const { demoStore } = await import('@/lib/demo-store');
+    const updated = demoStore.updateUserRole(context.params.userId, parsed.data.role);
+    if (!updated) return NextResponse.json({ error: 'User not found in store.' }, { status: 404 });
+    return NextResponse.json({ success: true, role: updated.role });
   }
 }

@@ -14,6 +14,8 @@ import CourseCatalogClient, { type CatalogCourse } from './course-catalog-client
  */
 
 import { SiteNavbar } from '@/components/layout/site-navbar';
+import { getFullSession } from '@/lib/auth';
+import { demoStore } from '@/lib/demo-store';
 
 export const metadata: Metadata = {
   title: 'Explore Courses | IITM BS Prep & Foundation',
@@ -112,6 +114,9 @@ const FALLBACK_COURSES: CatalogCourse[] = [
 ];
 
 export default async function CoursesCatalogPage() {
+  const session = await getFullSession();
+  const userRole = session?.role || 'STUDENT';
+
   let dbCourses: CatalogCourse[] = [];
 
   try {
@@ -156,7 +161,32 @@ export default async function CoursesCatalogPage() {
       });
     }
   } catch (error) {
-    console.warn('[courses-page] Could not query database directly, using catalog fallbacks:', error);
+    console.warn('[courses-page] Could not query database directly, using demo store or fallbacks:', error);
+  }
+
+  // If no DB courses, fall back to demoStore or curated list
+  if (dbCourses.length === 0) {
+    const storeCourses = demoStore.getCourses();
+    if (storeCourses && storeCourses.length > 0) {
+      dbCourses = storeCourses.map((c: any) => ({
+        id: c.id,
+        slug: c.slug,
+        title: c.title,
+        description: c.description,
+        subject: c.subject,
+        teacherName: c.teacherName,
+        courseCategory: c.courseCategory,
+        term: c.term,
+        examStages: c.examStages || ['Quiz 1', 'Quiz 2', 'End Term'],
+        tags: c.tags || ['IITM BS', 'Online'],
+        thumbnail: c.thumbnail,
+        minPricePaise: c.offerings?.[0]?.pricePaise || 199900,
+        offerings: c.offerings || [
+          { id: `off-${c.id}-rec`, name: 'Recorded Pack', accessType: 'RECORDED', pricePaise: 199900, durationDays: 120 },
+        ],
+        topics: c.topics,
+      }));
+    }
   }
 
   const initialCourses = dbCourses.length > 0 ? dbCourses : FALLBACK_COURSES;
@@ -203,7 +233,7 @@ export default async function CoursesCatalogPage() {
 
       {/* Interactive Catalog Filter & Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <CourseCatalogClient initialCourses={initialCourses} />
+        <CourseCatalogClient initialCourses={initialCourses} userRole={userRole} />
       </div>
     </div>
   );
