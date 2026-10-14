@@ -5,6 +5,7 @@
  * Module: Layout Components (src/components/layout/sidebar.tsx)
  *
  * Unified responsive navigation sidebar for the LMS SaaS shell.
+ * - Warm editorial aesthetic: Light cream/white surface, clean borders, terracotta accents.
  * - Dynamic role-gated navigation: strictly separates Super Manager, Manager, Admin, Instructor, and Student.
  * - Same visual layout and design for every role with clear permission boundaries.
  * - User Profile & Quick Settings card with 1-click Sign Out.
@@ -155,7 +156,7 @@ export function Sidebar({
     return (
       <div className="py-2">
         {!isCollapsed && (
-          <div className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-wider text-stone-500 font-mono">
+          <div className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500 font-mono">
             {sectionTitle}
           </div>
         )}
@@ -171,10 +172,10 @@ export function Sidebar({
                   title={isCollapsed ? item.title : undefined}
                   className={[
                     'group flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200',
-                    'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400',
+                    'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#E05A33]',
                     active
-                      ? 'bg-emerald-950/70 text-emerald-300 font-bold border-l-2 border-emerald-400 shadow-sm'
-                      : 'text-stone-400 hover:text-white hover:bg-stone-900/60',
+                      ? 'bg-[#FDF0EB] text-[#E05A33] font-semibold border-l-2 border-[#E05A33] dark:bg-[#3A150C] dark:text-[#EE8E6E] dark:border-[#E86D45] shadow-xs'
+                      : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-neutral-100 dark:hover:bg-neutral-800/60',
                     isCollapsed ? 'justify-center px-2' : '',
                   ]
                     .filter(Boolean)
@@ -183,14 +184,16 @@ export function Sidebar({
                   <Icon
                     className={[
                       'w-4 h-4 shrink-0 transition-transform group-hover:scale-110 duration-200',
-                      active ? 'text-emerald-400' : 'text-stone-400 group-hover:text-emerald-300',
+                      active
+                        ? 'text-[#E05A33] dark:text-[#EE8E6E]'
+                        : 'text-neutral-400 group-hover:text-neutral-700 dark:text-neutral-500 dark:group-hover:text-neutral-300',
                     ].join(' ')}
                   />
                   {!isCollapsed && (
-                    <span className="flex-1 truncate tracking-tight">{item.title}</span>
+                    <span className="flex-1 truncate tracking-tight font-body">{item.title}</span>
                   )}
                   {!isCollapsed && item.badge && (
-                    <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold rounded bg-emerald-950 text-emerald-300 border border-emerald-800/80">
+                    <span className="px-1.5 py-0.5 text-[9px] font-mono font-bold rounded bg-[#FDF0EB] text-[#E05A33] border border-[#F5B8A3]/70 dark:bg-[#3A150C] dark:text-[#EE8E6E] dark:border-[#7D2F1A]">
                       {item.badge}
                     </span>
                   )}
@@ -206,7 +209,7 @@ export function Sidebar({
   return (
     <aside
       className={[
-        'flex flex-col bg-[#0c100d] text-stone-300 border-r border-stone-800/80 select-none transition-all duration-300 z-30 shrink-0 shadow-xl',
+        'flex flex-col bg-white dark:bg-[#111110] text-neutral-800 dark:text-neutral-200 border-r border-[#E8E6E1] dark:border-[#2D2D2A] select-none transition-all duration-300 z-30 shrink-0 shadow-xs',
         isCollapsed ? 'w-16' : 'w-64',
         className,
       ]
@@ -214,20 +217,20 @@ export function Sidebar({
         .join(' ')}
     >
       {/* Brand Header */}
-      <div className="flex items-center justify-between h-16 px-4 border-b border-stone-800">
+      <div className="flex items-center justify-between h-16 px-4 border-b border-[#E8E6E1] dark:border-[#2D2D2A]">
         <Link
           href="/"
-          className="flex items-center gap-2.5 overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded-md group"
+          className="flex items-center gap-2.5 overflow-hidden focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#E05A33] rounded-md group"
         >
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-700 text-stone-950 font-black font-serif text-base shadow-sm group-hover:rotate-6 transition-transform">
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-[#E05A33] to-[#C94A26] text-white font-serif font-black text-base shadow-sm group-hover:scale-105 transition-transform">
             G
           </div>
           {!isCollapsed && (
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-sm text-white tracking-tight">
-                GenZ IITian<span className="text-emerald-400">.</span>
+              <span className="font-display font-extrabold text-sm text-[#1A1A19] dark:text-[#F5F3EF] tracking-tight">
+                GenZ IITian<span className="text-[#E05A33]">.</span>
               </span>
-              <span className="text-[9px] text-emerald-400 font-mono tracking-widest uppercase -mt-0.5">
+              <span className="text-[9px] text-neutral-400 dark:text-neutral-500 font-mono tracking-widest uppercase -mt-0.5 font-medium">
                 ACADEMIC LMS
               </span>
             </div>
@@ -238,7 +241,7 @@ export function Sidebar({
           type="button"
           onClick={toggleCollapse}
           aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400"
+          className="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 dark:text-neutral-500 dark:hover:text-neutral-200 dark:hover:bg-neutral-800 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#E05A33]"
         >
           {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </button>
@@ -250,43 +253,43 @@ export function Sidebar({
 
         {isInstructor && (
           <>
-            <div className="h-px bg-stone-800/60 my-2 mx-1" />
+            <div className="h-px bg-[#E8E6E1] dark:bg-[#2D2D2A] my-2 mx-1" />
             {renderSection('Faculty Desk', instructorItems)}
           </>
         )}
 
         {isManager && (
           <>
-            <div className="h-px bg-stone-800/60 my-2 mx-1" />
+            <div className="h-px bg-[#E8E6E1] dark:bg-[#2D2D2A] my-2 mx-1" />
             {renderSection('Management & Ops', managementItems)}
           </>
         )}
 
         {(isStudent || isSuperManager) && (
           <>
-            <div className="h-px bg-stone-800/60 my-2 mx-1" />
+            <div className="h-px bg-[#E8E6E1] dark:bg-[#2D2D2A] my-2 mx-1" />
             {renderSection('Learner Toolkit', learnerToolkit)}
           </>
         )}
       </div>
 
       {/* Bottom Profile, Settings & Sign Out Panel */}
-      <div className="p-3 border-t border-stone-800/80 bg-stone-950/70">
+      <div className="p-3 border-t border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#161615]">
         {!isCollapsed ? (
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-2">
               <Link
                 href="/profile"
-                className="flex items-center gap-2.5 p-1 rounded-xl hover:bg-stone-900 transition-colors group flex-1 min-w-0"
+                className="flex items-center gap-2.5 p-1 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800/60 transition-colors group flex-1 min-w-0"
               >
-                <div className="w-8 h-8 rounded-lg bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-[#FDF0EB] border border-[#F5B8A3] text-[#E05A33] dark:bg-[#3A150C] dark:border-[#7D2F1A] dark:text-[#EE8E6E] font-bold text-xs flex items-center justify-center shrink-0">
                   {userName ? userName.slice(0, 2).toUpperCase() : 'ST'}
                 </div>
                 <div className="flex flex-col min-w-0">
-                  <span className="text-xs font-bold text-white truncate group-hover:text-emerald-400 transition-colors">
+                  <span className="text-xs font-bold text-neutral-900 dark:text-neutral-100 truncate group-hover:text-[#E05A33] dark:group-hover:text-[#EE8E6E] transition-colors font-display">
                     {userName || 'My Account'}
                   </span>
-                  <span className="text-[10px] text-stone-500 font-mono truncate uppercase">
+                  <span className="text-[10px] text-neutral-400 dark:text-neutral-500 font-mono truncate uppercase">
                     {role}
                   </span>
                 </div>
@@ -296,7 +299,7 @@ export function Sidebar({
                 type="button"
                 title="Sign out"
                 onClick={handleSignOut}
-                className="p-2 text-stone-400 hover:text-rose-400 hover:bg-stone-900 rounded-xl transition-colors cursor-pointer"
+                className="p-2 text-neutral-400 hover:text-[#C94B3E] hover:bg-neutral-100 dark:text-neutral-500 dark:hover:text-[#E2766A] dark:hover:bg-neutral-800 rounded-xl transition-colors cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -305,16 +308,16 @@ export function Sidebar({
             <div className="grid grid-cols-2 gap-1.5 pt-1 font-mono text-[10px]">
               <Link
                 href="/profile"
-                className="px-2 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-850 hover:text-white text-stone-300 text-center transition-colors flex items-center justify-center gap-1 border border-stone-800"
+                className="px-2 py-1.5 rounded-lg bg-neutral-50 hover:bg-neutral-100 hover:text-neutral-900 text-neutral-600 text-center transition-colors flex items-center justify-center gap-1 border border-[#E8E6E1] dark:bg-neutral-900 dark:hover:bg-neutral-850 dark:hover:text-white dark:text-neutral-400 dark:border-neutral-800"
               >
-                <User className="w-3 h-3 text-emerald-400" />
+                <User className="w-3 h-3 text-[#E05A33] dark:text-[#EE8E6E]" />
                 <span>Profile</span>
               </Link>
               <Link
                 href="/profile"
-                className="px-2 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-850 hover:text-white text-stone-300 text-center transition-colors flex items-center justify-center gap-1 border border-stone-800"
+                className="px-2 py-1.5 rounded-lg bg-neutral-50 hover:bg-neutral-100 hover:text-neutral-900 text-neutral-600 text-center transition-colors flex items-center justify-center gap-1 border border-[#E8E6E1] dark:bg-neutral-900 dark:hover:bg-neutral-850 dark:hover:text-white dark:text-neutral-400 dark:border-neutral-800"
               >
-                <Settings className="w-3 h-3 text-stone-400" />
+                <Settings className="w-3 h-3 text-neutral-400 dark:text-neutral-500" />
                 <span>Settings</span>
               </Link>
             </div>
@@ -324,7 +327,7 @@ export function Sidebar({
             <Link
               href="/profile"
               title="Profile"
-              className="w-8 h-8 rounded-lg bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-xs flex items-center justify-center hover:scale-105 transition-transform"
+              className="w-8 h-8 rounded-lg bg-[#FDF0EB] border border-[#F5B8A3] text-[#E05A33] dark:bg-[#3A150C] dark:border-[#7D2F1A] dark:text-[#EE8E6E] font-bold text-xs flex items-center justify-center hover:scale-105 transition-transform"
             >
               {userName ? userName.slice(0, 2).toUpperCase() : 'ST'}
             </Link>
@@ -332,7 +335,7 @@ export function Sidebar({
               type="button"
               title="Sign out"
               onClick={handleSignOut}
-              className="p-1.5 text-stone-400 hover:text-rose-400 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 text-neutral-400 hover:text-[#C94B3E] hover:bg-neutral-100 dark:text-neutral-500 dark:hover:text-[#E2766A] dark:hover:bg-neutral-800 rounded-lg transition-colors cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
             </button>

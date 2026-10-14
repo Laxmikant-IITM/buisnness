@@ -1,7 +1,8 @@
 /**
  * @file apps/web/src/components/layout/site-navbar.tsx
- * @description Common, Unified Header & Navigation Bar for all public pages.
+ * @description Redesigned editorial Header & Navigation Bar for all public pages.
  *
+ * Warm cream light-first design system with terracotta accents.
  * Ensures 100% visual and functional consistency across:
  * - Home (/)
  * - Course Catalog (/courses, /courses/[slug])
@@ -101,169 +102,165 @@ export function SiteNavbar({ initialUser, hideAnnouncement = false }: SiteNavbar
   };
 
   return (
-    <>
-      {/* Top Global Announcement Banner */}
-      {!hideAnnouncement && (
-        <div className="bg-gradient-to-r from-emerald-950 via-emerald-900 to-stone-900 border-b border-emerald-800/60 px-4 py-2 text-center text-xs font-medium text-emerald-200 flex items-center justify-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-          <span>Summer 2026 Cohorts Open · Official IIT Madras BS Degree Companion · Over 15,000+ Students</span>
-          <Link href="/courses" className="underline font-bold text-white hover:text-emerald-300 ml-1 hidden sm:inline">
-            Explore Batches →
-          </Link>
-        </div>
-      )}
-
-      {/* Main SaaS Navbar */}
-      <header className="w-full border-b border-stone-800/80 sticky top-0 bg-[#090d0b]/95 backdrop-blur-md z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 text-stone-950 font-serif font-black text-xl flex items-center justify-center transform group-hover:scale-105 transition-transform shadow-lg shadow-emerald-900/30">
-              G
+    <header className="w-full border-b border-[#E8E6E1] dark:border-[#2D2D2A] sticky top-0 bg-[#FAFAF7]/90 dark:bg-[#111110]/90 backdrop-blur-md z-40 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between">
+        {/* Brand Logo */}
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#E05A33] to-[#C94A26] text-white font-serif font-black text-xl flex items-center justify-center transform group-hover:scale-105 transition-transform shadow-sm">
+            G
+          </span>
+          <div className="flex flex-col">
+            <span className="font-extrabold text-xl tracking-tight text-[#1A1A19] dark:text-[#F5F3EF] font-display block leading-none">
+              GenZ IITian<span className="text-[#E05A33]">.</span>
             </span>
-            <div>
-              <span className="font-extrabold text-xl tracking-tight text-white font-display block leading-none">
-                GenZ IITian<span className="text-emerald-500">.</span>
-              </span>
-              <span className="text-[10px] font-mono tracking-widest text-emerald-400 uppercase">
-                ACADEMIC LMS
-              </span>
-            </div>
-          </Link>
+            <span className="text-[10px] font-mono tracking-widest text-[#8C8C87] uppercase mt-0.5 font-medium">
+              ACADEMIC LMS
+            </span>
+          </div>
+        </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold text-stone-300">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-7 text-[13px] font-medium font-body">
+          {navLinks.map((link) => {
+            const active = isCurrent(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`transition-colors flex items-center gap-1.5 py-1 ${
+                  active
+                    ? 'text-[#E05A33] dark:text-[#EE8E6E] font-semibold'
+                    : 'text-neutral-600 hover:text-[#E05A33] dark:text-neutral-300 dark:hover:text-[#EE8E6E]'
+                }`}
+              >
+                <span>{link.label}</span>
+                {link.badge && (
+                  <Badge
+                    variant="neutral"
+                    size="sm"
+                    className="text-[9px] font-mono tracking-wider px-1.5 py-0 bg-[#FDF0EB] text-[#E05A33] border-[#F5B8A3]/70 dark:bg-[#3A150C] dark:text-[#EE8E6E] dark:border-[#7D2F1A] rounded font-semibold"
+                  >
+                    {link.badge}
+                  </Badge>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Dynamic Auth Header CTAs */}
+        <div className="hidden sm:flex items-center gap-3">
+          <ThemeToggle />
+
+          {user ? (
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white font-semibold text-xs shadow-sm transition-all duration-150 transform hover:-translate-y-0.5"
+            >
+              <Compass className="w-4 h-4" />
+              <span>Dashboard</span>
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/sign-in"
+                className="text-xs font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white px-3 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/sign-in"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white font-semibold text-xs shadow-sm transition-all duration-150 transform hover:-translate-y-0.5"
+              >
+                <span>Role Sandbox</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </>
+          )}
+        </div>
+
+        {/* Mobile Menu Hamburger Button */}
+        <div className="flex lg:hidden items-center gap-2">
+          <ThemeToggle />
+          {user && (
+            <Link
+              href={user.role === 'STUDENT' ? '/dashboard' : '/manager'}
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#E05A33] text-white font-semibold text-xs"
+            >
+              <span>Dashboard</span>
+            </Link>
+          )}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-xl text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 border border-[#E8E6E1] dark:border-[#2D2D2A] transition-colors"
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden border-t border-[#E8E6E1] dark:border-[#2D2D2A] bg-[#FAFAF7] dark:bg-[#111110] px-5 py-6 space-y-4">
+          <div className="space-y-1">
             {navLinks.map((link) => {
               const active = isCurrent(link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`transition-colors flex items-center gap-1.5 py-1 ${
-                    active ? 'text-emerald-400 font-bold' : 'hover:text-emerald-400 text-stone-300'
-                  }`}
-                >
-                  <span>{link.label}</span>
-                  {link.badge && (
-                    <Badge variant="brand" className="text-[9px] py-0 px-1 bg-emerald-950 text-emerald-400 border border-emerald-800">
-                      {link.badge}
-                    </Badge>
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Dynamic Auth Header CTAs */}
-          <div className="hidden sm:flex items-center gap-3">
-            <ThemeToggle />
-
-            {user ? (
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-stone-950 font-extrabold text-xs shadow-lg shadow-emerald-950 transition-all transform hover:-translate-y-0.5"
-              >
-                <Compass className="w-4 h-4" />
-                <span>Dashboard</span>
-              </Link>
-            ) : (
-              <>
-                <Link
-                  href="/sign-in"
-                  className="text-xs font-bold text-stone-300 hover:text-white px-3 py-2 rounded-lg hover:bg-stone-900 transition-colors"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/sign-in"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all"
-                >
-                  <span>Role Sandbox</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </>
-            )}
-          </div>
-
-          {/* Mobile Menu Hamburger Button */}
-          <div className="flex lg:hidden items-center gap-2">
-            {user && (
-              <Link
-                href={user.role === 'STUDENT' ? '/dashboard' : '/manager'}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-500 text-stone-950 font-bold text-xs"
-              >
-                <span>Dashboard</span>
-              </Link>
-            )}
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-stone-400 hover:text-white hover:bg-stone-900 transition-colors"
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-stone-800 bg-[#090d0b] px-6 py-6 space-y-4">
-            <div className="space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block py-2 text-sm font-semibold rounded-lg px-3 transition-colors ${
-                    isCurrent(link.href)
-                      ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                      : 'text-stone-300 hover:text-white hover:bg-stone-900'
+                  className={`block py-2.5 text-sm rounded-xl px-3.5 transition-colors font-body ${
+                    active
+                      ? 'bg-[#FDF0EB] text-[#E05A33] font-semibold dark:bg-[#3A150C] dark:text-[#EE8E6E] border border-[#F5B8A3]/60 dark:border-[#7D2F1A]'
+                      : 'text-neutral-700 hover:text-[#E05A33] hover:bg-neutral-100 dark:text-neutral-300 dark:hover:text-[#EE8E6E] dark:hover:bg-neutral-900/60 font-medium'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <span>{link.label}</span>
                     {link.badge && (
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-900 text-emerald-300">
+                      <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-[#FDF0EB] text-[#E05A33] border border-[#F5B8A3]/60 dark:bg-[#3A150C] dark:text-[#EE8E6E] dark:border-[#7D2F1A]">
                         {link.badge}
                       </span>
                     )}
                   </div>
                 </Link>
-              ))}
-            </div>
-
-            <div className="pt-4 border-t border-stone-800 flex flex-col gap-2">
-              {user ? (
-                <Link
-                  href="/dashboard"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-3 rounded-xl bg-emerald-500 text-stone-950 text-center font-bold text-sm"
-                >
-                  Enter Dashboard
-                </Link>
-              ) : (
-                <>
-                  <Link
-                    href="/sign-in"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full py-2.5 rounded-xl border border-stone-700 text-center font-bold text-xs text-stone-200"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/sign-in"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full py-2.5 rounded-xl bg-emerald-600 text-white text-center font-bold text-xs"
-                  >
-                    1-Click Role Sandbox
-                  </Link>
-                </>
-              )}
-            </div>
+              );
+            })}
           </div>
-        )}
-      </header>
-    </>
+
+          <div className="pt-4 border-t border-[#E8E6E1] dark:border-[#2D2D2A] flex flex-col gap-2.5">
+            {user ? (
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-2.5 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white text-center font-semibold text-sm shadow-sm transition-colors"
+              >
+                Enter Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/sign-in"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2.5 rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#1C1C1A] text-center font-semibold text-xs text-neutral-800 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/sign-in"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2.5 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white text-center font-semibold text-xs shadow-sm transition-colors"
+                >
+                  1-Click Role Sandbox
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

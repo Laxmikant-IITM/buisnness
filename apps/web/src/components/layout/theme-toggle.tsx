@@ -13,18 +13,18 @@ import React, { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
 export function ThemeToggle({ className = '' }: { className?: string }) {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>('light');
 
   useEffect(() => {
     const stored = localStorage.getItem('theme');
-    if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-      setTheme('light');
-      document.documentElement.classList.add('light');
-      document.documentElement.setAttribute('data-theme', 'light');
-    } else {
+    if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       setTheme('dark');
-      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
       document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      setTheme('light');
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
     }
   }, []);
 
@@ -33,12 +33,12 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     setTheme(next);
     localStorage.setItem('theme', next);
 
-    if (next === 'light') {
-      document.documentElement.classList.add('light');
-      document.documentElement.setAttribute('data-theme', 'light');
-    } else {
-      document.documentElement.classList.remove('light');
+    if (next === 'dark') {
+      document.documentElement.classList.add('dark');
       document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
     }
   };
 
@@ -50,8 +50,8 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
       className={`p-2 rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-center ${
         theme === 'dark'
-          ? 'bg-stone-900 border-stone-800 text-amber-400 hover:bg-stone-850 hover:border-amber-500/40 shadow-sm'
-          : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-100 hover:border-stone-400 shadow-sm'
+          ? 'bg-neutral-800 border-neutral-700 text-amber-400 hover:border-amber-500/40 shadow-sm'
+          : 'bg-white border-[#E8E6E1] text-neutral-600 hover:bg-[#F5F3EF] hover:border-neutral-400 shadow-sm'
       } ${className}`}
     >
       {theme === 'dark' ? (

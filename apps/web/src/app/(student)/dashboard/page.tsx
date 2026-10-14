@@ -1,15 +1,9 @@
 /**
  * @file apps/web/src/app/(student)/dashboard/page.tsx
- * @description Unified SaaS Dashboard (Single Dashboard for All Roles).
+ * @description Redesigned editorial Dashboard (for Students, Instructors, Managers).
  *
- * Implements:
- * - Unified structural layout: Same look, feel, spacing, and micro-animations for everyone.
- * - Dynamic role adaptation: Filters options and metrics strictly by role clearance:
- *   - Students: Daily Streak, Total XP, Academic Rank, Resume Lesson Hero, Enrolled Courses.
- *   - Instructors: Assigned Cohorts, Active Students, Homework Submissions, Live Session CTA.
- *   - Managers/Admins: Courses, Active Learners, Enrollments, Anti-Cheat Telemetry, Course Studio.
- * - Zero raw emojis: 100% clean Lucide SVG icons.
- * - High-contrast modern SaaS design with dark/light appearance support.
+ * Warm cream light-first palette (#FAFAF7), clean white cards (#FFFFFF),
+ * terracotta accents (#E05A33), subtle card tilts and count-ups, zero AI slop.
  */
 
 import React from 'react';
@@ -34,17 +28,15 @@ import {
   Sparkles,
   Award,
   Calendar,
-  AlertCircle,
   Coins,
   ShieldCheck,
   Users,
   GraduationCap,
   TrendingUp,
   Activity,
-  ArrowUpRight,
 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { CandidateTelemetryTable } from '@/components/dashboard/candidate-telemetry-table';
+import { FadeUp, CardTilt, CountUp } from './dashboard-animations';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,16 +46,16 @@ export default async function UnifiedDashboardPage() {
   if (!session) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-center p-6 space-y-4">
-        <div className="w-14 h-14 rounded-2xl bg-emerald-950/60 border border-emerald-800/80 flex items-center justify-center text-emerald-400">
+        <div className="w-14 h-14 rounded-2xl bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] flex items-center justify-center text-[#E05A33]">
           <BookOpen className="w-7 h-7" />
         </div>
-        <h1 className="text-2xl font-black text-white font-display">Academic Workspace</h1>
-        <p className="text-sm text-stone-400 max-w-md">
+        <h1 className="text-2xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display">Academic Workspace</h1>
+        <p className="text-sm text-[#8C8C87] max-w-md">
           Please sign in to access your curriculum, live classes, assignments, and operations console.
         </p>
         <Link
           href="/sign-in"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold text-xs transition-transform hover:scale-105"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white font-bold text-xs transition-transform hover:scale-105 shadow-sm"
         >
           <span>Sign In to Continue</span>
           <ArrowRight className="w-4 h-4" />
@@ -318,24 +310,24 @@ export default async function UnifiedDashboardPage() {
   }
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
-      {/* 1. Top Banner Greeting (Consistent for All Roles) */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-stone-800">
+    <div className="space-y-8 max-w-7xl mx-auto text-[#1A1A19] dark:text-[#F5F3EF]">
+      {/* 1. Top Banner Greeting */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#E8E6E1] dark:border-[#2D2D2A]">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-950 text-emerald-300 border border-emerald-800/80">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] border border-[#F5B8A3] dark:border-[#7D2F1A]">
               {isManagerRole
                 ? role.replace('_', ' ')
                 : isInstructor
                 ? 'COURSE INSTRUCTOR'
                 : (user?.iitmLevel || 'IITM BS SCHOLAR')}
             </span>
-            <span className="text-stone-600 font-mono">/</span>
-            <span className="text-xs font-mono text-stone-400 uppercase tracking-wider">
+            <span className="text-[#8C8C87] font-mono">/</span>
+            <span className="text-xs font-mono text-[#8C8C87] uppercase tracking-wider">
               ID: {securityId}
             </span>
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight font-display">
+          <h1 className="text-3xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] tracking-tight font-display">
             Welcome back, {userName}
           </h1>
         </div>
@@ -343,21 +335,21 @@ export default async function UnifiedDashboardPage() {
         {/* Status Pill on Right */}
         <div className="flex items-center gap-3">
           {isManagerRole || isInstructor ? (
-            <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-stone-900 border border-stone-800 text-xs font-mono text-emerald-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] text-xs font-mono text-[#2D7A4F] shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#2D7A4F] animate-pulse" />
               <span>Telemetry Live (14ms)</span>
             </div>
           ) : (
             <Link
               href="/refer"
-              className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-stone-900 border border-stone-800 hover:border-amber-500/50 transition-all group"
+              className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 transition-all group shadow-xs"
             >
-              <div className="p-1 rounded-lg bg-amber-950/60 text-amber-400 group-hover:scale-110 transition-transform">
-                <Coins className="w-4 h-4" />
+              <div className="p-1 rounded-lg bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] group-hover:scale-110 transition-transform">
+                <Coins className="w-4 h-4 text-[#D4952B]" />
               </div>
               <div>
-                <div className="text-[10px] font-mono text-stone-400 uppercase">Wallet Coins</div>
-                <div className="text-xs font-bold text-white group-hover:text-amber-400 font-mono">
+                <div className="text-[10px] font-mono text-[#8C8C87] uppercase">Wallet Coins</div>
+                <div className="text-xs font-bold text-[#1A1A19] dark:text-[#F5F3EF] group-hover:text-[#E05A33] font-mono">
                   {userCoins} Coins (5% Off)
                 </div>
               </div>
@@ -366,31 +358,31 @@ export default async function UnifiedDashboardPage() {
         </div>
       </div>
 
-      {/* 2. 4 Metric / KPI Cards (Identical Grid Across All Roles) */}
+      {/* 2. 4 Metric / KPI Cards */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1 */}
-        <div className="p-5 rounded-2xl bg-stone-950 border border-stone-800 relative overflow-hidden group hover:border-emerald-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+        <CardTilt className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] relative overflow-hidden group hover:border-[#E05A33]/50 transition-all shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-stone-400 font-semibold">
+            <span className="text-xs font-mono uppercase text-[#8C8C87] font-semibold">
               {isManagerRole ? 'Total Courses' : isInstructor ? 'Assigned Cohorts' : 'Daily Streak'}
             </span>
-            <div className="p-2 rounded-xl bg-orange-950/60 border border-orange-800/80 text-orange-400">
+            <div className="p-2 rounded-xl bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] text-[#E05A33]">
               {isManagerRole ? <BookOpen className="w-4 h-4" /> : isInstructor ? <BookOpen className="w-4 h-4" /> : <Flame className="w-4 h-4" />}
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-3xl font-black text-white font-display flex items-baseline gap-2">
+            <div className="text-3xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display flex items-baseline gap-2">
               <span>{isManagerRole ? managerStats.totalCourses : isInstructor ? '3 Cohorts' : `${userStreak} Days`}</span>
               {!isManagerRole && !isInstructor && (
-                <span className="text-xs font-mono text-orange-400 font-semibold">Active</span>
+                <span className="text-xs font-mono text-[#E05A33] font-semibold">Active</span>
               )}
             </div>
             {isManagerRole ? (
-              <div className="text-xs font-mono text-emerald-400 mt-2 pt-2 border-t border-stone-900">
+              <div className="text-xs font-mono text-[#2D7A4F] mt-2 pt-2 border-t border-[#E8E6E1] dark:border-[#2D2D2A]">
                 {managerStats.publishedCourses} published
               </div>
             ) : isInstructor ? (
-              <div className="text-xs font-mono text-stone-400 mt-2 pt-2 border-t border-stone-900">
+              <div className="text-xs font-mono text-[#8C8C87] mt-2 pt-2 border-t border-[#E8E6E1] dark:border-[#2D2D2A]">
                 142 enrolled learners
               </div>
             ) : (
@@ -399,61 +391,61 @@ export default async function UnifiedDashboardPage() {
                   <div key={idx} className="flex-1 text-center">
                     <div
                       className={`h-1.5 rounded-full ${
-                        idx < userStreak % 7 ? 'bg-orange-500' : 'bg-stone-800'
+                        idx < userStreak % 7 ? 'bg-[#E05A33]' : 'bg-[#E8E6E1] dark:bg-[#2D2D2A]'
                       }`}
                     />
-                    <span className="text-[9px] font-mono text-stone-500 mt-1 block">{day}</span>
+                    <span className="text-[9px] font-mono text-[#8C8C87] mt-1 block">{day}</span>
                   </div>
                 ))}
               </div>
             )}
           </div>
-        </div>
+        </CardTilt>
 
         {/* Metric 2 */}
-        <div className="p-5 rounded-2xl bg-stone-950 border border-stone-800 relative overflow-hidden group hover:border-emerald-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+        <CardTilt className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] relative overflow-hidden group hover:border-[#E05A33]/50 transition-all shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-stone-400 font-semibold">
+            <span className="text-xs font-mono uppercase text-[#8C8C87] font-semibold">
               {isManagerRole ? 'Active Learners' : isInstructor ? 'Active Students' : 'Total XP'}
             </span>
-            <div className="p-2 rounded-xl bg-amber-950/60 border border-amber-800/80 text-amber-400">
+            <div className="p-2 rounded-xl bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] text-[#E05A33]">
               {isManagerRole || isInstructor ? <Users className="w-4 h-4" /> : <Zap className="w-4 h-4 fill-current" />}
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-3xl font-black text-white font-display">
+            <div className="text-3xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display">
               {isManagerRole ? managerStats.activeLearners.toLocaleString() : isInstructor ? '142' : `${userXp.toLocaleString()} XP`}
             </div>
-            <div className="text-xs text-stone-400 mt-2 flex items-center gap-1 pt-2 border-t border-stone-900">
+            <div className="text-xs text-[#6B6B66] dark:text-[#B5B3AD] mt-2 flex items-center gap-1 pt-2 border-t border-[#E8E6E1] dark:border-[#2D2D2A]">
               {isManagerRole ? (
-                <span className="inline-flex items-center gap-1 text-emerald-400 font-mono font-semibold">
+                <span className="inline-flex items-center gap-1 text-[#2D7A4F] font-mono font-semibold">
                   <TrendingUp className="w-3 h-3" />
                   +18.4% WoW
                 </span>
               ) : isInstructor ? (
-                <span className="text-emerald-400 font-mono font-semibold">+12 this week</span>
+                <span className="text-[#2D7A4F] font-mono font-semibold">+12 this week</span>
               ) : (
                 <>
-                  <span className="text-emerald-400 font-mono font-bold">+180 XP</span>
+                  <span className="text-[#2D7A4F] font-mono font-bold">+180 XP</span>
                   <span>earned this week</span>
                 </>
               )}
             </div>
           </div>
-        </div>
+        </CardTilt>
 
         {/* Metric 3 */}
-        <div className="p-5 rounded-2xl bg-stone-950 border border-stone-800 relative overflow-hidden group hover:border-emerald-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+        <CardTilt className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] relative overflow-hidden group hover:border-[#E05A33]/50 transition-all shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-stone-400 font-semibold">
+            <span className="text-xs font-mono uppercase text-[#8C8C87] font-semibold">
               {isManagerRole ? 'Active Seats' : isInstructor ? 'Homework Desk' : 'Academic Rank'}
             </span>
-            <div className="p-2 rounded-xl bg-purple-950/60 border border-purple-800/80 text-purple-400">
+            <div className="p-2 rounded-xl bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] text-[#E05A33]">
               {isManagerRole ? <GraduationCap className="w-4 h-4" /> : isInstructor ? <FileCheck className="w-4 h-4" /> : <Trophy className="w-4 h-4" />}
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-xl font-black text-white font-display">
+            <div className="text-xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display">
               {isManagerRole
                 ? `${managerStats.activeEnrollments.toLocaleString()} Seats`
                 : isInstructor
@@ -461,68 +453,68 @@ export default async function UnifiedDashboardPage() {
                 : `Level ${userLevel}: IITM Scholar`}
             </div>
             {isManagerRole ? (
-              <div className="text-xs font-mono text-purple-400 mt-2 pt-2 border-t border-stone-900 flex items-center gap-1">
+              <div className="text-xs font-mono text-[#E05A33] mt-2 pt-2 border-t border-[#E8E6E1] dark:border-[#2D2D2A] flex items-center gap-1 font-semibold">
                 <TrendingUp className="w-3 h-3" />
                 +14.2% Growth
               </div>
             ) : isInstructor ? (
-              <div className="text-xs font-mono text-amber-400 mt-2 pt-2 border-t border-stone-900">
+              <div className="text-xs font-mono text-[#D4952B] mt-2 pt-2 border-t border-[#E8E6E1] dark:border-[#2D2D2A]">
                 Awaiting review
               </div>
             ) : (
               <div className="mt-2 space-y-1">
-                <div className="flex justify-between text-[10px] font-mono text-stone-400">
+                <div className="flex justify-between text-[10px] font-mono text-[#8C8C87]">
                   <span>Progress to Level {userLevel + 1}</span>
                   <span>82%</span>
                 </div>
-                <div className="h-1.5 rounded-full bg-stone-800 overflow-hidden">
-                  <div className="h-full bg-purple-500 rounded-full" style={{ width: '82%' }} />
+                <div className="h-1.5 rounded-full bg-[#E8E6E1] dark:bg-[#2D2D2A] overflow-hidden">
+                  <div className="h-full bg-[#E05A33] rounded-full" style={{ width: '82%' }} />
                 </div>
               </div>
             )}
           </div>
-        </div>
+        </CardTilt>
 
         {/* Metric 4 */}
-        <div className="p-5 rounded-2xl bg-stone-950 border border-stone-800 relative overflow-hidden group hover:border-emerald-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+        <CardTilt className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] relative overflow-hidden group hover:border-[#E05A33]/50 transition-all shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-stone-400 font-semibold">
+            <span className="text-xs font-mono uppercase text-[#8C8C87] font-semibold">
               {isManagerRole ? 'Assessment Suite' : isInstructor ? 'Next Masterclass' : 'Daily Goal'}
             </span>
-            <div className="p-2 rounded-xl bg-blue-950/60 border border-blue-800/80 text-blue-400">
+            <div className="p-2 rounded-xl bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] text-[#E05A33]">
               {isManagerRole ? <ShieldCheck className="w-4 h-4" /> : isInstructor ? <Video className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-xl sm:text-2xl font-black text-white font-display">
+            <div className="text-xl sm:text-2xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display">
               {isManagerRole ? `${managerStats.publishedExams} Exams` : isInstructor ? 'Thu 7:00 PM' : '1 / 2 Lessons'}
             </div>
-            <div className="text-xs text-stone-400 mt-2 pt-2 border-t border-stone-900">
+            <div className="text-xs text-[#8C8C87] mt-2 pt-2 border-t border-[#E8E6E1] dark:border-[#2D2D2A]">
               {isManagerRole ? (
-                <span className="text-emerald-400 font-mono font-semibold">99.8% Integrity Verified</span>
+                <span className="text-[#2D7A4F] font-mono font-semibold">99.8% Integrity Verified</span>
               ) : isInstructor ? (
-                <span className="text-stone-400 font-mono">Calculus Problem Sitting</span>
+                <span className="text-[#8C8C87] font-mono">Calculus Problem Sitting</span>
               ) : (
                 <span>Complete 1 more lesson</span>
               )}
             </div>
           </div>
-        </div>
+        </CardTilt>
       </section>
 
-      {/* 3. Hero Spotlight Card (Same Grand Aesthetics for All Roles) */}
+      {/* 3. Hero Spotlight Card */}
       {isManagerRole ? (
-        <section className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-stone-950 to-stone-900 border border-emerald-500/30 shadow-2xl relative overflow-hidden">
+        <section className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] shadow-sm relative overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800/80 text-emerald-400 text-xs font-mono font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] text-[#E05A33] text-xs font-mono font-semibold">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>OPERATIONAL MISSION CONTROL · PROCTORING & DELIVERY</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-white font-display">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display">
                 Anti-Cheat Telemetry & Course Studio
               </h2>
-              <div className="flex items-center gap-3 text-xs font-mono text-emerald-400 pt-1">
+              <div className="flex items-center gap-3 text-xs font-mono text-[#2D7A4F] pt-1">
                 <span className="flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5" />
                   <span>4 Active Telemetry Rooms</span>
@@ -535,7 +527,7 @@ export default async function UnifiedDashboardPage() {
             <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
               <Link
                 href="/manager/exams"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black text-xs shadow-xl shadow-emerald-500/20 transition-all hover:scale-105"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white font-bold text-xs shadow-sm transition-all"
               >
                 <ShieldCheck className="w-4 h-4" />
                 <span>Exam Operations</span>
@@ -543,7 +535,7 @@ export default async function UnifiedDashboardPage() {
               </Link>
               <Link
                 href="/manager/courses"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 border border-stone-700 text-white font-bold text-xs transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#F5F3EF] dark:bg-[#242422] hover:bg-[#EDEBE5] border border-[#E8E6E1] dark:border-[#2D2D2A] text-[#1A1A19] dark:text-[#F5F3EF] font-bold text-xs transition-colors"
               >
                 <BookOpen className="w-4 h-4" />
                 <span>Course Studio</span>
@@ -552,37 +544,37 @@ export default async function UnifiedDashboardPage() {
           </div>
         </section>
       ) : resumeLesson ? (
-        <section className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-stone-950 to-stone-900 border border-emerald-500/30 shadow-2xl relative overflow-hidden">
+        <section className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] shadow-sm relative overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800/80 text-emerald-400 text-xs font-mono font-semibold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] text-[#E05A33] text-xs font-mono font-semibold">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>CONTINUE LEARNING · READY TO RESUME</span>
               </div>
 
               <div>
-                <span className="text-xs font-mono uppercase text-stone-400 font-semibold">
+                <span className="text-xs font-mono uppercase text-[#8C8C87] font-semibold">
                   {resumeLesson.courseTitle} · {resumeLesson.topicTitle}
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-black text-white font-display mt-1">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display mt-1">
                   {resumeLesson.lessonTitle}
                 </h2>
               </div>
 
-              <div className="flex items-center gap-4 text-xs font-mono text-stone-300">
+              <div className="flex items-center gap-4 text-xs font-mono text-[#6B6B66] dark:text-[#B5B3AD]">
                 <span className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-emerald-400" />
+                  <Clock className="w-3.5 h-3.5 text-[#E05A33]" />
                   {resumeLesson.duration || '24 mins'}
                 </span>
                 <span>•</span>
-                <span className="text-emerald-400 font-semibold">
+                <span className="text-[#E05A33] font-semibold">
                   {resumeLesson.completionPct}% Course Completed
                 </span>
               </div>
 
-              <div className="w-full max-w-md h-2 rounded-full bg-stone-800 overflow-hidden">
+              <div className="w-full max-w-md h-2 rounded-full bg-[#E8E6E1] dark:bg-[#2D2D2A] overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-[#E05A33] to-[#E86D45] rounded-full transition-all duration-500"
                   style={{ width: `${Math.max(5, resumeLesson.completionPct)}%` }}
                 />
               </div>
@@ -591,7 +583,7 @@ export default async function UnifiedDashboardPage() {
             <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
               <Link
                 href={`/learning/${resumeLesson.courseId}/${resumeLesson.lessonId}`}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-stone-950 font-black text-sm shadow-xl shadow-emerald-500/25 transition-all hover:scale-105"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white font-extrabold text-sm shadow-md shadow-[#E05A33]/20 transition-all hover:scale-105"
               >
                 <Play className="w-4 h-4 fill-current" />
                 <span>Resume Lesson</span>
@@ -602,7 +594,7 @@ export default async function UnifiedDashboardPage() {
         </section>
       ) : null}
 
-      {/* 4. Main Grid: Left Column (Courses / Telemetry) + Right Column (Live, Homework, Community) */}
+      {/* 4. Main Grid: Left Column (Courses / Telemetry) + Right Column */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column (2 Cols) */}
         <div className="lg:col-span-2 space-y-6">
@@ -612,13 +604,13 @@ export default async function UnifiedDashboardPage() {
               <CandidateTelemetryTable />
 
               {/* Active Courses Quick List */}
-              <div className="p-5 rounded-2xl bg-stone-950 border border-stone-800 space-y-4 shadow-xl">
+              <div className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] space-y-4 shadow-xs">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-base font-bold text-white font-display">Active Course Catalog</h3>
-                    <p className="text-xs text-stone-400">Curriculums managed under platform authority.</p>
+                    <h3 className="text-base font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display">Active Course Catalog</h3>
+                    <p className="text-xs text-[#8C8C87]">Curriculums managed under platform authority.</p>
                   </div>
-                  <Link href="/manager/courses" className="text-xs font-mono text-emerald-400 hover:underline">
+                  <Link href="/manager/courses" className="text-xs font-mono text-[#E05A33] hover:underline font-semibold">
                     Course Studio →
                   </Link>
                 </div>
@@ -627,17 +619,17 @@ export default async function UnifiedDashboardPage() {
                   {enrolledCourses.map((item) => (
                     <div
                       key={item.enrollmentId}
-                      className="p-3.5 rounded-xl bg-stone-900/60 border border-stone-800/80 flex items-center justify-between hover:border-emerald-500/40 transition-colors"
+                      className="p-3.5 rounded-xl bg-[#FAFAF7] dark:bg-[#242422] border border-[#E8E6E1] dark:border-[#2D2D2A] flex items-center justify-between hover:border-[#E05A33]/40 transition-colors"
                     >
                       <div>
-                        <div className="font-bold text-xs text-white">{item.course.title}</div>
-                        <div className="text-[11px] text-stone-400 font-mono mt-0.5">
+                        <div className="font-bold text-xs text-[#1A1A19] dark:text-[#F5F3EF]">{item.course.title}</div>
+                        <div className="text-[11px] text-[#8C8C87] font-mono mt-0.5">
                           {item.totalLessons} lessons · {item.accessType} batch
                         </div>
                       </div>
                       <Link
                         href="/manager/courses"
-                        className="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-semibold"
+                        className="px-3 py-1.5 rounded-lg bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33] text-[#1A1A19] dark:text-[#F5F3EF] text-xs font-semibold shadow-xs"
                       >
                         Edit Modules
                       </Link>
@@ -651,32 +643,32 @@ export default async function UnifiedDashboardPage() {
               {/* Enrolled Courses Section for Students & Instructors */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-white font-display">
+                  <h2 className="text-xl font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display">
                     {isInstructor ? 'Assigned Teaching Cohorts' : 'Enrolled Courses'}
                   </h2>
                 </div>
-                <Link href="/courses" className="text-xs text-emerald-400 hover:underline font-mono">
+                <Link href="/courses" className="text-xs text-[#E05A33] hover:underline font-mono font-semibold">
                   Browse Catalog →
                 </Link>
               </div>
 
               <div className="space-y-4">
                 {enrolledCourses.map((item) => (
-                  <div
+                  <CardTilt
                     key={item.enrollmentId}
-                    className="p-5 rounded-2xl bg-stone-950 border border-stone-800 hover:border-emerald-500/40 hover:-translate-y-0.5 transition-all duration-300 space-y-4 group shadow-xl"
+                    className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/40 transition-all duration-300 space-y-4 group shadow-xs"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-mono text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] text-[#E05A33] font-mono text-[10px] font-bold">
                             {item.accessType.replaceAll('_', ' ')}
                           </span>
-                          <span className="text-[11px] font-mono text-stone-500">
+                          <span className="text-[11px] font-mono text-[#8C8C87]">
                             {item.completedLessons} of {item.totalLessons} lessons completed
                           </span>
                         </div>
-                        <h3 className="text-lg font-bold text-white font-display mt-1.5 group-hover:text-emerald-400 transition-colors">
+                        <h3 className="text-lg font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display mt-1.5 group-hover:text-[#E05A33] transition-colors">
                           {item.course.title}
                         </h3>
                       </div>
@@ -685,7 +677,7 @@ export default async function UnifiedDashboardPage() {
                         {item.nextLesson && (
                           <Link
                             href={`/learning/${item.course.id}/${item.nextLesson.id}`}
-                            className="px-4 py-2 rounded-xl bg-stone-900 hover:bg-emerald-500 hover:text-stone-950 border border-stone-700 text-white font-bold text-xs transition-all flex items-center gap-1.5 shadow-sm"
+                            className="px-4 py-2 rounded-xl bg-[#F5F3EF] dark:bg-[#242422] hover:bg-[#E05A33] hover:text-white border border-[#E8E6E1] dark:border-[#2D2D2A] text-[#1A1A19] dark:text-[#F5F3EF] font-bold text-xs transition-all flex items-center gap-1.5 shadow-xs"
                           >
                             <Play className="w-3.5 h-3.5 fill-current" />
                             <span>Continue</span>
@@ -695,46 +687,46 @@ export default async function UnifiedDashboardPage() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-xs font-mono text-stone-400">
+                      <div className="flex justify-between text-xs font-mono text-[#8C8C87]">
                         <span>Curriculum Progress</span>
-                        <span className="text-emerald-400 font-bold">{item.progressPct}%</span>
+                        <span className="text-[#E05A33] font-bold">{item.progressPct}%</span>
                       </div>
-                      <div className="h-2 rounded-full bg-stone-900 overflow-hidden">
+                      <div className="h-2 rounded-full bg-[#E8E6E1] dark:bg-[#2D2D2A] overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500"
+                          className="h-full bg-gradient-to-r from-[#E05A33] to-[#E86D45] rounded-full transition-all duration-500"
                           style={{ width: `${item.progressPct}%` }}
                         />
                       </div>
                     </div>
 
                     {item.nextLesson && (
-                      <div className="p-3 rounded-xl bg-stone-900/60 border border-stone-800/80 flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-2 text-stone-300">
-                          <span className="text-stone-500 font-mono">Next up:</span>
-                          <span className="font-semibold text-white">{item.nextLesson.title}</span>
+                      <div className="p-3 rounded-xl bg-[#FAFAF7] dark:bg-[#242422] border border-[#E8E6E1] dark:border-[#2D2D2A] flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-2 text-[#4A4A46] dark:text-[#B5B3AD]">
+                          <span className="text-[#8C8C87] font-mono">Next up:</span>
+                          <span className="font-semibold text-[#1A1A19] dark:text-[#F5F3EF]">{item.nextLesson.title}</span>
                         </div>
-                        <span className="text-stone-500 font-mono">{item.nextLesson.duration || 'Lesson'}</span>
+                        <span className="text-[#8C8C87] font-mono">{item.nextLesson.duration || 'Lesson'}</span>
                       </div>
                     )}
-                  </div>
+                  </CardTilt>
                 ))}
               </div>
             </>
           )}
         </div>
 
-        {/* Right Column (1 Col): Live Classes, Homework, Community */}
+        {/* Right Column (1 Col) */}
         <div className="space-y-6">
           {/* Upcoming Live Classes Card */}
-          <div className="p-5 rounded-2xl bg-stone-950 border border-stone-800 space-y-4 shadow-xl">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-red-950/60 text-red-400">
+                <div className="p-1.5 rounded-lg bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33]">
                   <Video className="w-4 h-4" />
                 </div>
-                <h3 className="font-bold text-white text-sm font-display">Live Masterclasses</h3>
+                <h3 className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm font-display">Live Masterclasses</h3>
               </div>
-              <Link href="/live" className="text-[11px] font-mono text-emerald-400 hover:underline">
+              <Link href="/live" className="text-[11px] font-mono text-[#E05A33] hover:underline font-semibold">
                 View All →
               </Link>
             </div>
@@ -744,19 +736,19 @@ export default async function UnifiedDashboardPage() {
                 liveEvents.map((evt: any) => (
                   <div
                     key={evt.id}
-                    className="p-3 rounded-xl bg-stone-900/80 border border-stone-800 space-y-2"
+                    className="p-3 rounded-xl bg-[#FAFAF7] dark:bg-[#242422] border border-[#E8E6E1] dark:border-[#2D2D2A] space-y-2"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-emerald-400 font-semibold uppercase">
+                      <span className="text-[10px] font-mono text-[#E05A33] font-semibold uppercase">
                         {evt.course.title}
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-red-950 text-red-400 text-[9px] font-mono font-bold animate-pulse">
+                      <span className="px-1.5 py-0.5 rounded bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] text-[9px] font-mono font-bold animate-pulse">
                         LIVE SOON
                       </span>
                     </div>
-                    <div className="font-semibold text-xs text-white">{evt.title}</div>
+                    <div className="font-semibold text-xs text-[#1A1A19] dark:text-[#F5F3EF]">{evt.title}</div>
                     <div className="flex items-center justify-between pt-1">
-                      <span className="text-[10px] font-mono text-stone-400">
+                      <span className="text-[10px] font-mono text-[#8C8C87]">
                         {new Date(evt.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                       {evt.meetLink ? (
@@ -764,21 +756,21 @@ export default async function UnifiedDashboardPage() {
                           href={evt.meetLink}
                           target="_blank"
                           rel="noreferrer"
-                          className="px-2.5 py-1 rounded-md bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold text-[11px] transition-colors"
+                          className="px-2.5 py-1 rounded-md bg-[#E05A33] hover:bg-[#C94A26] text-white font-bold text-[11px] transition-colors"
                         >
                           Join Meet
                         </a>
                       ) : (
-                        <span className="text-[10px] font-mono text-stone-500">Scheduled</span>
+                        <span className="text-[10px] font-mono text-[#8C8C87]">Scheduled</span>
                       )}
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="p-4 rounded-xl bg-stone-900/40 border border-stone-800 text-center text-xs text-stone-400 space-y-2">
-                  <Calendar className="w-5 h-5 mx-auto text-stone-500" />
+                <div className="p-4 rounded-xl bg-[#FAFAF7] dark:bg-[#242422] border border-[#E8E6E1] dark:border-[#2D2D2A] text-center text-xs text-[#8C8C87] space-y-2">
+                  <Calendar className="w-5 h-5 mx-auto text-[#8C8C87]" />
                   <p>Weekly Problem Sittings schedule every Tuesday & Thursday at 7:00 PM.</p>
-                  <Link href="/live" className="text-emerald-400 font-semibold text-xs block">
+                  <Link href="/live" className="text-[#E05A33] font-semibold text-xs block">
                     Check Schedule →
                   </Link>
                 </div>
@@ -787,31 +779,31 @@ export default async function UnifiedDashboardPage() {
           </div>
 
           {/* Pending Homework Desk */}
-          <div className="p-5 rounded-2xl bg-stone-950 border border-stone-800 space-y-4 shadow-xl">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-amber-950/60 text-amber-400">
+                <div className="p-1.5 rounded-lg bg-[#FDFAF2] dark:bg-[#381D0C] text-[#D4952B]">
                   <FileCheck className="w-4 h-4" />
                 </div>
-                <h3 className="font-bold text-white text-sm font-display">Homework Desk</h3>
+                <h3 className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm font-display">Homework Desk</h3>
               </div>
-              <Link href="/homework" className="text-[11px] font-mono text-amber-400 hover:underline">
+              <Link href="/homework" className="text-[11px] font-mono text-[#D4952B] hover:underline font-semibold">
                 Submit →
               </Link>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-stone-900/60 border border-stone-800 space-y-2">
+            <div className="p-3.5 rounded-xl bg-[#FAFAF7] dark:bg-[#242422] border border-[#E8E6E1] dark:border-[#2D2D2A] space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono text-amber-400 font-semibold">MATH 2 · WEEK 4</span>
-                <span className="text-[10px] font-mono text-stone-400">Due Sunday 11:59 PM</span>
+                <span className="text-[10px] font-mono text-[#D4952B] font-semibold">MATH 2 · WEEK 4</span>
+                <span className="text-[10px] font-mono text-[#8C8C87]">Due Sunday 11:59 PM</span>
               </div>
-              <div className="text-xs font-semibold text-white">Calculus Taylor Series Problem Set</div>
-              <p className="text-[11px] text-stone-400">
+              <div className="text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF]">Calculus Taylor Series Problem Set</div>
+              <p className="text-[11px] text-[#6B6B66] dark:text-[#B5B3AD]">
                 Submit PDF or multi-file solutions for TA review and grade feedback.
               </p>
               <Link
                 href="/homework"
-                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-400 hover:underline pt-1 font-mono"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-[#D4952B] hover:underline pt-1 font-mono"
               >
                 <span>Open Submission Form</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -820,30 +812,30 @@ export default async function UnifiedDashboardPage() {
           </div>
 
           {/* Course Community Chat Pulse */}
-          <div className="p-5 rounded-2xl bg-stone-950 border border-stone-800 space-y-4 shadow-xl">
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-teal-950/60 text-teal-400">
+                <div className="p-1.5 rounded-lg bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33]">
                   <MessageSquare className="w-4 h-4" />
                 </div>
-                <h3 className="font-bold text-white text-sm font-display">Course Community</h3>
+                <h3 className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm font-display">Course Community</h3>
               </div>
-              <Link href="/community" className="text-[11px] font-mono text-teal-400 hover:underline">
+              <Link href="/community" className="text-[11px] font-mono text-[#E05A33] hover:underline font-semibold">
                 Open Chat →
               </Link>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-stone-900/60 border border-stone-800 space-y-2 text-xs">
-              <div className="flex items-center justify-between text-[10px] font-mono text-stone-400">
+            <div className="p-3.5 rounded-xl bg-[#FAFAF7] dark:bg-[#242422] border border-[#E8E6E1] dark:border-[#2D2D2A] space-y-2 text-xs">
+              <div className="flex items-center justify-between text-[10px] font-mono text-[#8C8C87]">
                 <span>#general-doubt-clearing</span>
-                <span className="text-emerald-400">● 14 peers active</span>
+                <span className="text-[#2D7A4F]">● 14 peers active</span>
               </div>
-              <p className="text-stone-300">
-                <strong className="text-white">Aryan (TA):</strong> "Uploaded the solution breakdown for Question 7 in the practice papers desk!"
+              <p className="text-[#4A4A46] dark:text-[#B5B3AD]">
+                <strong className="text-[#1A1A19] dark:text-[#F5F3EF]">Aryan (TA):</strong> "Uploaded the solution breakdown for Question 7 in the practice papers desk!"
               </p>
               <Link
                 href="/community"
-                className="w-full mt-2 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-center text-xs font-bold block transition-colors"
+                className="w-full mt-2 py-2 rounded-xl bg-[#F5F3EF] dark:bg-[#242422] hover:bg-[#EDEBE5] text-[#1A1A19] dark:text-[#F5F3EF] text-center text-xs font-bold block transition-colors border border-[#E8E6E1] dark:border-[#2D2D2A]"
               >
                 Join Live Discussion
               </Link>
@@ -852,9 +844,9 @@ export default async function UnifiedDashboardPage() {
         </div>
       </div>
 
-      {/* 5. Quick Utilities Dock (Adapted strictly by role clearance) */}
-      <section className="pt-6 border-t border-stone-800">
-        <h3 className="text-xs font-mono uppercase tracking-wider text-stone-400 font-semibold mb-4">
+      {/* 5. Quick Utilities Dock */}
+      <section className="pt-6 border-t border-[#E8E6E1] dark:border-[#2D2D2A]">
+        <h3 className="text-xs font-mono uppercase tracking-wider text-[#8C8C87] font-semibold mb-4">
           {isManagerRole ? 'MANAGERIAL STUDIO & TOOLS' : 'ACADEMIC TOOLKIT & PLAYGROUNDS'}
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -862,76 +854,76 @@ export default async function UnifiedDashboardPage() {
             <>
               <Link
                 href="/manager/courses"
-                className="p-4 rounded-xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 hover:-translate-y-0.5 transition-all duration-300 group shadow-xs"
               >
-                <BookOpen className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
-                <div className="font-bold text-white text-sm mt-2">Course Studio</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Edit modules & video sources</div>
+                <BookOpen className="w-5 h-5 text-[#E05A33] group-hover:scale-110 transition-transform" />
+                <div className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm mt-2">Course Studio</div>
+                <div className="text-[11px] text-[#8C8C87] mt-0.5">Edit modules & video sources</div>
               </Link>
 
               <Link
                 href="/manager/exams"
-                className="p-4 rounded-xl bg-stone-950 border border-stone-800 hover:border-amber-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 hover:-translate-y-0.5 transition-all duration-300 group shadow-xs"
               >
-                <ShieldCheck className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
-                <div className="font-bold text-white text-sm mt-2">Exam Operations</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Proctoring rooms & CSV export</div>
+                <ShieldCheck className="w-5 h-5 text-[#D4952B] group-hover:scale-110 transition-transform" />
+                <div className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm mt-2">Exam Operations</div>
+                <div className="text-[11px] text-[#8C8C87] mt-0.5">Proctoring rooms & CSV export</div>
               </Link>
 
               <Link
                 href="/manager/users"
-                className="p-4 rounded-xl bg-stone-950 border border-stone-800 hover:border-blue-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 hover:-translate-y-0.5 transition-all duration-300 group shadow-xs"
               >
-                <Users className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
-                <div className="font-bold text-white text-sm mt-2">User Directory</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Staff roles & security codes</div>
+                <Users className="w-5 h-5 text-[#2D7A4F] group-hover:scale-110 transition-transform" />
+                <div className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm mt-2">User Directory</div>
+                <div className="text-[11px] text-[#8C8C87] mt-0.5">Staff roles & security codes</div>
               </Link>
 
               <Link
                 href="/ide/1"
-                className="p-4 rounded-xl bg-stone-950 border border-stone-800 hover:border-purple-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 hover:-translate-y-0.5 transition-all duration-300 group shadow-xs"
               >
-                <Code2 className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform" />
-                <div className="font-bold text-white text-sm mt-2">Piston Sandbox</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Python & DSA runner</div>
+                <Code2 className="w-5 h-5 text-[#E05A33] group-hover:scale-110 transition-transform" />
+                <div className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm mt-2">Piston Sandbox</div>
+                <div className="text-[11px] text-[#8C8C87] mt-0.5">Python & DSA runner</div>
               </Link>
             </>
           ) : (
             <>
               <Link
                 href="/tools"
-                className="p-4 rounded-xl bg-stone-950 border border-stone-800 hover:border-emerald-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 hover:-translate-y-0.5 transition-all duration-300 group shadow-xs"
               >
-                <Calculator className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
-                <div className="font-bold text-white text-sm mt-2">Grade Predictor</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Reverse target calculator</div>
+                <Calculator className="w-5 h-5 text-[#E05A33] group-hover:scale-110 transition-transform" />
+                <div className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm mt-2">Grade Predictor</div>
+                <div className="text-[11px] text-[#8C8C87] mt-0.5">Reverse target calculator</div>
               </Link>
 
               <Link
                 href="/exams"
-                className="p-4 rounded-xl bg-stone-950 border border-stone-800 hover:border-amber-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 hover:-translate-y-0.5 transition-all duration-300 group shadow-xs"
               >
-                <ShieldCheck className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform" />
-                <div className="font-bold text-white text-sm mt-2">Proctored Mocks</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Anti-cheat exam rooms</div>
+                <ShieldCheck className="w-5 h-5 text-[#D4952B] group-hover:scale-110 transition-transform" />
+                <div className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm mt-2">Proctored Mocks</div>
+                <div className="text-[11px] text-[#8C8C87] mt-0.5">Anti-cheat exam rooms</div>
               </Link>
 
               <Link
                 href="/ide/1"
-                className="p-4 rounded-xl bg-stone-950 border border-stone-800 hover:border-blue-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 hover:-translate-y-0.5 transition-all duration-300 group shadow-xs"
               >
-                <Code2 className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
-                <div className="font-bold text-white text-sm mt-2">Piston Sandbox</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Python & DSA compiler</div>
+                <Code2 className="w-5 h-5 text-[#E05A33] group-hover:scale-110 transition-transform" />
+                <div className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm mt-2">Piston Sandbox</div>
+                <div className="text-[11px] text-[#8C8C87] mt-0.5">Python & DSA compiler</div>
               </Link>
 
               <Link
                 href="/refer"
-                className="p-4 rounded-xl bg-stone-950 border border-stone-800 hover:border-purple-500/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group"
+                className="p-4 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 hover:-translate-y-0.5 transition-all duration-300 group shadow-xs"
               >
-                <Coins className="w-5 h-5 text-purple-400 group-hover:scale-110 transition-transform" />
-                <div className="font-bold text-white text-sm mt-2">5% Referral Hub</div>
-                <div className="text-[11px] text-stone-400 mt-0.5">Earn wallet coins</div>
+                <Coins className="w-5 h-5 text-[#D4952B] group-hover:scale-110 transition-transform" />
+                <div className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm mt-2">5% Referral Hub</div>
+                <div className="text-[11px] text-[#8C8C87] mt-0.5">Earn wallet coins</div>
               </Link>
             </>
           )}
