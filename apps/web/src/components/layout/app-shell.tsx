@@ -43,10 +43,10 @@ export function AppShell({
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   return (
-    <div className={`min-h-screen flex bg-[#FAFAF7] dark:bg-[#111110] text-[#1A1A19] dark:text-[#F5F3EF] font-sans selection:bg-[#FDF0EB] selection:text-[#E05A33] ${className}`}>
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:flex shrink-0">
-        <Sidebar userRole={user?.role} userName={user?.name} className="sticky top-0 h-screen" />
+    <div className={`h-screen w-screen flex overflow-hidden bg-[#FAFAF7] dark:bg-[#111110] text-[#1A1A19] dark:text-[#F5F3EF] font-sans selection:bg-[#FDF0EB] selection:text-[#E05A33] ${className}`}>
+      {/* Desktop Fixed Sidebar */}
+      <div className="hidden lg:flex shrink-0 h-full">
+        <Sidebar userRole={user?.role} userName={user?.name} className="h-full" />
       </div>
 
       {/* Mobile Drawer Overlay & Sidebar */}
@@ -71,8 +71,8 @@ export function AppShell({
         </div>
       )}
 
-      {/* Main Area (Header + Content + Mobile Nav) */}
-      <div className="flex-1 flex flex-col min-w-0 pb-20 lg:pb-0">
+      {/* Main Area (Header + Scrollable Content + Mobile Nav) */}
+      <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden pb-16 lg:pb-0">
         <Header
           breadcrumbs={breadcrumbs}
           user={user}

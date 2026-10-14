@@ -44,16 +44,16 @@ export function CommunityChannelLayout({
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-stone-800">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#E8E6E1] dark:border-[#2D2D2A]">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-800/80 mb-2 font-mono">
-            <Users className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#FDF0EB] text-[#E05A33] border border-[#F5B8A3] dark:bg-[#3A150C] dark:text-[#EE8E6E] dark:border-[#7D2F1A] mb-2 font-mono">
+            <Users className="w-3.5 h-3.5 text-[#E05A33]" />
             <span>Peer Learning Network</span>
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight font-display">
+          <h1 className="text-2xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] tracking-tight font-display">
             Course Communities
           </h1>
-          <p className="text-xs text-stone-400 mt-1">
+          <p className="text-xs text-[#6B6B66] dark:text-[#9E9D97] mt-1">
             Real-time doubt resolution, coding discussions, and collaborative study groups.
           </p>
         </div>
@@ -63,17 +63,17 @@ export function CommunityChannelLayout({
           <button
             type="button"
             onClick={() => setMobileSelectOpen(!mobileSelectOpen)}
-            className="w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-stone-900 border border-stone-800 text-xs font-bold text-white"
+            className="w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] text-xs font-bold text-[#1A1A19] dark:text-[#F5F3EF]"
           >
             <div className="flex items-center gap-2 truncate">
-              <Hash className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <Hash className="w-3.5 h-3.5 text-[#E05A33] shrink-0" />
               <span className="truncate">{activeCourse.title}</span>
             </div>
-            <ChevronDown className="w-4 h-4 text-stone-400 shrink-0" />
+            <ChevronDown className="w-4 h-4 text-[#8C8C87] shrink-0" />
           </button>
 
           {mobileSelectOpen && (
-            <div className="absolute top-full left-0 right-0 mt-2 p-1.5 rounded-xl bg-stone-900 border border-stone-800 shadow-2xl z-30 space-y-1">
+            <div className="absolute top-full left-0 right-0 mt-2 p-1.5 rounded-xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] shadow-2xl z-30 space-y-1">
               {courses.map((course) => {
                 const isSelected = course.id === activeCourse.id;
                 return (
@@ -86,12 +86,12 @@ export function CommunityChannelLayout({
                     }}
                     className={`w-full text-left p-2.5 rounded-lg text-xs font-medium flex items-center justify-between transition-colors ${
                       isSelected
-                        ? 'bg-emerald-950/70 text-emerald-300 font-bold border border-emerald-800/80'
-                        : 'text-stone-300 hover:bg-stone-800 hover:text-white'
+                        ? 'bg-[#FDF0EB] text-[#E05A33] font-bold border border-[#F5B8A3] dark:bg-[#3A150C] dark:text-[#EE8E6E]'
+                        : 'text-[#6B6B66] dark:text-[#9E9D97] hover:bg-[#FAFAF7] dark:hover:bg-[#252522] hover:text-[#1A1A19] dark:hover:text-white'
                     }`}
                   >
                     <span className="truncate">{course.title}</span>
-                    {isSelected && <span className="w-2 h-2 rounded-full bg-emerald-400" />}
+                    {isSelected && <span className="w-2 h-2 rounded-full bg-[#E05A33]" />}
                   </button>
                 );
               })}
@@ -104,12 +104,12 @@ export function CommunityChannelLayout({
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
         {/* Left Desktop Channel Sidebar (4 cols) */}
         <aside className="hidden md:block md:col-span-4 lg:col-span-3 space-y-3">
-          <div className="p-3 rounded-2xl bg-stone-950 border border-stone-800 shadow-xl space-y-2">
-            <div className="px-3 py-2 flex items-center justify-between border-b border-stone-900">
-              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-stone-400">
+          <div className="p-3 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] shadow-xs space-y-2">
+            <div className="px-3 py-2 flex items-center justify-between border-b border-[#E8E6E1] dark:border-[#2D2D2A]">
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#8C8C87]">
                 Course Channels ({courses.length})
               </span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-[#E05A33] animate-pulse" />
             </div>
 
             <div className="space-y-1.5">
@@ -121,16 +121,16 @@ export function CommunityChannelLayout({
                     href={`/community?courseId=${course.id}`}
                     className={`group block p-3 rounded-xl transition-all border ${
                       isSelected
-                        ? 'bg-emerald-950/60 border-emerald-500/60 text-white shadow-sm'
-                        : 'bg-stone-900/40 border-stone-800/60 text-stone-300 hover:bg-stone-900 hover:border-stone-700 hover:text-white'
+                        ? 'bg-[#FDF0EB] border-[#F5B8A3] text-[#E05A33] dark:bg-[#3A150C] dark:border-[#7D2F1A] dark:text-[#EE8E6E] shadow-xs'
+                        : 'bg-[#FAFAF7] dark:bg-[#161615] border-[#E8E6E1] dark:border-[#2D2D2A] text-[#6B6B66] dark:text-[#9E9D97] hover:bg-white dark:hover:bg-[#20201D] hover:border-[#E05A33]/40 hover:text-[#1A1A19] dark:hover:text-white'
                     }`}
                   >
                     <div className="flex items-start gap-2.5">
                       <div
                         className={`mt-0.5 flex items-center justify-center w-6 h-6 rounded-lg text-xs font-mono font-bold shrink-0 ${
                           isSelected
-                            ? 'bg-emerald-500 text-stone-950'
-                            : 'bg-stone-800 text-stone-400 group-hover:text-stone-200'
+                            ? 'bg-[#E05A33] text-white'
+                            : 'bg-[#E8E6E1] dark:bg-[#2D2D2A] text-[#6B6B66] dark:text-[#9E9D97]'
                         }`}
                       >
                         #
@@ -140,11 +140,11 @@ export function CommunityChannelLayout({
                           {course.title}
                         </div>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className="text-[10px] font-mono text-stone-400">
+                          <span className="text-[10px] font-mono text-[#8C8C87]">
                             {course.subject || 'Academic Cohort'}
                           </span>
                           {isSelected && (
-                            <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                            <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-white dark:bg-[#1C1C1A] text-[#E05A33] border border-[#F5B8A3] dark:border-[#7D2F1A]">
                               Active
                             </span>
                           )}

@@ -67,49 +67,8 @@ html.dark, [data-theme="dark"] {
 }
 
 html.dark body {
-  background-color: #090d0b;
+  background-color: #111110;
   color: #F5F3EF;
-}
-
-/* ── Dark theme contrast protections ──────────────── */
-html.dark .text-neutral-900,
-html.dark .text-neutral-800,
-html.dark .text-[#1A1A19],
-html.dark .text-[#202824],
-html.dark .text-[#1e2722] {
-  color: #F5F3EF !important;
-}
-
-html.dark .text-neutral-700,
-html.dark .text-neutral-600,
-html.dark .text-[#4A4A46],
-html.dark .text-[#6B6B66] {
-  color: #D4D2CC !important;
-}
-
-html.dark .text-neutral-500,
-html.dark .text-neutral-400,
-html.dark .text-[#8C8C87] {
-  color: #9E9D97 !important;
-}
-
-html.dark .bg-white {
-  background-color: #121714 !important;
-}
-
-html.dark .bg-neutral-50 {
-  background-color: #161c18 !important;
-}
-
-html.dark .bg-neutral-100 {
-  background-color: #1a221d !important;
-}
-
-html.dark .border-neutral-200,
-html.dark .border-neutral-100,
-html.dark .border-[#E8E6E1],
-html.dark .border-[#dedfd7] {
-  border-color: #27272a !important;
 }
 
 /* ── Auth ────────────────────────────────────────────── */

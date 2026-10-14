@@ -340,28 +340,8 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9f5] text-[#1e2722]">
-      {/* Top Navbar */}
-      <header className="border-b border-[#e2e4dc] bg-white sticky top-0 z-30">
-        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/courses" className="flex items-center gap-2">
-            <span className="w-7 h-7 rounded-lg bg-[#29493e] text-[#b8e06a] flex items-center justify-center font-bold text-base font-serif">
-              n
-            </span>
-            <span className="font-extrabold text-lg tracking-tight text-[#202824]">
-              northstar<span className="text-[#6e923e]">.</span>
-            </span>
-          </Link>
-          <div className="flex items-center gap-2 text-xs font-semibold text-neutral-500">
-            <Lock className="w-3.5 h-3.5 text-emerald-700" />
-            <span>256-Bit SSL Encrypted Checkout</span>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Checkout View */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-6">
+    <div className="max-w-4xl mx-auto space-y-6 pt-2">
+      <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#202824] tracking-tight font-display">
             Complete Your Enrollment
           </h1>
@@ -637,7 +617,6 @@ export default function CheckoutPage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
-  );
-}
+      </div>
+    );
+  }

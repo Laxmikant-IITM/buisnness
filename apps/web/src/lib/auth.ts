@@ -506,10 +506,9 @@ export async function hasCourseStaffAccess(userId: string, courseId: string): Pr
   return Boolean(assignment);
 }
 
-/** Admins can manage only assigned courses; instructors remain read-only. */
+/** Platform managers and admins can manage courses; scoped instructors require assignment. */
 export async function canManageCourse(userId: string, role: string, courseId: string): Promise<boolean> {
-  if (isPlatformManager(role)) return true;
-  if (role !== 'ADMIN') return false;
+  if (isPlatformManager(role) || role === 'ADMIN') return true;
   return hasCourseStaffAccess(userId, courseId);
 }
 

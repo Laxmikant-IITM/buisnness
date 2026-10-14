@@ -255,72 +255,35 @@ export default function StudentProfilePage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-[#f6f5ef] p-8 flex items-center justify-center">
+      <div className="py-20 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <RefreshCw className="w-6 h-6 animate-spin text-brand-700" />
-          <p className="text-xs font-semibold text-neutral-600">Loading student profile…</p>
+          <RefreshCw className="w-6 h-6 animate-spin text-[#E05A33]" />
+          <p className="text-xs font-semibold text-[#8C8C87]">Loading profile...</p>
         </div>
-      </main>
+      </div>
     );
   }
 
   if (error || !user) {
     return (
-      <main className="min-h-screen bg-[#f6f5ef] p-8 flex items-center justify-center">
-        <div className="max-w-md w-full bg-white p-6 rounded-xl border border-neutral-300 text-center space-y-4">
-          <AlertTriangle className="w-8 h-8 text-red-500 mx-auto" />
-          <h2 className="text-base font-bold text-neutral-900">Profile Unavailable</h2>
-          <p className="text-xs text-neutral-600">{error || 'Please sign in to access your profile.'}</p>
+      <div className="py-20 flex items-center justify-center">
+        <div className="max-w-md w-full bg-white dark:bg-[#1C1C1A] p-6 rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] text-center space-y-4 shadow-sm">
+          <AlertTriangle className="w-8 h-8 text-amber-500 mx-auto" />
+          <h2 className="text-base font-bold text-[#1A1A19] dark:text-[#F5F3EF]">Profile Unavailable</h2>
+          <p className="text-xs text-[#6B6B66] dark:text-[#9E9D97]">{error || 'Please sign in to access your profile.'}</p>
           <Link
             href="/sign-in"
-            className="inline-block py-2 px-4 bg-brand-800 text-white rounded-lg text-xs font-semibold"
+            className="inline-block py-2 px-4 bg-[#E05A33] hover:bg-[#C94A26] text-white rounded-lg text-xs font-semibold transition-colors"
           >
             Sign in
           </Link>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#f6f5ef] pb-16 font-sans text-neutral-900">
-      {/* Top Learner Header */}
-      <header className="border-b border-[#dedfd7] bg-[#fffefa]/80 backdrop-blur-md sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link className="brand flex items-center gap-1.5" href="/">
-              <span className="brand-icon">N</span>
-              <span className="font-extrabold text-base tracking-tight font-display">
-                northstar<span className="text-brand-700">.</span>
-              </span>
-            </Link>
-            <nav className="hidden sm:flex items-center gap-4 text-xs font-semibold text-neutral-600">
-              <Link href="/learning" className="hover:text-neutral-900 transition-colors">
-                My Learning
-              </Link>
-              <Link href="/tools" className="hover:text-neutral-900 transition-colors">
-                Academic Tools
-              </Link>
-              <Link href="/profile" className="text-neutral-900 font-bold border-b-2 border-brand-700 pb-0.5">
-                Profile
-              </Link>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleSignOut}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-300 text-xs font-semibold text-neutral-700 hover:bg-neutral-100 transition-colors"
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span>Sign out</span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Container */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 space-y-6">
+    <div className="space-y-6 max-w-5xl mx-auto">
         {/* Pending Deletion Alert Banner */}
         {pendingDeletion && (
           <div className="p-4 bg-amber-50 border border-amber-300 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-900 text-xs">
@@ -346,7 +309,7 @@ export default function StudentProfilePage() {
         )}
 
         {/* Profile Card Header */}
-        <section className="bg-white rounded-2xl border border-[#dedfd7] p-6 sm:p-8 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <section className="bg-white dark:bg-[#1C1C1A] rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-6 sm:p-8 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             <Avatar
               name={user.name}
@@ -412,7 +375,7 @@ export default function StudentProfilePage() {
         {/* Gamification / Stats Grid */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* XP & Level */}
-          <div className="bg-white rounded-xl border border-[#dedfd7] p-5 space-y-2">
+          <div className="bg-white dark:bg-[#1C1C1A] rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-5 space-y-2">
             <div className="flex justify-between items-center text-xs text-neutral-500 font-semibold">
               <span>Experience Points</span>
               <Sparkles className="w-4 h-4 text-amber-500" />
@@ -430,7 +393,7 @@ export default function StudentProfilePage() {
           </div>
 
           {/* Daily Streak */}
-          <div className="bg-white rounded-xl border border-[#dedfd7] p-5 space-y-2">
+          <div className="bg-white dark:bg-[#1C1C1A] rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-5 space-y-2">
             <div className="flex justify-between items-center text-xs text-neutral-500 font-semibold">
               <span>Learning Streak</span>
               <Flame className="w-4 h-4 text-orange-500" />
@@ -443,7 +406,7 @@ export default function StudentProfilePage() {
           </div>
 
           {/* Wallet Coins */}
-          <div className="bg-white rounded-xl border border-[#dedfd7] p-5 space-y-2">
+          <div className="bg-white dark:bg-[#1C1C1A] rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-5 space-y-2">
             <div className="flex justify-between items-center text-xs text-neutral-500 font-semibold">
               <span>Learning Coins</span>
               <Coins className="w-4 h-4 text-emerald-600" />
@@ -458,7 +421,7 @@ export default function StudentProfilePage() {
           </div>
 
           {/* Referral Stats */}
-          <div className="bg-white rounded-xl border border-[#dedfd7] p-5 space-y-2">
+          <div className="bg-white dark:bg-[#1C1C1A] rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-5 space-y-2">
             <div className="flex justify-between items-center text-xs text-neutral-500 font-semibold">
               <span>Peer Referrals</span>
               <Award className="w-4 h-4 text-indigo-500" />
@@ -474,7 +437,7 @@ export default function StudentProfilePage() {
         {/* Academic Identity & Badges Grid */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* IITM Credentials Card */}
-          <div className="bg-white rounded-2xl border border-[#dedfd7] p-6 space-y-4">
+          <div className="bg-white dark:bg-[#1C1C1A] rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-6 space-y-4">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <GraduationCap className="w-5 h-5 text-brand-700" />
@@ -527,7 +490,7 @@ export default function StudentProfilePage() {
           </div>
 
           {/* Badges & Achievements Card */}
-          <div className="bg-white rounded-2xl border border-[#dedfd7] p-6 space-y-4">
+          <div className="bg-white dark:bg-[#1C1C1A] rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-6 space-y-4">
             <div className="flex items-center gap-2">
               <Award className="w-5 h-5 text-amber-500" />
               <h2 className="text-base font-bold font-display text-neutral-900">
@@ -562,7 +525,7 @@ export default function StudentProfilePage() {
         </section>
 
         {/* Activity Audit Trail */}
-        <section className="bg-white rounded-2xl border border-[#dedfd7] p-6 space-y-4">
+        <section className="bg-white dark:bg-[#1C1C1A] rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-6 space-y-4">
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
             <div className="flex items-center gap-2">
               <History className="w-5 h-5 text-neutral-600" />
@@ -616,7 +579,7 @@ export default function StudentProfilePage() {
         </section>
 
         {/* Danger Zone: Account Deletion */}
-        <section className="bg-white rounded-2xl border border-red-200 p-6 space-y-3">
+        <section className="bg-white dark:bg-[#1C1C1A] rounded-2xl border border-red-200 p-6 space-y-3">
           <div className="flex items-center gap-2 text-red-600">
             <Trash2 className="w-5 h-5" />
             <h2 className="text-base font-bold font-display">Account Deletion & Data Privacy</h2>
@@ -648,7 +611,6 @@ export default function StudentProfilePage() {
             )}
           </div>
         </section>
-      </main>
 
       {/* Unskippable Profile Setup Modal if profile is incomplete */}
       <ProfileSetupModal

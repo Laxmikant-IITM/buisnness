@@ -330,9 +330,9 @@ export function CommunityChat({
   const getRoleBadge = (role: string) => {
     if (role === 'INSTRUCTOR' || role === 'ADMIN' || role === 'MANAGER' || role === 'SUPER_MANAGER') {
       return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono">
-          <Sparkles className="w-2.5 h-2.5 text-emerald-400" />
-          Instructor
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#FDF0EB] text-[#E05A33] border border-[#F5B8A3] dark:bg-[#3A150C] dark:text-[#EE8E6E] dark:border-[#7D2F1A] font-mono">
+          <Sparkles className="w-2.5 h-2.5 text-[#E05A33]" />
+          Staff Mentor
         </span>
       );
     }
@@ -340,30 +340,30 @@ export function CommunityChat({
   };
 
   return (
-    <div className={`flex flex-col h-[700px] bg-stone-950 rounded-2xl border border-stone-800 shadow-2xl overflow-hidden ${className}`}>
+    <div className={`flex flex-col h-[700px] bg-white dark:bg-[#1C1C1A] rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] shadow-xs overflow-hidden ${className}`}>
       {/* Community Room Header */}
-      <div className="flex items-center justify-between px-6 py-4 bg-stone-900/80 border-b border-stone-800">
+      <div className="flex items-center justify-between px-6 py-4 bg-white dark:bg-[#1C1C1A] border-b border-[#E8E6E1] dark:border-[#2D2D2A]">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-sm">
+          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#FDF0EB] border border-[#F5B8A3] text-[#E05A33] dark:bg-[#3A150C] dark:border-[#7D2F1A] dark:text-[#EE8E6E] font-bold text-sm">
             #
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="font-bold text-sm text-white font-display">{courseTitle} Community</h2>
+              <h2 className="font-bold text-sm text-[#1A1A19] dark:text-[#F5F3EF] font-display">{courseTitle} Community</h2>
               <div
                 className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono border ${
                   connectionStatus === 'connected'
-                    ? 'bg-emerald-950/80 text-emerald-300 border-emerald-800'
+                    ? 'bg-[#FDF0EB] text-[#E05A33] border-[#F5B8A3] dark:bg-[#3A150C] dark:text-[#EE8E6E]'
                     : connectionStatus === 'connecting'
-                    ? 'bg-amber-950/80 text-amber-300 border-amber-800'
-                    : 'bg-rose-950/80 text-rose-300 border-rose-800'
+                    ? 'bg-amber-50 text-amber-800 border-amber-200'
+                    : 'bg-rose-50 text-rose-800 border-rose-200'
                 }`}
               >
-                <Radio className={`w-3 h-3 ${connectionStatus === 'connected' ? 'animate-pulse text-emerald-400' : ''}`} />
+                <Radio className={`w-3 h-3 ${connectionStatus === 'connected' ? 'animate-pulse text-[#E05A33]' : ''}`} />
                 <span className="capitalize">{connectionStatus}</span>
               </div>
             </div>
-            <p className="text-xs text-stone-400 font-body">Ask questions, share code solutions, and engage with mentors</p>
+            <p className="text-xs text-[#8C8C87] font-body">Ask questions, share code solutions, and engage with mentors</p>
           </div>
         </div>
 
@@ -437,17 +437,17 @@ export function CommunityChat({
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto p-6 space-y-4 bg-stone-950"
+        className="flex-1 overflow-y-auto p-6 space-y-4 bg-[#FAFAF7] dark:bg-[#111110]"
       >
         {loading ? (
-          <div className="flex flex-col items-center justify-center h-full text-stone-400 gap-2">
-            <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+          <div className="flex flex-col items-center justify-center h-full text-[#8C8C87] gap-2">
+            <div className="w-6 h-6 border-2 border-[#E05A33] border-t-transparent rounded-full animate-spin" />
             <span className="text-xs font-mono">Loading course discussions...</span>
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center h-full text-center px-4">
-            <AlertCircle className="w-8 h-8 text-rose-400 mb-2" />
-            <p className="text-sm font-semibold text-white">{error}</p>
+            <AlertCircle className="w-8 h-8 text-rose-500 mb-2" />
+            <p className="text-sm font-semibold text-[#1A1A19] dark:text-[#F5F3EF]">{error}</p>
             <Button variant="outline" size="sm" onClick={fetchMessages} className="mt-3 text-xs">
               Retry Connection
             </Button>
@@ -464,7 +464,7 @@ export function CommunityChat({
                 {/* Author Avatar */}
                 <Avatar className="w-8 h-8 shrink-0">
                   <AvatarImage src={msg.user.avatar || undefined} alt={msg.user.name} />
-                  <AvatarFallback className="bg-emerald-950 border border-emerald-800 text-emerald-400 text-xs font-bold">
+                  <AvatarFallback className="bg-[#FDF0EB] border border-[#F5B8A3] text-[#E05A33] dark:bg-[#3A150C] dark:border-[#7D2F1A] dark:text-[#EE8E6E] text-xs font-bold">
                     {msg.user.name.slice(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
@@ -473,12 +473,12 @@ export function CommunityChat({
                 <div className={`max-w-[78%] flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                   {/* Author Name + Role Badge + Timestamp */}
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-semibold text-white">{msg.user.name}</span>
+                    <span className="text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF]">{msg.user.name}</span>
                     {getRoleBadge(msg.user.role)}
-                    <span className="text-[10px] text-stone-500 font-mono">{formatMessageTime(msg.createdAt)}</span>
+                    <span className="text-[10px] text-[#8C8C87] font-mono">{formatMessageTime(msg.createdAt)}</span>
                     {msg.isPinned && (
                       <span title="Pinned announcement">
-                        <Pin className="w-3 h-3 fill-amber-400 text-amber-400" />
+                        <Pin className="w-3 h-3 fill-amber-500 text-amber-500" />
                       </span>
                     )}
                   </div>
@@ -486,11 +486,13 @@ export function CommunityChat({
                   {/* Reply Reference Bubble */}
                   {msg.replyTo && (
                     <div
-                      className={`mb-1 px-3 py-1.5 rounded-lg text-xs border border-stone-800 text-stone-400 ${
-                        isMe ? 'bg-emerald-950/40 border-emerald-900/60' : 'bg-stone-900/60'
+                      className={`mb-1 px-3 py-1.5 rounded-lg text-xs border ${
+                        isMe
+                          ? 'bg-[#FDF0EB] border-[#F5B8A3] text-[#E05A33] dark:bg-[#3A150C] dark:border-[#7D2F1A] dark:text-[#EE8E6E]'
+                          : 'bg-white dark:bg-[#1C1C1A] border-[#E8E6E1] dark:border-[#2D2D2A] text-[#6B6B66] dark:text-[#9E9D97]'
                       }`}
                     >
-                      <span className="font-semibold text-emerald-400 block text-[11px] font-mono">
+                      <span className="font-semibold text-[#E05A33] block text-[11px] font-mono">
                         @{msg.replyTo.user?.name || 'Learner'}
                       </span>
                       <p className="truncate max-w-xs">{msg.replyTo.content}</p>
@@ -499,17 +501,17 @@ export function CommunityChat({
 
                   {/* Main Bubble */}
                   <div
-                    className={`relative px-4 py-2.5 rounded-2xl text-xs leading-relaxed break-words shadow-sm ${
+                    className={`relative px-4 py-2.5 rounded-2xl text-xs leading-relaxed break-words shadow-xs ${
                       isMe
-                        ? 'bg-emerald-600 text-stone-950 font-medium rounded-tr-xs'
-                        : 'bg-stone-900 text-stone-200 border border-stone-800 rounded-tl-xs'
+                        ? 'bg-[#E05A33] text-white font-medium rounded-tr-xs'
+                        : 'bg-white dark:bg-[#1C1C1A] text-[#1A1A19] dark:text-[#F5F3EF] border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-tl-xs'
                     }`}
                   >
                     <p className="whitespace-pre-wrap">{msg.content}</p>
 
                     {/* Image Attachment */}
                     {msg.imageUrl && (
-                      <div className="mt-2 rounded-lg overflow-hidden border border-black/20">
+                      <div className="mt-2 rounded-lg overflow-hidden border border-black/10">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={msg.imageUrl}
@@ -528,7 +530,7 @@ export function CommunityChat({
                         const config = REACTION_CONFIGS[reactionKey] || {
                           label: reactionKey,
                           icon: ThumbsUp,
-                          color: 'text-stone-400',
+                          color: 'text-[#8C8C87]',
                         };
                         const Icon = config.icon;
 
@@ -539,8 +541,8 @@ export function CommunityChat({
                             onClick={() => handleToggleReaction(msg.id, reactionKey)}
                             className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] border font-mono transition-colors ${
                               hasReacted
-                                ? 'bg-emerald-950 text-emerald-300 border-emerald-700 font-bold'
-                                : 'bg-stone-900 text-stone-400 border-stone-800 hover:bg-stone-850'
+                                ? 'bg-[#FDF0EB] text-[#E05A33] border-[#F5B8A3] dark:bg-[#3A150C] dark:text-[#EE8E6E] font-bold'
+                                : 'bg-white dark:bg-[#1C1C1A] text-[#8C8C87] border-[#E8E6E1] dark:border-[#2D2D2A] hover:bg-[#FAFAF7]'
                             }`}
                           >
                             <Icon className={`w-3 h-3 ${config.color}`} />
@@ -553,7 +555,7 @@ export function CommunityChat({
 
                   {/* Hover Actions Toolbar with SVG Icons */}
                   <div
-                    className={`absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 bg-stone-900 border border-stone-800 rounded-xl shadow-lg p-1 z-10 ${
+                    className={`absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-xl shadow-lg p-1 z-10 ${
                       isMe ? 'right-full mr-2' : 'left-full ml-2'
                     }`}
                   >
@@ -566,7 +568,7 @@ export function CommunityChat({
                           type="button"
                           onClick={() => handleToggleReaction(msg.id, key)}
                           title={config.label}
-                          className="hover:scale-125 transition-transform p-1.5 rounded text-stone-400 hover:text-white"
+                          className="hover:scale-125 transition-transform p-1.5 rounded text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white"
                         >
                           <Icon className={`w-3.5 h-3.5 ${config.color}`} />
                         </button>
@@ -577,7 +579,7 @@ export function CommunityChat({
                       type="button"
                       onClick={() => setReplyingTo(msg)}
                       title="Reply"
-                      className="p-1.5 hover:bg-stone-800 rounded text-stone-400 hover:text-white"
+                      className="p-1.5 hover:bg-[#F5F3EF] dark:hover:bg-[#252522] rounded text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white"
                     >
                       <Reply className="w-3.5 h-3.5" />
                     </button>
@@ -587,8 +589,8 @@ export function CommunityChat({
                         type="button"
                         onClick={() => handleTogglePin(msg.id, msg.isPinned)}
                         title={msg.isPinned ? 'Unpin' : 'Pin to top'}
-                        className={`p-1.5 hover:bg-stone-800 rounded ${
-                          msg.isPinned ? 'text-amber-400' : 'text-stone-400 hover:text-white'
+                        className={`p-1.5 hover:bg-[#F5F3EF] dark:hover:bg-[#252522] rounded ${
+                          msg.isPinned ? 'text-amber-500' : 'text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white'
                         }`}
                       >
                         <Pin className="w-3.5 h-3.5" />
@@ -605,18 +607,18 @@ export function CommunityChat({
 
       {/* Reply Preview Drawer */}
       {replyingTo && (
-        <div className="flex items-center justify-between px-6 py-2 bg-emerald-950/50 border-t border-emerald-900/60 text-xs text-stone-300">
+        <div className="flex items-center justify-between px-6 py-2 bg-[#FDF0EB] dark:bg-[#3A150C] border-t border-[#F5B8A3] dark:border-[#7D2F1A] text-xs text-[#1A1A19] dark:text-[#F5F3EF]">
           <div className="flex items-center gap-2 truncate">
-            <Reply className="w-4 h-4 text-emerald-400 shrink-0" />
+            <Reply className="w-4 h-4 text-[#E05A33] shrink-0" />
             <span>
-              Replying to <strong className="text-white font-mono">@{replyingTo.user.name}</strong>:{' '}
-              <span className="italic text-stone-400 truncate max-w-sm">{replyingTo.content}</span>
+              Replying to <strong className="text-[#E05A33] font-mono">@{replyingTo.user.name}</strong>:{' '}
+              <span className="italic text-[#6B6B66] dark:text-[#9E9D97] truncate max-w-sm">{replyingTo.content}</span>
             </span>
           </div>
           <button
             type="button"
             onClick={() => setReplyingTo(null)}
-            className="text-stone-400 hover:text-white p-1"
+            className="text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white p-1 cursor-pointer"
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -625,14 +627,14 @@ export function CommunityChat({
 
       {/* Image URL attachment drawer */}
       {showImageInput && (
-        <div className="px-6 py-2 bg-stone-900 border-t border-stone-800 flex items-center gap-2">
-          <ImageIcon className="w-4 h-4 text-stone-400 shrink-0" />
+        <div className="px-6 py-2 bg-white dark:bg-[#1C1C1A] border-t border-[#E8E6E1] dark:border-[#2D2D2A] flex items-center gap-2">
+          <ImageIcon className="w-4 h-4 text-[#8C8C87] shrink-0" />
           <input
             type="url"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="Paste public image URL (e.g. diagram, homework screenshot)..."
-            className="flex-1 bg-stone-950 border border-stone-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:border-emerald-500"
+            className="flex-1 bg-[#FAFAF7] dark:bg-[#161615] border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-lg px-3 py-1.5 text-xs text-[#1A1A19] dark:text-[#F5F3EF] placeholder-[#8C8C87] focus:outline-none focus:border-[#E05A33]"
           />
           <button
             type="button"
@@ -640,7 +642,7 @@ export function CommunityChat({
               setImageUrl('');
               setShowImageInput(false);
             }}
-            className="text-stone-400 hover:text-white text-xs font-mono"
+            className="text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white text-xs font-mono cursor-pointer"
           >
             Cancel
           </button>
@@ -648,15 +650,15 @@ export function CommunityChat({
       )}
 
       {/* Message Composer Footer */}
-      <form onSubmit={handleSendMessage} className="p-3 bg-stone-900 border-t border-stone-800 flex items-center gap-2">
+      <form onSubmit={handleSendMessage} className="p-3 bg-white dark:bg-[#1C1C1A] border-t border-[#E8E6E1] dark:border-[#2D2D2A] flex items-center gap-2">
         <button
           type="button"
           onClick={() => setShowImageInput(!showImageInput)}
           title="Attach image screenshot URL"
-          className={`p-2 rounded-xl transition-colors ${
+          className={`p-2 rounded-xl transition-colors cursor-pointer ${
             showImageInput || imageUrl
-              ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
-              : 'text-stone-400 hover:bg-stone-800 hover:text-white'
+              ? 'bg-[#FDF0EB] text-[#E05A33] border border-[#F5B8A3] dark:bg-[#3A150C] dark:text-[#EE8E6E]'
+              : 'text-[#8C8C87] hover:bg-[#FAFAF7] dark:hover:bg-[#252522] hover:text-[#1A1A19]'
           }`}
         >
           <ImageIcon className="w-4 h-4" />
@@ -667,13 +669,13 @@ export function CommunityChat({
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={`Message #${courseTitle}...`}
-          className="flex-1 bg-stone-950 border border-stone-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:border-emerald-500 transition-all font-body"
+          className="flex-1 bg-[#FAFAF7] dark:bg-[#161615] border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-xl px-4 py-2.5 text-xs text-[#1A1A19] dark:text-[#F5F3EF] placeholder-[#8C8C87] focus:outline-none focus:border-[#E05A33] transition-all font-body"
         />
 
         <Button
           type="submit"
           disabled={isSending || (!content.trim() && !imageUrl)}
-          className="bg-emerald-500 hover:bg-emerald-400 text-stone-950 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+          className="bg-[#E05A33] hover:bg-[#C94A26] text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
         >
           <Send className="w-3.5 h-3.5" />
           <span>Send</span>
