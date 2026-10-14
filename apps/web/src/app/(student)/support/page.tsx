@@ -230,47 +230,47 @@ export default function SupportPage() {
   const getStatusBadge = (status: TicketItem['status']) => {
     switch (status) {
       case 'OPEN':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">OPEN</span>;
+        return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950/80 text-amber-300 border border-amber-800">OPEN</span>;
       case 'IN_PROGRESS':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-200">IN PROGRESS</span>;
+        return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-950/80 text-blue-300 border border-blue-800">IN PROGRESS</span>;
       case 'RESOLVED':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">RESOLVED</span>;
+        return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800">RESOLVED</span>;
       case 'CLOSED':
-        return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-neutral-100 text-neutral-600">CLOSED</span>;
+        return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-stone-900 text-stone-400 border border-stone-800">CLOSED</span>;
     }
   };
 
   const getPriorityBadge = (priority: TicketItem['priority']) => {
     switch (priority) {
       case 'URGENT':
-        return <span className="text-[10px] font-bold text-rose-600 uppercase tracking-wide">URGENT</span>;
+        return <span className="text-[10px] font-bold text-rose-400 uppercase tracking-wide">URGENT</span>;
       case 'HIGH':
-        return <span className="text-[10px] font-bold text-amber-600 uppercase tracking-wide">HIGH</span>;
+        return <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wide">HIGH</span>;
       default:
-        return <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wide">{priority}</span>;
+        return <span className="text-[10px] font-mono text-stone-400 uppercase tracking-wide">{priority}</span>;
     }
   };
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 text-stone-100">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-neutral-200">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-stone-800">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 mb-2 font-mono">
-            <HelpCircle className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-800 mb-2 font-mono">
+            <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
             <span>Learner Assistance</span>
           </div>
-          <h1 className="text-2xl font-extrabold text-neutral-900 tracking-tight font-display">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-display">
             Support Helpdesk & FAQ
           </h1>
-          <p className="text-xs text-neutral-600 mt-1 font-body">
+          <p className="text-xs sm:text-sm text-stone-300 mt-1 font-sans">
             Get help with academic schedules, course materials, exam proctoring, or technical connectivity.
           </p>
         </div>
 
         <Button
           onClick={() => setIsCreateOpen(true)}
-          className="bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 cursor-pointer shadow-xs"
+          className="bg-emerald-500 hover:bg-emerald-400 text-stone-950 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 cursor-pointer shadow-sm transition-transform active:scale-95"
         >
           <Plus className="w-4 h-4" />
           <span>New Support Ticket</span>
@@ -282,10 +282,10 @@ export default function SupportPage() {
         {/* Left Column: Tickets */}
         <div className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold text-base text-neutral-900 font-display">
+            <h2 className="font-bold text-base text-white font-display">
               Your Support Inquiries
             </h2>
-            <span className="text-xs text-neutral-500 font-mono">
+            <span className="text-xs text-stone-400 font-mono">
               {tickets.length} {tickets.length === 1 ? 'ticket' : 'tickets'}
             </span>
           </div>
@@ -293,16 +293,16 @@ export default function SupportPage() {
           {loading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((n) => (
-                <div key={n} className="h-24 rounded-xl bg-neutral-100 animate-pulse border border-neutral-200" />
+                <div key={n} className="h-24 rounded-xl bg-stone-900/60 animate-pulse border border-stone-800" />
               ))}
             </div>
           ) : tickets.length === 0 ? (
-            <div className="p-8 bg-white rounded-xl border border-neutral-200 text-center">
-              <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center mx-auto mb-2">
+            <div className="p-8 bg-[#121714] rounded-2xl border border-stone-800 text-center">
+              <div className="w-10 h-10 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 flex items-center justify-center mx-auto mb-2">
                 <CheckCircle2 className="w-5 h-5" />
               </div>
-              <p className="text-sm font-semibold text-neutral-800">No open tickets</p>
-              <p className="text-xs text-neutral-500 mt-0.5">
+              <p className="text-sm font-semibold text-white">No open tickets</p>
+              <p className="text-xs text-stone-400 mt-1">
                 Have questions or encounter issues? Click &quot;New Support Ticket&quot; to contact counselors.
               </p>
             </div>
@@ -312,32 +312,32 @@ export default function SupportPage() {
                 <div
                   key={t.id}
                   onClick={() => handleOpenTicket(t)}
-                  className="bg-white rounded-xl border border-neutral-200 p-4 shadow-xs hover:border-neutral-300 transition-all cursor-pointer flex items-start justify-between gap-4"
+                  className="bg-[#121714] rounded-2xl border border-stone-800 p-4 shadow-xs hover:border-emerald-500/50 transition-all cursor-pointer flex items-start justify-between gap-4"
                 >
                   <div className="space-y-1.5 flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       {getStatusBadge(t.status)}
                       {getPriorityBadge(t.priority)}
-                      <span className="text-[10px] text-neutral-400 font-mono">
+                      <span className="text-[10px] text-stone-400 font-mono">
                         #{t.id.slice(-6)}
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-sm text-neutral-900 font-display truncate">
+                    <h3 className="font-bold text-sm text-white font-display truncate">
                       {t.subject}
                     </h3>
-                    <p className="text-xs text-neutral-600 line-clamp-2 font-body">
+                    <p className="text-xs text-stone-300 line-clamp-2 font-sans">
                       {t.body}
                     </p>
 
-                    <div className="flex items-center gap-4 text-[11px] text-neutral-400 font-mono pt-1">
+                    <div className="flex items-center gap-4 text-[11px] text-stone-400 font-mono pt-1">
                       <span>Created {new Date(t.createdAt).toLocaleDateString()}</span>
                       <span className="flex items-center gap-1">
-                        <MessageSquare className="w-3 h-3 text-neutral-400" />
+                        <MessageSquare className="w-3 h-3 text-stone-400" />
                         {t._count.replies} replies
                       </span>
                       {t.assignedTo && (
-                        <span className="text-emerald-800">Assigned: {t.assignedTo.name}</span>
+                        <span className="text-emerald-400 font-medium">Assigned: {t.assignedTo.name}</span>
                       )}
                     </div>
                   </div>
@@ -350,13 +350,13 @@ export default function SupportPage() {
         {/* Right Column: FAQ Accordion */}
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-emerald-700" />
-            <h2 className="font-bold text-base text-neutral-900 font-display">
+            <Sparkles className="w-4 h-4 text-emerald-400" />
+            <h2 className="font-bold text-base text-white font-display">
               Frequently Answered Questions
             </h2>
           </div>
 
-          <div className="bg-white rounded-xl border border-neutral-200 divide-y divide-neutral-100 overflow-hidden shadow-xs">
+          <div className="bg-[#121714] rounded-2xl border border-stone-800 divide-y divide-stone-800/80 overflow-hidden shadow-xs">
             {FAQ_ITEMS.map((faq, index) => {
               const isOpen = expandedFaq === index;
               return (
@@ -364,17 +364,17 @@ export default function SupportPage() {
                   <button
                     type="button"
                     onClick={() => setExpandedFaq(isOpen ? null : index)}
-                    className="w-full p-4 text-left flex items-center justify-between gap-3 text-xs font-semibold text-neutral-800 hover:text-emerald-900"
+                    className="w-full p-4 text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-semibold text-stone-200 hover:text-white"
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
-                      className={`w-4 h-4 shrink-0 text-neutral-400 transition-transform ${
-                        isOpen ? 'rotate-180 text-emerald-700' : ''
+                      className={`w-4 h-4 shrink-0 text-stone-400 transition-transform ${
+                        isOpen ? 'rotate-180 text-emerald-400' : ''
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="px-4 pb-4 text-xs text-neutral-600 leading-relaxed font-body bg-neutral-50/50">
+                    <div className="px-4 pb-4 text-xs sm:text-sm text-stone-300 leading-relaxed font-sans bg-stone-900/50">
                       {faq.answer}
                     </div>
                   )}
@@ -387,26 +387,26 @@ export default function SupportPage() {
 
       {/* Ticket Conversation Viewer Modal */}
       {activeTicket && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/70 backdrop-blur-xs">
-          <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-neutral-200 flex flex-col max-h-[85vh] overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="relative w-full max-w-2xl bg-[#0f1411] rounded-2xl shadow-2xl border border-stone-800 flex flex-col max-h-[85vh] overflow-hidden text-stone-100">
             {/* Header */}
-            <div className="px-6 py-4 bg-neutral-50 border-b border-neutral-200 flex items-center justify-between">
+            <div className="px-6 py-4 bg-stone-900/90 border-b border-stone-800 flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   {getStatusBadge(activeTicket.status)}
                   {getPriorityBadge(activeTicket.priority)}
-                  <span className="text-[10px] font-mono text-neutral-400">
+                  <span className="text-[10px] font-mono text-stone-400">
                     Ticket #{activeTicket.id.slice(-6)}
                   </span>
                 </div>
-                <h3 className="font-bold text-base text-neutral-900 font-display">
+                <h3 className="font-bold text-base text-white font-display">
                   {activeTicket.subject}
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveTicket(null)}
-                className="p-1 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-200"
+                className="p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -415,10 +415,10 @@ export default function SupportPage() {
             {/* Conversation Stream */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {/* Original Ticket Description */}
-              <div className="p-4 rounded-xl bg-neutral-100/70 border border-neutral-200 text-xs text-neutral-800 space-y-1">
-                <div className="flex items-center justify-between font-semibold text-emerald-950">
+              <div className="p-4 rounded-xl bg-stone-900/80 border border-stone-800 text-xs text-stone-200 space-y-1">
+                <div className="flex items-center justify-between font-semibold text-emerald-400">
                   <span>{activeTicket.user.name} (Ticket Creator)</span>
-                  <span className="text-[10px] text-neutral-400 font-mono">
+                  <span className="text-[10px] text-stone-400 font-mono">
                     {new Date(activeTicket.createdAt).toLocaleString()}
                   </span>
                 </div>
@@ -427,9 +427,9 @@ export default function SupportPage() {
 
               {/* Threaded Replies */}
               {loadingReplies ? (
-                <div className="text-center py-6 text-xs text-neutral-400">Loading discussion thread...</div>
+                <div className="text-center py-6 text-xs text-stone-400">Loading discussion thread...</div>
               ) : replies.length === 0 ? (
-                <div className="text-center py-6 text-xs text-neutral-400 italic">
+                <div className="text-center py-6 text-xs text-stone-400 italic">
                   No replies yet. Our support counselors are reviewing your request.
                 </div>
               ) : (
@@ -440,20 +440,20 @@ export default function SupportPage() {
                       key={reply.id}
                       className={`p-3.5 rounded-xl border text-xs leading-relaxed space-y-1 ${
                         isStaff
-                          ? 'bg-emerald-50/70 border-emerald-200 text-emerald-950 ml-4'
-                          : 'bg-white border-neutral-200 text-neutral-800 mr-4'
+                          ? 'bg-emerald-950/50 border-emerald-800 text-emerald-200 ml-4'
+                          : 'bg-stone-900/60 border-stone-800 text-stone-200 mr-4'
                       }`}
                     >
                       <div className="flex items-center justify-between font-semibold">
                         <span className="flex items-center gap-1.5">
-                          <span>{reply.user.name}</span>
+                          <span className="text-white">{reply.user.name}</span>
                           {isStaff && (
-                            <span className="px-1.5 py-0.2 rounded text-[9px] bg-emerald-200 text-emerald-800 font-mono">
+                            <span className="px-1.5 py-0.2 rounded text-[9px] bg-emerald-900 text-emerald-300 font-mono">
                               Staff Support
                             </span>
                           )}
                         </span>
-                        <span className="text-[10px] text-neutral-400 font-mono">
+                        <span className="text-[10px] text-stone-400 font-mono">
                           {new Date(reply.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
@@ -465,18 +465,18 @@ export default function SupportPage() {
             </div>
 
             {/* Reply Composer */}
-            <form onSubmit={handleSendReply} className="p-4 bg-white border-t border-neutral-200 flex items-center gap-2">
+            <form onSubmit={handleSendReply} className="p-4 bg-[#0c100e] border-t border-stone-800 flex items-center gap-2">
               <input
                 type="text"
                 value={replyBody}
                 onChange={(e) => setReplyBody(e.target.value)}
                 placeholder="Type a reply to this support ticket..."
-                className="flex-1 bg-neutral-50 border border-neutral-300 rounded-lg px-4 py-2.5 text-xs text-neutral-900 focus:outline-none focus:ring-1 focus:ring-emerald-700"
+                className="flex-1 bg-stone-900 border border-stone-700 rounded-lg px-4 py-2.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
               />
               <Button
                 type="submit"
                 disabled={sendingReply || !replyBody.trim()}
-                className="bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold px-4 py-2.5 rounded-lg flex items-center gap-1.5 cursor-pointer"
+                className="bg-emerald-500 hover:bg-emerald-400 text-stone-950 text-xs font-bold px-4 py-2.5 rounded-lg flex items-center gap-1.5 cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Reply</span>
@@ -488,46 +488,46 @@ export default function SupportPage() {
 
       {/* Create Ticket Modal */}
       {isCreateOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/70 backdrop-blur-xs">
-          <div className="relative w-full max-w-lg bg-white rounded-2xl p-6 shadow-2xl border border-neutral-200 space-y-4">
-            <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
-              <h3 className="font-extrabold text-base text-neutral-900 font-display">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="relative w-full max-w-lg bg-[#0f1411] rounded-2xl p-6 shadow-2xl border border-stone-800 space-y-4 text-stone-100">
+            <div className="flex items-center justify-between border-b border-stone-800 pb-3">
+              <h3 className="font-extrabold text-base text-white font-display">
                 Create Support Helpdesk Ticket
               </h3>
               <button
                 type="button"
                 onClick={() => setIsCreateOpen(false)}
-                className="p-1 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100"
+                className="p-1 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {createError && (
-              <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-800">
+              <div className="p-3 bg-rose-950/50 border border-rose-800 rounded-lg text-xs text-rose-300">
                 {createError}
               </div>
             )}
 
             <form onSubmit={handleCreateTicket} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-neutral-800">Ticket Subject</label>
+                <label className="text-xs font-semibold text-stone-300">Ticket Subject</label>
                 <input
                   type="text"
                   required
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   placeholder="e.g. Question regarding Week 3 programming assignment cutoff"
-                  className="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-3 py-2 text-xs text-neutral-900 focus:outline-none focus:ring-1 focus:ring-emerald-600 focus:bg-white"
+                  className="w-full bg-stone-900 border border-stone-700 rounded-lg px-3 py-2 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-neutral-800">Priority Level</label>
+                <label className="text-xs font-semibold text-stone-300">Priority Level</label>
                 <select
                   value={priority}
                   onChange={(e) => setPriority(e.target.value as any)}
-                  className="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-3 py-2 text-xs text-neutral-900 focus:outline-none focus:ring-1 focus:ring-emerald-600 focus:bg-white"
+                  className="w-full bg-stone-900 border border-stone-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
                 >
                   <option value="LOW">Low - General Inquiry</option>
                   <option value="NORMAL">Normal - Coursework / Clarification</option>
@@ -537,30 +537,30 @@ export default function SupportPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-neutral-800">Description of Issue</label>
+                <label className="text-xs font-semibold text-stone-300">Description of Issue</label>
                 <textarea
                   required
                   rows={4}
                   value={body}
                   onChange={(e) => setBody(e.target.value)}
                   placeholder="Provide complete details including course name, week number, error messages, or screenshots links..."
-                  className="w-full bg-neutral-50 border border-neutral-300 rounded-lg px-3 py-2 text-xs text-neutral-900 focus:outline-none focus:ring-1 focus:ring-emerald-600 focus:bg-white resize-none"
+                  className="w-full bg-stone-900 border border-stone-700 rounded-lg px-3 py-2 text-xs text-white placeholder-stone-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 resize-none"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-neutral-100">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-stone-800">
                 <Button
                   variant="outline"
                   type="button"
                   onClick={() => setIsCreateOpen(false)}
-                  className="text-xs"
+                  className="text-xs border-stone-700 text-stone-300 hover:bg-stone-800 hover:text-white"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold cursor-pointer"
+                  className="bg-emerald-500 hover:bg-emerald-400 text-stone-950 text-xs font-bold cursor-pointer"
                 >
                   {submitting ? 'Submitting Ticket...' : 'Submit Support Ticket'}
                 </Button>

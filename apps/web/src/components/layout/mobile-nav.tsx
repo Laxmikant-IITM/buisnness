@@ -59,8 +59,8 @@ export function MobileNav({
       aria-label="Mobile navigation"
       className={[
         'fixed bottom-0 left-0 right-0 z-40 lg:hidden',
-        'bg-[#090d0b]/95 backdrop-blur-md border-t border-stone-800/80',
-        'px-2 py-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] shadow-2xl',
+        'bg-white/95 dark:bg-[#1C1C1A]/95 backdrop-blur-md border-t border-[#E8E6E1] dark:border-[#2D2D2A]',
+        'px-2 py-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] shadow-xl',
         className,
       ]
         .filter(Boolean)
@@ -77,9 +77,9 @@ export function MobileNav({
                 key={item.id}
                 type="button"
                 onClick={onMoreClick}
-                className="flex flex-1 flex-col items-center justify-center py-1.5 px-2 rounded-xl text-[10px] font-mono text-stone-400 hover:text-white transition-all cursor-pointer active:scale-95"
+                className="flex flex-1 flex-col items-center justify-center py-1.5 px-2 rounded-xl text-[10px] font-mono text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-[#F5F3EF] transition-all cursor-pointer active:scale-95"
               >
-                <Icon className="w-5 h-5 mb-0.5 text-stone-400" />
+                <Icon className="w-5 h-5 mb-0.5 text-[#8C8C87]" />
                 <span>{item.label}</span>
               </button>
             );
@@ -92,8 +92,8 @@ export function MobileNav({
               className={[
                 'flex flex-1 flex-col items-center justify-center py-1.5 px-2 rounded-xl text-[10px] font-mono transition-all select-none active:scale-95',
                 active
-                  ? 'text-emerald-400 font-bold bg-emerald-950/40 border border-emerald-900/40'
-                  : 'text-stone-400 hover:text-white font-medium',
+                  ? 'text-[#E05A33] font-bold bg-[#FDF0EB] dark:bg-[#3A150C]/60 border border-[#F5B8A3]/60 dark:border-[#7D2F1A]'
+                  : 'text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-[#F5F3EF] font-medium',
               ]
                 .filter(Boolean)
                 .join(' ')}
@@ -101,7 +101,7 @@ export function MobileNav({
               <Icon
                 className={[
                   'w-5 h-5 mb-0.5 transition-transform duration-150',
-                  active ? 'text-emerald-400 scale-105' : 'text-stone-500',
+                  active ? 'text-[#E05A33] scale-105' : 'text-[#8C8C87]',
                 ].join(' ')}
               />
               <span className="truncate max-w-[54px]">{item.label}</span>

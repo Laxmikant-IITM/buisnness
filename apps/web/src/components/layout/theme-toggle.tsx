@@ -16,16 +16,38 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
   const [theme, setTheme] = useState<'dark' | 'light'>('light');
 
   useEffect(() => {
+    const applyTheme = (targetTheme: 'dark' | 'light') => {
+      setTheme(targetTheme);
+      if (targetTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    };
+
     const stored = localStorage.getItem('theme');
-    if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setTheme('dark');
-      document.documentElement.classList.add('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
+    if (stored === 'dark') {
+      applyTheme('dark');
     } else {
-      setTheme('light');
-      document.documentElement.classList.remove('dark');
-      document.documentElement.setAttribute('data-theme', 'light');
+      applyTheme('light');
     }
+
+    const handleSync = () => {
+      const current = localStorage.getItem('theme');
+      if (current === 'dark' || current === 'light') {
+        applyTheme(current);
+      }
+    };
+
+    window.addEventListener('theme-change', handleSync);
+    window.addEventListener('storage', handleSync);
+
+    return () => {
+      window.removeEventListener('theme-change', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
   }, []);
 
   const toggleTheme = () => {
@@ -40,6 +62,8 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       document.documentElement.classList.remove('dark');
       document.documentElement.setAttribute('data-theme', 'light');
     }
+
+    window.dispatchEvent(new Event('theme-change'));
   };
 
   return (

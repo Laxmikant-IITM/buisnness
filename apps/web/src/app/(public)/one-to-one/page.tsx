@@ -170,71 +170,70 @@ export default function OneToOneBookingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d0b] text-stone-100 font-sans selection:bg-emerald-800 selection:text-white">
+    <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#111110] text-[#1A1A19] dark:text-[#F5F3EF] font-sans selection:bg-[#FDF0EB] selection:text-[#E05A33]">
       {/* Unified Site Navbar */}
       <SiteNavbar />
 
       {/* Main Container */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-            <span>Dedicated Academic Mentorship</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#202824] tracking-tight font-display">
-            Book 1-on-1 Tutoring & Doubt Clearing
+        <div className="text-center max-w-xl mx-auto space-y-2">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#E05A33] font-semibold">
+            1:1 ACADEMIC MENTORSHIP
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] tracking-tight font-display">
+            Book 1-on-1 Doubt Session
           </h1>
-          <p className="text-sm text-neutral-600 leading-relaxed">
-            Get personalized guidance from top-performing IIT Madras BS alumni and instructors. Clear complex assignment doubts, debug Python scripts, and plan your exam targets.
+          <p className="text-xs sm:text-sm text-[#8C8C87]">
+            Direct 1:1 guidance from verified IIT Madras BS course mentors.
           </p>
         </div>
 
         {confirmedBooking ? (
           /* Confirmation State */
-          <div className="max-w-lg mx-auto bg-white rounded-2xl border border-emerald-200 p-8 shadow-sm text-center space-y-5">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-10 h-10" />
+          <div className="max-w-lg mx-auto bg-white dark:bg-[#1C1C1A] rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] p-8 shadow-xs text-center space-y-5">
+            <div className="w-14 h-14 rounded-full bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-8 h-8" />
             </div>
 
             <div className="space-y-1">
-              <h2 className="text-2xl font-bold text-neutral-900 font-display">
-                Session Confirmed!
+              <h2 className="text-2xl font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display">
+                Session Confirmed
               </h2>
-              <p className="text-xs text-neutral-500">
-                Reservation ID: <span className="font-mono font-bold text-neutral-800">{confirmedBooking.id}</span>
+              <p className="text-xs text-[#8C8C87]">
+                Reservation ID: <span className="font-mono font-bold text-[#1A1A19] dark:text-[#F5F3EF]">{confirmedBooking.id}</span>
               </p>
             </div>
 
-            <div className="bg-neutral-50 rounded-xl p-4 text-xs text-left space-y-2 border border-neutral-200">
+            <div className="bg-[#FAFAF7] dark:bg-[#242422] rounded-xl p-4 text-xs text-left space-y-2 border border-[#E8E6E1] dark:border-[#2D2D2A]">
               <div className="flex justify-between">
-                <span className="text-neutral-500">Scheduled Date:</span>
-                <span className="font-semibold text-neutral-800">{confirmedBooking.slotDate}</span>
+                <span className="text-[#8C8C87]">Scheduled Date:</span>
+                <span className="font-semibold text-[#1A1A19] dark:text-[#F5F3EF]">{confirmedBooking.slotDate}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-500">Time Slot:</span>
-                <span className="font-semibold text-neutral-800">{confirmedBooking.slotTime}</span>
+                <span className="text-[#8C8C87]">Time Slot:</span>
+                <span className="font-semibold text-[#1A1A19] dark:text-[#F5F3EF]">{confirmedBooking.slotTime}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-500">Plan:</span>
-                <span className="font-semibold text-neutral-800">{confirmedBooking.plan}</span>
+                <span className="text-[#8C8C87]">Plan:</span>
+                <span className="font-semibold text-[#E05A33]">{confirmedBooking.plan}</span>
               </div>
             </div>
 
-            <p className="text-xs text-neutral-600 leading-relaxed">
-              Google Meet connection link has been sent to your email. Your mentor will review your notes before the call.
+            <p className="text-xs text-[#8C8C87]">
+              Google Meet connection link sent to your email.
             </p>
 
             <div className="pt-2 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => setConfirmedBooking(null)}
-                className="w-full py-2.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold rounded-lg text-xs transition"
+                className="w-full py-2.5 bg-[#F5F3EF] dark:bg-[#2D2D2A] hover:bg-[#EDEBE5] text-[#1A1A19] dark:text-[#F5F3EF] font-semibold rounded-lg text-xs transition"
               >
                 Book Another Slot
               </button>
               <Link
                 href="/courses"
-                className="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold rounded-lg text-xs flex items-center justify-center transition"
+                className="w-full py-2.5 bg-[#E05A33] hover:bg-[#C94A26] text-white font-semibold rounded-lg text-xs flex items-center justify-center transition"
               >
                 Explore Courses
               </Link>
@@ -244,19 +243,19 @@ export default function OneToOneBookingPage() {
           /* Booking Form */
           <form onSubmit={handleBookingSubmit} className="space-y-8">
             {error && (
-              <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-3">
-                <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-600" />
+              <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-red-800 dark:text-red-300 text-xs flex items-center gap-3">
+                <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
                 <span>{error}</span>
               </div>
             )}
 
             {/* Step 1: Select Plan */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-neutral-900 font-display flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs flex items-center justify-center font-bold">
+            <div className="space-y-3">
+              <h2 className="text-base font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] text-xs flex items-center justify-center font-bold">
                   1
                 </span>
-                <span>Select Mentorship Plan</span>
+                <span>Select Plan</span>
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -264,25 +263,25 @@ export default function OneToOneBookingPage() {
                   <div
                     key={plan.id}
                     onClick={() => setSelectedPlan(plan.id)}
-                    className={`p-5 rounded-xl border cursor-pointer transition ${
+                    className={`p-5 rounded-2xl border cursor-pointer transition shadow-xs ${
                       selectedPlan === plan.id
-                        ? 'border-emerald-700 bg-emerald-50/40 ring-1 ring-emerald-700'
-                        : 'border-neutral-200 bg-white hover:border-neutral-300'
+                        ? 'border-[#E05A33] bg-[#FDF0EB]/60 dark:bg-[#3A150C]/30 ring-1 ring-[#E05A33]'
+                        : 'border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#1C1C1A] hover:border-[#E05A33]/50'
                     }`}
                   >
-                    <div className="flex justify-between items-baseline mb-2">
-                      <span className="font-bold text-sm text-neutral-900 font-display">
+                    <div className="flex justify-between items-baseline mb-1.5">
+                      <span className="font-bold text-sm text-[#1A1A19] dark:text-[#F5F3EF] font-display">
                         {plan.name}
                       </span>
-                      <span className="text-base font-extrabold text-neutral-900 font-mono">
+                      <span className="text-base font-extrabold text-[#E05A33] font-display">
                         {plan.price}
                       </span>
                     </div>
-                    <div className="text-xs text-emerald-800 font-semibold mb-2 flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
+                    <div className="text-xs text-[#8C8C87] font-semibold mb-2 flex items-center gap-1 font-mono">
+                      <Clock className="w-3.5 h-3.5 text-[#E05A33]" />
                       <span>{plan.duration}</span>
                     </div>
-                    <p className="text-xs text-neutral-600 leading-relaxed">
+                    <p className="text-xs text-[#6B6B66] dark:text-[#B5B3AD] leading-relaxed">
                       {plan.description}
                     </p>
                   </div>
@@ -291,12 +290,12 @@ export default function OneToOneBookingPage() {
             </div>
 
             {/* Step 2: Date Selector */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-neutral-900 font-display flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs flex items-center justify-center font-bold">
+            <div className="space-y-3">
+              <h2 className="text-base font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] text-xs flex items-center justify-center font-bold">
                   2
                 </span>
-                <span>Choose Appointment Date</span>
+                <span>Choose Date</span>
               </h2>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
@@ -312,10 +311,10 @@ export default function OneToOneBookingPage() {
                       type="button"
                       key={dateStr}
                       onClick={() => setSelectedDate(dateStr)}
-                      className={`p-3 rounded-xl border text-center transition flex flex-col items-center justify-center ${
+                      className={`p-3 rounded-xl border text-center transition flex flex-col items-center justify-center cursor-pointer shadow-xs ${
                         isSelected
-                          ? 'bg-emerald-800 text-white border-emerald-800 shadow-sm'
-                          : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50'
+                          ? 'bg-[#E05A33] text-white border-[#E05A33]'
+                          : 'bg-white dark:bg-[#1C1C1A] text-[#1A1A19] dark:text-[#F5F3EF] border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50'
                       }`}
                     >
                       <span className="text-[11px] font-medium uppercase">{dayName}</span>
@@ -328,12 +327,12 @@ export default function OneToOneBookingPage() {
             </div>
 
             {/* Step 3: Time Slot Selector */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-neutral-900 font-display flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs flex items-center justify-center font-bold">
+            <div className="space-y-3">
+              <h2 className="text-base font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] text-xs flex items-center justify-center font-bold">
                   3
                 </span>
-                <span>Select Available Time Slot</span>
+                <span>Select Time Slot</span>
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
@@ -344,13 +343,13 @@ export default function OneToOneBookingPage() {
                       type="button"
                       key={slot.time}
                       onClick={() => setSelectedTime(slot.time)}
-                      className={`p-3 rounded-xl border text-left transition ${
+                      className={`p-3 rounded-xl border text-left transition cursor-pointer shadow-xs ${
                         isSelected
-                          ? 'border-emerald-700 bg-emerald-50 text-emerald-950 ring-1 ring-emerald-700'
-                          : 'border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50'
+                          ? 'border-[#E05A33] bg-[#FDF0EB] dark:bg-[#3A150C]/60 text-[#E05A33] ring-1 ring-[#E05A33]'
+                          : 'border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#1C1C1A] text-[#1A1A19] dark:text-[#F5F3EF] hover:border-[#E05A33]/50'
                       }`}
                     >
-                      <div className="text-[10px] text-neutral-400 uppercase font-semibold">
+                      <div className="text-[10px] text-[#8C8C87] uppercase font-semibold">
                         {slot.period}
                       </div>
                       <div className="text-xs font-bold font-mono mt-0.5">{slot.time}</div>
@@ -361,34 +360,34 @@ export default function OneToOneBookingPage() {
             </div>
 
             {/* Step 4: Subject & Academic Level */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-neutral-900 font-display flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs flex items-center justify-center font-bold">
+            <div className="space-y-3">
+              <h2 className="text-base font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] text-xs flex items-center justify-center font-bold">
                   4
                 </span>
-                <span>Academic Focus & Subjects</span>
+                <span>Subject & Level</span>
               </h2>
 
-              <div className="bg-white p-6 rounded-xl border border-neutral-200 space-y-4 shadow-sm">
+              <div className="bg-white dark:bg-[#1C1C1A] p-6 rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] space-y-4 shadow-xs">
                 <div>
-                  <label className="block text-xs font-semibold text-neutral-700 mb-1">
-                    Your IITM BS Degree Level
+                  <label className="block text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF] mb-1.5">
+                    IITM BS Degree Level
                   </label>
                   <select
                     value={level}
                     onChange={(e) => setLevel(e.target.value)}
-                    className="w-full sm:w-72 px-3 py-2 border border-neutral-300 rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                    className="w-full sm:w-72 px-3 py-2 border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-lg text-xs bg-[#FAFAF7] dark:bg-[#242422] text-[#1A1A19] dark:text-[#F5F3EF] focus:outline-none focus:ring-1 focus:ring-[#E05A33]"
                   >
                     <option value="Qualifier">Qualifier Stage</option>
                     <option value="Foundation">Foundation Level (Term 1 - 4)</option>
-                    <option value="Diploma">Diploma Level (Data Science / Programming)</option>
+                    <option value="Diploma">Diploma Level</option>
                     <option value="Degree">Degree / Capstone Level</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-neutral-700 mb-2">
-                    Select Subject(s) to Discuss
+                  <label className="block text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF] mb-2">
+                    Subjects
                   </label>
                   <div className="flex flex-wrap gap-2">
                     {SUBJECTS_LIST.map((subj) => {
@@ -398,10 +397,10 @@ export default function OneToOneBookingPage() {
                           type="button"
                           key={subj}
                           onClick={() => toggleSubject(subj)}
-                          className={`px-3 py-1.5 rounded-lg text-xs transition ${
+                          className={`px-3 py-1.5 rounded-lg text-xs transition cursor-pointer ${
                             isPicked
-                              ? 'bg-emerald-800 text-white font-semibold'
-                              : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                              ? 'bg-[#E05A33] text-white font-semibold'
+                              : 'bg-[#F5F3EF] dark:bg-[#242422] text-[#4A4A46] dark:text-[#B5B3AD] hover:bg-[#EDEBE5] dark:hover:bg-[#2D2D2A]'
                           }`}
                         >
                           {subj}
@@ -412,78 +411,78 @@ export default function OneToOneBookingPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-neutral-700 mb-1">
-                    What specific questions or topics do you want help with? (Optional)
+                  <label className="block text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF] mb-1.5">
+                    Notes or Questions (Optional)
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="e.g. Need assistance with Week 3 recursion assignment, and dry running past Quiz 1 question 8..."
+                    placeholder="Topic or assignment doubt details..."
                     value={userNotes}
                     onChange={(e) => setUserNotes(e.target.value)}
-                    className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                    className="w-full px-3 py-2 border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-lg text-xs bg-[#FAFAF7] dark:bg-[#242422] text-[#1A1A19] dark:text-[#F5F3EF] focus:outline-none focus:ring-1 focus:ring-[#E05A33]"
                   />
                 </div>
               </div>
             </div>
 
             {/* Step 5: Student Details */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-neutral-900 font-display flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs flex items-center justify-center font-bold">
+            <div className="space-y-3">
+              <h2 className="text-base font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] text-xs flex items-center justify-center font-bold">
                   5
                 </span>
-                <span>Your Contact Details</span>
+                <span>Contact Information</span>
               </h2>
 
-              <div className="bg-white p-6 rounded-xl border border-neutral-200 grid grid-cols-1 sm:grid-cols-3 gap-4 shadow-sm">
+              <div className="bg-white dark:bg-[#1C1C1A] p-6 rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] grid grid-cols-1 sm:grid-cols-3 gap-4 shadow-xs">
                 <div>
-                  <label className="block text-xs font-semibold text-neutral-700 mb-1">Full Name</label>
+                  <label className="block text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF] mb-1.5">Full Name</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Rahul Verma"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                    className="w-full px-3 py-2 border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-lg text-xs bg-[#FAFAF7] dark:bg-[#242422] text-[#1A1A19] dark:text-[#F5F3EF] focus:outline-none focus:ring-1 focus:ring-[#E05A33]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-neutral-700 mb-1">Email Address</label>
+                  <label className="block text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF] mb-1.5">Email Address</label>
                   <input
                     type="email"
                     required
                     placeholder="e.g. rahul@student.iitm.ac.in"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                    className="w-full px-3 py-2 border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-lg text-xs bg-[#FAFAF7] dark:bg-[#242422] text-[#1A1A19] dark:text-[#F5F3EF] focus:outline-none focus:ring-1 focus:ring-[#E05A33]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-neutral-700 mb-1">WhatsApp Mobile</label>
+                  <label className="block text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF] mb-1.5">WhatsApp Mobile</label>
                   <input
                     type="tel"
                     required
                     placeholder="e.g. 9876543210"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-emerald-700"
+                    className="w-full px-3 py-2 border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-lg text-xs bg-[#FAFAF7] dark:bg-[#242422] text-[#1A1A19] dark:text-[#F5F3EF] focus:outline-none focus:ring-1 focus:ring-[#E05A33]"
                   />
                 </div>
               </div>
             </div>
 
             {/* Submit Bar */}
-            <div className="bg-white p-6 rounded-xl border border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
-              <div className="text-xs text-neutral-500">
-                <span>Maximum 3 bookings per day limit strictly enforced.</span>
+            <div className="bg-white dark:bg-[#1C1C1A] p-6 rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+              <div className="text-xs text-[#8C8C87] font-mono">
+                <span>Maximum 3 bookings per day limit.</span>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-8 py-3 bg-[#29493e] hover:bg-[#1f382f] disabled:opacity-50 text-white font-bold rounded-lg text-sm flex items-center justify-center gap-2 transition shadow-md"
+                className="w-full sm:w-auto px-8 py-3 bg-[#E05A33] hover:bg-[#C94A26] disabled:opacity-50 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer"
               >
                 {isSubmitting ? (
                   <>
@@ -492,7 +491,7 @@ export default function OneToOneBookingPage() {
                   </>
                 ) : (
                   <>
-                    <span>Confirm 1:1 Appointment</span>
+                    <span>Confirm Appointment</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}

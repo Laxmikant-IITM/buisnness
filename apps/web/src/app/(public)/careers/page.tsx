@@ -13,14 +13,10 @@ import {
   Building2,
   DollarSign,
   ArrowRight,
-  ExternalLink,
   Sparkles,
-  CheckCircle2,
   GraduationCap,
   Users,
 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 
 export const metadata = {
   title: 'Careers & Internships | IITM BS Student Career Hub',
@@ -58,113 +54,112 @@ const JOB_OPENINGS: JobOpening[] = [
     id: 'job-2',
     role: 'Machine Learning Research Associate',
     company: 'Applied AI Labs Bangalore',
-    location: 'Bengaluru / Remote',
+    location: 'Bangalore / Remote',
     type: 'Full-time',
     stipend: '₹12 - 16 LPA',
-    termEligibility: 'Diploma in DS / Degree Level',
-    skills: ['PyTorch', 'Linear Algebra', 'NLP', 'Computer Vision'],
+    termEligibility: 'Diploma in Data Science / Degree',
+    skills: ['PyTorch', 'Scikit-Learn', 'Math 2', 'MLP'],
     postedAt: 'Just now',
     featured: true,
   },
   {
     id: 'job-3',
-    role: 'Full-Stack Software Engineer (Python/Next.js)',
-    company: 'VectorScale Systems',
+    role: 'Software Development Intern (Backend)',
+    company: 'Veloce Data Systems',
     location: 'Hyderabad / Remote',
-    type: 'Full-time',
-    stipend: '₹9 - 14 LPA',
-    termEligibility: 'Diploma in Programming',
-    skills: ['TypeScript', 'Next.js', 'PostgreSQL', 'Python'],
+    type: 'Internship',
+    stipend: '₹25,000 / mo',
+    termEligibility: 'Foundation Qualifier Pass',
+    skills: ['Python', 'Data Structures', 'FastAPI'],
     postedAt: '3 days ago',
   },
   {
     id: 'job-4',
-    role: 'Quantitative Analytics Trainee',
-    company: 'AlphaRisk Capital',
-    location: 'Mumbai / Onsite',
-    type: 'Internship',
-    stipend: '₹40,000 / mo',
-    termEligibility: 'Foundation Term 3+',
-    skills: ['Math 1 & 2', 'Probability', 'Python Financial Modeling'],
-    postedAt: '1 week ago',
+    role: 'Analytics Engineer Trainee',
+    company: 'FinMetrics Analytics',
+    location: 'Mumbai / Hybrid',
+    type: 'Full-time',
+    stipend: '₹8 - 11 LPA',
+    termEligibility: 'Diploma in DS / Programming',
+    skills: ['SQL', 'Tableau', 'Business Data Mgmt'],
+    postedAt: '4 days ago',
   },
   {
     id: 'job-5',
-    role: 'Undergraduate AI Research Fellow',
-    company: 'Center for Responsible AI (CeRAI)',
-    location: 'Remote',
+    role: 'Generative AI Engineering Fellow',
+    company: 'IITM Tech Innovation Hub',
+    location: 'Chennai / Remote',
     type: 'Fellowship',
-    stipend: '₹25,000 / mo + Paper Co-authorship',
-    termEligibility: 'Any IITM BS Enrolled Student',
-    skills: ['Scientific Writing', 'Python', 'Ethics in AI'],
+    stipend: '₹45,000 / mo',
+    termEligibility: 'Diploma Level & Above',
+    skills: ['Transformers', 'Vector DBs', 'Python'],
     postedAt: '5 days ago',
   },
 ];
 
 export default function CareersPage() {
   return (
-    <div className="min-h-screen bg-[#090d0b] text-stone-100 flex flex-col justify-between selection:bg-emerald-800 selection:text-white">
+    <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#111110] text-[#1A1A19] dark:text-[#F5F3EF] flex flex-col justify-between selection:bg-[#FDF0EB] selection:text-[#E05A33] transition-colors">
       {/* Universal Site Navbar */}
       <SiteNavbar />
 
-      <main className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-12 space-y-12">
+      <main className="max-w-6xl w-full mx-auto px-4 sm:px-6 py-12 space-y-10">
         {/* Header Hero */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-800">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] border border-[#F5B8A3] dark:border-[#7D2F1A]">
             <Sparkles className="w-3.5 h-3.5" />
             <span>IIT Madras BS Alumni & Partner Placement Network</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white font-display tracking-tight leading-tight">
-            Careers, Internships & Jobs
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display tracking-tight leading-tight">
+            Careers & Internships
           </h1>
 
-          <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
-            Curated opportunities tailored for students in the IIT Madras BS Degree. Filtered by Foundation, Diploma, and Degree level coursework so you can land roles relevant to your stage.
+          <p className="text-[#6B6B66] dark:text-[#B5B3AD] text-sm sm:text-base leading-relaxed">
+            Curated opportunities tailored for students in the IIT Madras BS Degree.
           </p>
         </div>
 
         {/* Value Proposition Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-5 rounded-xl border border-stone-800 bg-stone-950/70 backdrop-blur space-y-2">
-            <div className="w-9 h-9 rounded-lg bg-emerald-950 border border-emerald-800/80 flex items-center justify-center text-emerald-400">
+          <div className="p-5 rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#1C1C1A] space-y-2 shadow-xs">
+            <div className="w-9 h-9 rounded-lg bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] flex items-center justify-center text-[#E05A33]">
               <Building2 className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-white text-sm">Verified Companies</h3>
-            <p className="text-xs text-stone-400 leading-relaxed">
-              Every opening recognizes the rigorous credit structure and grading standards of the IITM BS Degree.
+            <h3 className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm">Verified Companies</h3>
+            <p className="text-xs text-[#8C8C87] leading-relaxed">
+              Openings recognizing the rigorous credit structure of the IITM BS Degree.
             </p>
           </div>
 
-          <div className="p-5 rounded-xl border border-stone-800 bg-stone-950/70 backdrop-blur space-y-2">
-            <div className="w-9 h-9 rounded-lg bg-teal-950 border border-teal-800/80 flex items-center justify-center text-teal-400">
+          <div className="p-5 rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#1C1C1A] space-y-2 shadow-xs">
+            <div className="w-9 h-9 rounded-lg bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] flex items-center justify-center text-[#E05A33]">
               <GraduationCap className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-white text-sm">Level-Mapped Hiring</h3>
-            <p className="text-xs text-stone-400 leading-relaxed">
-              Openings tagged by coursework: Foundation (Python & Math), Diploma (ML & Systems), and Degree.
+            <h3 className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm">Level-Mapped Hiring</h3>
+            <p className="text-xs text-[#8C8C87] leading-relaxed">
+              Tagged by coursework: Foundation, Diploma, and Degree.
             </p>
           </div>
 
-          <div className="p-5 rounded-xl border border-stone-800 bg-stone-950/70 backdrop-blur space-y-2">
-            <div className="w-9 h-9 rounded-lg bg-cyan-950 border border-cyan-800/80 flex items-center justify-center text-cyan-400">
+          <div className="p-5 rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#1C1C1A] space-y-2 shadow-xs">
+            <div className="w-9 h-9 rounded-lg bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] flex items-center justify-center text-[#E05A33]">
               <Users className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-white text-sm">Alumni Referrals</h3>
-            <p className="text-xs text-stone-400 leading-relaxed">
-              Direct connection and internal referrals from seniors currently working at Google, Microsoft, and IITM startups.
+            <h3 className="font-bold text-[#1A1A19] dark:text-[#F5F3EF] text-sm">Alumni Referrals</h3>
+            <p className="text-xs text-[#8C8C87] leading-relaxed">
+              Direct connection from alumni working at tech leaders and startups.
             </p>
           </div>
         </div>
 
         {/* Active Openings Section */}
         <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-800 pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E8E6E1] dark:border-[#2D2D2A] pb-3">
             <div>
-              <h2 className="text-lg font-bold text-white font-display">Featured Openings & Internships</h2>
-              <p className="text-xs text-stone-400">Verified by our academic faculty & placement team</p>
+              <h2 className="text-lg font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display">Featured Openings</h2>
             </div>
-            <span className="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded border border-emerald-800/60 self-start sm:self-auto">
+            <span className="text-xs font-mono text-[#E05A33] bg-[#FDF0EB] dark:bg-[#3A150C] px-2.5 py-1 rounded border border-[#F5B8A3] dark:border-[#7D2F1A] font-semibold self-start sm:self-auto">
               5 Active Openings
             </span>
           </div>
@@ -173,51 +168,51 @@ export default function CareersPage() {
             {JOB_OPENINGS.map((job) => (
               <div
                 key={job.id}
-                className="p-5 rounded-xl border border-stone-800 bg-stone-950 hover:border-emerald-600/50 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 group"
+                className="p-5 rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#1C1C1A] hover:border-[#E05A33]/50 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 group shadow-xs"
               >
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">
+                    <span className="text-sm font-bold text-[#1A1A19] dark:text-[#F5F3EF] group-hover:text-[#E05A33] transition-colors">
                       {job.role}
                     </span>
                     {job.featured && (
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] border border-[#F5B8A3]">
                         Featured
                       </span>
                     )}
-                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-stone-900 text-stone-300 border border-stone-800">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#F5F3EF] dark:bg-[#242422] text-[#6B6B66] dark:text-[#B5B3AD] border border-[#E8E6E1] dark:border-[#2D2D2A]">
                       {job.type}
                     </span>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-4 text-xs text-stone-400 font-mono">
-                    <span className="flex items-center gap-1.5 text-stone-300">
-                      <Building2 className="w-3.5 h-3.5 text-stone-500" />
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-[#8C8C87] font-mono">
+                    <span className="flex items-center gap-1.5 text-[#4A4A46] dark:text-[#B5B3AD]">
+                      <Building2 className="w-3.5 h-3.5 text-[#8C8C87]" />
                       {job.company}
                     </span>
                     <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-stone-500" />
+                      <MapPin className="w-3.5 h-3.5 text-[#8C8C87]" />
                       {job.location}
                     </span>
-                    <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
-                      <DollarSign className="w-3.5 h-3.5 text-emerald-500" />
+                    <span className="flex items-center gap-1.5 text-[#E05A33] font-semibold">
+                      <DollarSign className="w-3.5 h-3.5 text-[#E05A33]" />
                       {job.stipend}
                     </span>
-                    <span className="flex items-center gap-1.5 text-stone-500">
+                    <span className="flex items-center gap-1.5 text-[#8C8C87]">
                       <Clock className="w-3.5 h-3.5" />
                       {job.postedAt}
                     </span>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                    <span className="text-[11px] text-stone-500 mr-1 font-mono">Target:</span>
-                    <span className="text-[11px] px-2 py-0.5 rounded bg-stone-900 text-teal-300 border border-teal-900/50 font-mono">
+                    <span className="text-[11px] text-[#8C8C87] mr-1 font-mono">Target:</span>
+                    <span className="text-[11px] px-2 py-0.5 rounded bg-[#F5F3EF] dark:bg-[#242422] text-[#E05A33] border border-[#F5B8A3]/40 font-mono font-semibold">
                       {job.termEligibility}
                     </span>
                     {job.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-[10px] px-2 py-0.5 rounded bg-stone-900/80 text-stone-400 border border-stone-800"
+                        className="text-[10px] px-2 py-0.5 rounded bg-[#F5F3EF] dark:bg-[#242422] text-[#8C8C87] border border-[#E8E6E1] dark:border-[#2D2D2A]"
                       >
                         {skill}
                       </span>
@@ -228,13 +223,13 @@ export default function CareersPage() {
                 <div className="flex items-center gap-2.5 shrink-0 self-start md:self-center">
                   <Link
                     href={`/support`}
-                    className="px-3.5 py-2 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-xs font-semibold text-stone-200 transition flex items-center gap-1.5"
+                    className="px-3.5 py-2 rounded-lg bg-[#F5F3EF] dark:bg-[#242422] hover:bg-[#EDEBE5] border border-[#E8E6E1] dark:border-[#2D2D2A] text-xs font-semibold text-[#1A1A19] dark:text-[#F5F3EF] transition flex items-center gap-1.5"
                   >
                     <span>Resume Review</span>
                   </Link>
                   <a
                     href="mailto:careers@iitm-bs.academic?subject=Application"
-                    className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-stone-950 font-bold text-xs flex items-center gap-1.5 transition shadow-sm"
+                    className="px-4 py-2 rounded-lg bg-[#E05A33] hover:bg-[#C94A26] text-white font-bold text-xs flex items-center gap-1.5 transition shadow-xs"
                   >
                     <span>Quick Apply</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -246,16 +241,16 @@ export default function CareersPage() {
         </div>
 
         {/* Career Support CTA Banner */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-stone-900 to-teal-950/80 border border-emerald-800/60 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="p-6 rounded-2xl bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
           <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-lg font-bold text-white font-display">Need 1:1 Technical Interview Preparation?</h3>
-            <p className="text-xs text-stone-300 max-w-xl">
-              Book a 1:1 session with an IIT Madras alumnus working at top tech firms to review your resume, debug portfolio code, and simulate technical rounds.
+            <h3 className="text-lg font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display">Need 1:1 Technical Interview Preparation?</h3>
+            <p className="text-xs text-[#8C8C87] max-w-xl">
+              Book a session with an IIT Madras alumnus to review your resume, debug portfolio code, and simulate technical rounds.
             </p>
           </div>
           <Link
             href="/one-to-one"
-            className="px-5 py-2.5 rounded-xl bg-white hover:bg-stone-100 text-stone-950 font-extrabold text-xs shrink-0 flex items-center gap-2 transition"
+            className="px-5 py-2.5 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white font-bold text-xs shrink-0 flex items-center gap-2 transition shadow-xs"
           >
             <span>Book 1:1 Mentorship</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -264,8 +259,8 @@ export default function CareersPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-stone-800 py-6 text-center text-xs text-stone-500 font-mono">
-        © 2026 IITM BS Student Career Hub · Verified Opportunities for Data Science & AI
+      <footer className="border-t border-[#E8E6E1] dark:border-[#2D2D2A] py-6 text-center text-xs text-[#8C8C87] font-mono">
+        © 2026 IITM BS Student Career Hub · Verified Opportunities
       </footer>
     </div>
   );

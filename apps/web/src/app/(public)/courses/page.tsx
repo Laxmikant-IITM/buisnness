@@ -14,6 +14,8 @@ import CourseCatalogClient, { type CatalogCourse } from './course-catalog-client
  */
 
 import { SiteNavbar } from '@/components/layout/site-navbar';
+import { AppShell } from '@/components/layout/app-shell';
+import { DashboardCourses } from '@/components/dashboard/dashboard-courses';
 import { getFullSession } from '@/lib/auth';
 import { demoStore } from '@/lib/demo-store';
 
@@ -191,39 +193,55 @@ export default async function CoursesCatalogPage() {
 
   const initialCourses = dbCourses.length > 0 ? dbCourses : FALLBACK_COURSES;
 
+  // 1. If signed in, render within the Dashboard AppShell workspace
+  if (session) {
+    const headerUser = {
+      name: session.name || session.email.split('@')[0],
+      email: session.email,
+      avatar: session.avatar || undefined,
+      role: session.role,
+    };
+
+    return (
+      <AppShell user={headerUser}>
+        <DashboardCourses courses={initialCourses} userRole={userRole} />
+      </AppShell>
+    );
+  }
+
+  // 2. Unauthenticated visitors get the view-only commercial storefront
   return (
-    <div className="min-h-screen bg-[#090d0b] text-stone-100 font-sans selection:bg-emerald-800 selection:text-white">
+    <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#111110] text-[#1A1A19] dark:text-[#F5F3EF] font-sans selection:bg-[#FDF0EB] selection:text-[#E05A33]">
       {/* Unified Site Navbar */}
       <SiteNavbar />
 
       {/* Catalog Hero */}
-      <section className="bg-gradient-to-b from-[#090d0b] via-stone-950 to-[#090d0b] border-b border-stone-800 py-12 px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#FAFAF7] dark:bg-[#111110] border-b border-[#E8E6E1] dark:border-[#2D2D2A] py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center md:text-left md:flex md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-800 mb-3">
-              <span>IIT Madras BS Degree Support</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] border border-[#F5B8A3] dark:border-[#7D2F1A] mb-3 font-mono">
+              <span>IIT Madras BS Support</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-display">
-              Targeted Academic Courses & Batches
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] tracking-tight font-display">
+              Academic Courses & Batches
             </h1>
-            <p className="mt-2 text-stone-300 text-sm sm:text-base leading-relaxed">
-              Designed for Qualifier, Foundation, and Diploma stages. Live doubt-solving, recorded
-              concept breakdowns, and exam practice tailored to absolute grading rubrics.
+            <p className="mt-1.5 text-[#8C8C87] text-xs sm:text-sm">
+              Qualifier, Foundation, and Diploma cohorts.
             </p>
           </div>
 
           <div className="mt-6 md:mt-0 flex items-center gap-4 justify-center">
             <div className="text-right hidden sm:block">
-              <div className="text-xs font-semibold text-neutral-500 uppercase tracking-wide">
-                Guaranteed Floor
+              <div className="text-[11px] font-mono uppercase text-[#8C8C87]">
+                Starting At
               </div>
-              <div className="text-sm font-bold text-emerald-800 font-mono">
-                From ₹1,499 / term
+              <div className="text-sm font-extrabold text-[#E05A33] font-display">
+                ₹1,499 / term
               </div>
             </div>
             <Link
               href="/refer"
-              className="inline-flex items-center gap-2 text-xs font-bold px-3 py-2 bg-amber-50 text-amber-900 border border-amber-200 rounded-md hover:bg-amber-100 transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-bold px-3.5 py-2 bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] border border-[#F5B8A3] dark:border-[#7D2F1A] rounded-xl hover:bg-[#FBE4DC] transition-colors"
             >
               <span>Have a referral code? Get 5% OFF</span>
             </Link>
@@ -233,7 +251,7 @@ export default async function CoursesCatalogPage() {
 
       {/* Interactive Catalog Filter & Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <CourseCatalogClient initialCourses={initialCourses} userRole={userRole} />
+        <CourseCatalogClient initialCourses={initialCourses} userRole="STUDENT" />
       </div>
     </div>
   );

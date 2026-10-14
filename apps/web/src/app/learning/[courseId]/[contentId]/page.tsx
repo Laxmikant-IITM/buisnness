@@ -163,6 +163,28 @@ const DEMO_COURSES: Record<string, DemoCourseData> = {
   },
 };
 
+// Aliases so all platform course slugs and IDs work seamlessly
+DEMO_COURSES['course-math1'] = DEMO_COURSES['c1'];
+DEMO_COURSES['maths-1'] = DEMO_COURSES['c1'];
+DEMO_COURSES['mathematics-for-data-science-1'] = DEMO_COURSES['c1'];
+DEMO_COURSES['course-ct'] = DEMO_COURSES['c2'];
+DEMO_COURSES['python-ct'] = DEMO_COURSES['c2'];
+DEMO_COURSES['computational-thinking'] = DEMO_COURSES['c2'];
+DEMO_COURSES['course-stats1'] = {
+  id: 'course-stats1',
+  title: 'Statistics for Data Science 1',
+  slug: 'statistics-for-data-science-1',
+  topics: DEMO_COURSES['c1'].topics,
+};
+DEMO_COURSES['statistics-for-data-science-1'] = DEMO_COURSES['course-stats1'];
+DEMO_COURSES['deep-learning-neural-networks'] = {
+  id: 'deep-learning-neural-networks',
+  title: 'Deep Learning & Neural Networks',
+  slug: 'deep-learning-neural-networks',
+  topics: DEMO_COURSES['c2'].topics,
+};
+DEMO_COURSES['course-mlf'] = DEMO_COURSES['deep-learning-neural-networks'];
+
 export default async function LessonPage({
   params,
 }: {

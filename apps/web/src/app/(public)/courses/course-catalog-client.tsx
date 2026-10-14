@@ -355,39 +355,6 @@ export default function CourseCatalogClient({ initialCourses, userRole = 'STUDEN
 
   return (
     <div className="space-y-6">
-      {/* Staff Executive Action Tabs */}
-      {isStaff && (
-        <div className="flex items-center justify-between p-1 rounded-xl bg-stone-900 border border-stone-800">
-          <div className="flex gap-1">
-            <button
-              onClick={() => setActiveTab('browse')}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                activeTab === 'browse'
-                  ? 'bg-emerald-600 text-white shadow-xs font-bold'
-                  : 'text-stone-400 hover:text-white'
-              }`}
-            >
-              All Courses & Lectures ({courses.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('add')}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'add'
-                  ? 'bg-emerald-600 text-white shadow-xs font-bold'
-                  : 'text-stone-400 hover:text-white'
-              }`}
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Course</span>
-            </button>
-          </div>
-
-          <div className="hidden sm:flex items-center gap-2 pr-3 text-xs font-mono text-emerald-400">
-            <ShieldCheck className="w-4 h-4" />
-            <span>Manager Studio Active · Direct Course & Video Editing</span>
-          </div>
-        </div>
-      )}
 
       {/* Tab 2: Add Course Form (Inside Dashboard) */}
       {isStaff && activeTab === 'add' ? (
@@ -553,30 +520,30 @@ export default function CourseCatalogClient({ initialCourses, userRole = 'STUDEN
         /* Tab 1: Browse Courses */
         <div className="space-y-6">
           {/* Controls Bar */}
-          <div className="bg-stone-950 p-4 rounded-xl border border-stone-800 shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#1C1C1A] p-4 rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] shadow-xs space-y-4">
             <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
               {/* Search Box */}
               <div className="relative w-full md:w-96">
-                <Search className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-[#8C8C87] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search by subject, title, or keyword..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 text-xs rounded-lg border border-stone-800 bg-stone-900 text-stone-200 placeholder:text-stone-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  className="w-full pl-9 pr-4 py-2 text-xs rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] bg-[#FAFAF7] dark:bg-[#242422] text-[#1A1A19] dark:text-[#F5F3EF] placeholder:text-[#8C8C87] focus:outline-none focus:ring-1 focus:ring-[#E05A33]"
                 />
               </div>
 
               {/* Term Filter Buttons */}
-              <div className="flex flex-wrap gap-1 bg-stone-900 p-1 rounded-lg border border-stone-800 self-stretch md:self-auto">
+              <div className="flex flex-wrap gap-1 bg-[#FAFAF7] dark:bg-[#242422] p-1 rounded-xl border border-[#E8E6E1] dark:border-[#2D2D2A] self-stretch md:self-auto">
                 {TERMS.map((term) => (
                   <button
                     key={term}
                     onClick={() => setSelectedTerm(term)}
-                    className={`px-3 py-1.5 text-xs font-semibold rounded-md transition cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition cursor-pointer ${
                       selectedTerm === term
-                        ? 'bg-emerald-600 text-white shadow-xs'
-                        : 'text-stone-400 hover:text-white'
+                        ? 'bg-[#E05A33] text-white shadow-xs'
+                        : 'text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white'
                     }`}
                   >
                     {term}
@@ -594,87 +561,66 @@ export default function CourseCatalogClient({ initialCourses, userRole = 'STUDEN
               return (
                 <article
                   key={course.id}
-                  className="bg-stone-950 rounded-2xl border border-stone-800 overflow-hidden shadow-xl hover:border-emerald-600/50 transition-all flex flex-col justify-between group"
+                  className="bg-white dark:bg-[#1C1C1A] rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] overflow-hidden shadow-xs hover:border-[#E05A33]/50 transition-all flex flex-col justify-between group"
                 >
                   <div>
                     {/* Card Banner */}
-                    <div className="h-28 bg-gradient-to-br from-emerald-950/60 to-stone-900 p-4 flex flex-col justify-between border-b border-stone-800/80">
+                    <div className="h-28 bg-[#FDF0EB] dark:bg-[#3A150C]/40 p-4 flex flex-col justify-between border-b border-[#F5B8A3]/40 dark:border-[#7D2F1A]">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-white dark:bg-[#1C1C1A] text-[#E05A33] border border-[#F5B8A3] dark:border-[#7D2F1A] font-mono">
                           {course.subject || 'Academic'}
                         </span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-stone-900 text-stone-300 border border-stone-800">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white dark:bg-[#1C1C1A] text-[#6B6B66] dark:text-[#B5B3AD] border border-[#E8E6E1] dark:border-[#2D2D2A] font-mono">
                           {course.term || 'IITM BS'}
                         </span>
                       </div>
 
-                      <div className="text-xs font-mono text-stone-400">
+                      <div className="text-xs font-mono text-[#8C8C87]">
                         {course.courseCategory === 'LIVE' ? 'Live + Recorded Batch' : 'Recorded Masterclass'}
                       </div>
                     </div>
 
                     {/* Card Body */}
-                    <div className="p-5 space-y-3">
-                      <h3 className="font-bold text-base text-white group-hover:text-emerald-400 transition font-display">
+                    <div className="p-5 space-y-2.5">
+                      <h3 className="font-bold text-base text-[#1A1A19] dark:text-[#F5F3EF] group-hover:text-[#E05A33] transition font-display">
                         <Link href={`/courses/${course.slug}`}>{course.title}</Link>
                       </h3>
 
                       {course.description && (
-                        <p className="text-xs text-stone-400 line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-[#6B6B66] dark:text-[#B5B3AD] line-clamp-2 leading-relaxed">
                           {course.description}
                         </p>
                       )}
 
-                      <div className="text-xs text-stone-500 font-medium">
-                        Instructor: <span className="text-stone-300">{course.teacherName}</span>
+                      <div className="text-xs text-[#8C8C87] font-medium">
+                        Instructor: <span className="text-[#1A1A19] dark:text-[#F5F3EF] font-semibold">{course.teacherName}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Card Footer */}
-                  <div className="p-5 pt-0 border-t border-stone-900 mt-2 space-y-3">
+                  <div className="p-5 pt-0 border-t border-[#E8E6E1] dark:border-[#2D2D2A] mt-2 space-y-3">
                     <div className="flex items-baseline justify-between pt-3">
-                      <span className="text-[10px] text-stone-500 uppercase tracking-wide">Starting from</span>
-                      <span className="text-base font-extrabold text-white font-mono">
+                      <span className="text-[10px] text-[#8C8C87] uppercase tracking-wide font-mono">Starting from</span>
+                      <span className="text-base font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display">
                         ₹{startingRupees.toLocaleString('en-IN')}
                       </span>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
-                      {isStaff ? (
-                        <>
-                          <button
-                            onClick={() => openEditModal(course)}
-                            className="w-full py-2 px-3 rounded-lg bg-emerald-950 hover:bg-emerald-900 border border-emerald-800 text-emerald-300 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer"
-                          >
-                            <Edit3 className="w-3.5 h-3.5" />
-                            <span>Edit Course</span>
-                          </button>
-                          <Link
-                            href="/learning/c-maths/l-1"
-                            className="w-full py-2 px-3 rounded-lg bg-stone-800 hover:bg-stone-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition"
-                          >
-                            <PlayCircle className="w-3.5 h-3.5 text-emerald-400" />
-                            <span>Stream</span>
-                          </Link>
-                        </>
-                      ) : (
-                        <>
-                          <Link
-                            href={`/courses/${course.slug}`}
-                            className="w-full py-2 px-3 rounded-lg bg-stone-900 hover:bg-stone-800 text-stone-300 text-xs font-semibold text-center border border-stone-800 transition"
-                          >
-                            Syllabus
-                          </Link>
-                          <Link
-                            href={`/courses/${course.slug}`}
-                            className="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold text-center transition flex items-center justify-center gap-1"
-                          >
-                            <span>Enroll</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </Link>
-                        </>
-                      )}
+                      <Link
+                        href={`/courses/${course.slug}`}
+                        className="w-full py-2 px-3 rounded-lg bg-[#F5F3EF] hover:bg-[#EDEBE5] dark:bg-[#242422] text-[#1A1A19] dark:text-[#F5F3EF] text-xs font-semibold text-center border border-[#E8E6E1] dark:border-[#2D2D2A] transition"
+                      >
+                        Syllabus
+                      </Link>
+                      <Link
+                        href={`/courses/${course.slug}`}
+                        className="w-full py-2 px-3 rounded-lg bg-[#E05A33] hover:bg-[#C94A26] text-white text-xs font-bold text-center transition flex items-center justify-center gap-1 shadow-xs"
+                      >
+                        <span>View Details</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
                     </div>
                   </div>
                 </article>

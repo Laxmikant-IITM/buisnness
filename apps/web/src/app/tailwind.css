@@ -7,6 +7,8 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Accent: Terracotta / Coral */
   --color-accent-50: #FDF0EB;

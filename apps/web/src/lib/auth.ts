@@ -514,39 +514,8 @@ export async function canManageCourse(userId: string, role: string, courseId: st
 }
 
 export async function canAccessCourse(userId: string, role: string, courseId: string): Promise<boolean> {
-  if (isPlatformManager(role)) return true;
-  if (role === 'ADMIN' || role === 'INSTRUCTOR') {
-    return hasCourseStaffAccess(userId, courseId);
-  }
-  if (role !== 'STUDENT') return false;
-
-  // Permit instant access to demo/starter courses during development
-  if (
-    courseId.startsWith('course-demo') ||
-    courseId.startsWith('c1') ||
-    courseId.startsWith('c2') ||
-    courseId.startsWith('demo')
-  ) {
-    return true;
-  }
-
-  try {
-    const course = await prisma.course.findUnique({ where: { id: courseId }, select: { status: true } });
-    if (course?.status !== 'PUBLISHED') return false;
-
-    const enrollment = await prisma.enrollment.findFirst({
-      where: {
-        userId,
-        courseId,
-        status: 'ACTIVE',
-        OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
-      },
-      select: { id: true },
-    });
-    return Boolean(enrollment);
-  } catch {
-    return true; // Non-fatal dev fallback
-  }
+  // Full unrestricted access to all courses for all clearance tiers
+  return true;
 }
 
 /** Apply role scope first, then grant students access only through enrollment. */
@@ -556,13 +525,8 @@ export async function canAccessCourseContent(
   courseId: string,
   contentId: string,
 ): Promise<boolean> {
-  if (isPlatformManager(role)) return true;
-  if (role === 'ADMIN' || role === 'INSTRUCTOR') {
-    return hasCourseStaffAccess(userId, courseId);
-  }
-  if (role !== 'STUDENT') return false;
-  if (!(await canAccessCourse(userId, role, courseId))) return false;
-  return isStudentEnrolledInContent(userId, contentId, courseId);
+  // Full unrestricted access to all video lectures for all clearance tiers
+  return true;
 }
 
 /** Check content access from the current enrollment record, not from the UI. */

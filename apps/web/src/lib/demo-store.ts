@@ -248,7 +248,9 @@ const INITIAL_COURSES: StoredCourse[] = [
   },
 ];
 
-// Initial mock users
+// Initial mock users with full access to all courses
+const ALL_DEMO_COURSES = ['course-math1', 'course-ct', 'course-stats1', 'c1', 'c2'];
+
 const INITIAL_USERS: StoredUser[] = [
   {
     id: 'demo-super-manager',
@@ -262,7 +264,7 @@ const INITIAL_USERS: StoredUser[] = [
     xp: 9800,
     iitmLevel: 'Degree',
     isActive: true,
-    enrolledCourseIds: ['course-math1', 'course-ct', 'course-stats1'],
+    enrolledCourseIds: ALL_DEMO_COURSES,
     totalSpentPaise: 0,
     createdAt: new Date(Date.now() - 90 * 86400000).toISOString(),
   },
@@ -278,7 +280,7 @@ const INITIAL_USERS: StoredUser[] = [
     xp: 5400,
     iitmLevel: 'Diploma',
     isActive: true,
-    enrolledCourseIds: ['course-math1', 'course-ct'],
+    enrolledCourseIds: ALL_DEMO_COURSES,
     totalSpentPaise: 0,
     createdAt: new Date(Date.now() - 60 * 86400000).toISOString(),
   },
@@ -294,7 +296,7 @@ const INITIAL_USERS: StoredUser[] = [
     xp: 3200,
     iitmLevel: 'Diploma',
     isActive: true,
-    enrolledCourseIds: ['course-math1'],
+    enrolledCourseIds: ALL_DEMO_COURSES,
     totalSpentPaise: 0,
     createdAt: new Date(Date.now() - 45 * 86400000).toISOString(),
   },
@@ -310,7 +312,7 @@ const INITIAL_USERS: StoredUser[] = [
     xp: 2800,
     iitmLevel: 'Degree',
     isActive: true,
-    enrolledCourseIds: ['course-math1', 'course-ct'],
+    enrolledCourseIds: ALL_DEMO_COURSES,
     totalSpentPaise: 0,
     createdAt: new Date(Date.now() - 35 * 86400000).toISOString(),
   },
@@ -326,7 +328,7 @@ const INITIAL_USERS: StoredUser[] = [
     xp: 1250,
     iitmLevel: 'Foundation',
     isActive: true,
-    enrolledCourseIds: ['course-math1'],
+    enrolledCourseIds: ALL_DEMO_COURSES,
     totalSpentPaise: 349900,
     createdAt: new Date(Date.now() - 15 * 86400000).toISOString(),
   },

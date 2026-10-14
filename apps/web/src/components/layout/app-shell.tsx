@@ -43,7 +43,7 @@ export function AppShell({
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   return (
-    <div className={`min-h-screen flex bg-[#090d0b] text-stone-100 font-sans selection:bg-emerald-800 selection:text-white ${className}`}>
+    <div className={`min-h-screen flex bg-[#FAFAF7] dark:bg-[#111110] text-[#1A1A19] dark:text-[#F5F3EF] font-sans selection:bg-[#FDF0EB] selection:text-[#E05A33] ${className}`}>
       {/* Desktop Sidebar */}
       <div className="hidden lg:flex shrink-0">
         <Sidebar userRole={user?.role} userName={user?.name} className="sticky top-0 h-screen" />
@@ -53,16 +53,16 @@ export function AppShell({
       {mobileDrawerOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex">
           <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
             aria-hidden="true"
             onClick={() => setMobileDrawerOpen(false)}
           />
-          <div className="relative flex flex-col w-72 max-w-[85vw] h-full bg-[#0a0e0c] shadow-2xl z-10 border-r border-stone-800">
+          <div className="relative flex flex-col w-72 max-w-[85vw] h-full bg-[#FAFAF7] dark:bg-[#1C1C1A] shadow-2xl z-10 border-r border-[#E8E6E1] dark:border-[#2D2D2A]">
             <button
               type="button"
               onClick={() => setMobileDrawerOpen(false)}
               aria-label="Close menu drawer"
-              className="absolute top-4 right-4 p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white hover:bg-[#F5F3EF] dark:hover:bg-[#2D2D2A] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E05A33]"
             >
               <X className="w-5 h-5" />
             </button>

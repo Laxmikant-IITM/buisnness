@@ -31,6 +31,7 @@ import {
   Users,
   Sparkles,
   FileText,
+  Home,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ThemeToggle } from './theme-toggle';
@@ -102,7 +103,8 @@ export function SiteNavbar({ initialUser, hideAnnouncement = false }: SiteNavbar
   };
 
   return (
-    <header className="w-full border-b border-[#E8E6E1] dark:border-[#2D2D2A] sticky top-0 bg-[#FAFAF7]/90 dark:bg-[#111110]/90 backdrop-blur-md z-40 transition-colors">
+    <>
+      <header className="w-full border-b border-[#E8E6E1] dark:border-[#2D2D2A] sticky top-0 bg-[#FAFAF7]/90 dark:bg-[#111110]/90 backdrop-blur-md z-40 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
@@ -129,8 +131,8 @@ export function SiteNavbar({ initialUser, hideAnnouncement = false }: SiteNavbar
                 href={link.href}
                 className={`transition-colors flex items-center gap-1.5 py-1 ${
                   active
-                    ? 'text-[#E05A33] dark:text-[#EE8E6E] font-semibold'
-                    : 'text-neutral-600 hover:text-[#E05A33] dark:text-neutral-300 dark:hover:text-[#EE8E6E]'
+                    ? 'text-[#E05A33] font-bold'
+                    : 'text-[#2D2D2A] dark:text-[#EDEBE5] hover:text-[#E05A33] dark:hover:text-[#E05A33] font-medium'
                 }`}
               >
                 <span>{link.label}</span>
@@ -155,7 +157,7 @@ export function SiteNavbar({ initialUser, hideAnnouncement = false }: SiteNavbar
           {user ? (
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white font-semibold text-xs shadow-sm transition-all duration-150 transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#E05A33] hover:bg-[#C94A26] text-white font-bold text-xs shadow-sm transition-all duration-150 transform hover:-translate-y-0.5"
             >
               <Compass className="w-4 h-4" />
               <span>Dashboard</span>
@@ -164,7 +166,7 @@ export function SiteNavbar({ initialUser, hideAnnouncement = false }: SiteNavbar
             <>
               <Link
                 href="/sign-in"
-                className="text-xs font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white px-3 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                className="text-xs font-semibold text-[#2D2D2A] hover:text-[#1A1A19] dark:text-[#EDEBE5] dark:hover:text-white px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
               >
                 Sign In
               </Link>
@@ -262,5 +264,70 @@ export function SiteNavbar({ initialUser, hideAnnouncement = false }: SiteNavbar
         </div>
       )}
     </header>
+
+    {/* Mobile Public Fixed Bottom Navigation Bar */}
+    <nav
+      aria-label="Public mobile navigation"
+      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-[#090d0b]/95 backdrop-blur-md border-t border-stone-800/80 px-2 py-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom))] shadow-2xl"
+    >
+      <div className="flex items-center justify-around gap-1 max-w-md mx-auto">
+        <Link
+          href="/"
+          className={`flex flex-1 flex-col items-center justify-center py-1.5 px-2 rounded-xl text-[10px] font-mono transition-all select-none active:scale-95 ${
+            pathname === '/'
+              ? 'text-emerald-400 font-bold bg-emerald-950/40 border border-emerald-900/40'
+              : 'text-stone-400 hover:text-white'
+          }`}
+        >
+          <Home className="w-5 h-5 mb-0.5" />
+          <span>Home</span>
+        </Link>
+        <Link
+          href="/courses"
+          className={`flex flex-1 flex-col items-center justify-center py-1.5 px-2 rounded-xl text-[10px] font-mono transition-all select-none active:scale-95 ${
+            pathname.startsWith('/courses')
+              ? 'text-emerald-400 font-bold bg-emerald-950/40 border border-emerald-900/40'
+              : 'text-stone-400 hover:text-white'
+          }`}
+        >
+          <BookOpen className="w-5 h-5 mb-0.5" />
+          <span>Courses</span>
+        </Link>
+        <Link
+          href="/resources"
+          className={`flex flex-1 flex-col items-center justify-center py-1.5 px-2 rounded-xl text-[10px] font-mono transition-all select-none active:scale-95 ${
+            pathname.startsWith('/resources')
+              ? 'text-emerald-400 font-bold bg-emerald-950/40 border border-emerald-900/40'
+              : 'text-stone-400 hover:text-white'
+          }`}
+        >
+          <FileText className="w-5 h-5 mb-0.5" />
+          <span>Library</span>
+        </Link>
+        <Link
+          href="/tools"
+          className={`flex flex-1 flex-col items-center justify-center py-1.5 px-2 rounded-xl text-[10px] font-mono transition-all select-none active:scale-95 ${
+            pathname.startsWith('/tools')
+              ? 'text-emerald-400 font-bold bg-emerald-950/40 border border-emerald-900/40'
+              : 'text-stone-400 hover:text-white'
+          }`}
+        >
+          <Calculator className="w-5 h-5 mb-0.5" />
+          <span>Predictor</span>
+        </Link>
+        <Link
+          href={user ? (user.role === 'STUDENT' ? '/dashboard' : '/manager') : '/sign-in'}
+          className={`flex flex-1 flex-col items-center justify-center py-1.5 px-2 rounded-xl text-[10px] font-mono transition-all select-none active:scale-95 ${
+            pathname.startsWith('/dashboard') || pathname.startsWith('/manager') || pathname.startsWith('/sign-in')
+              ? 'text-emerald-400 font-bold bg-emerald-950/40 border border-emerald-900/40'
+              : 'text-stone-400 hover:text-white'
+          }`}
+        >
+          <Compass className="w-5 h-5 mb-0.5" />
+          <span>{user ? 'Dashboard' : 'Sign In'}</span>
+        </Link>
+      </div>
+    </nav>
+    </>
   );
 }

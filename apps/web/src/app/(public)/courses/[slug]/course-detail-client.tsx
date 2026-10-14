@@ -343,44 +343,44 @@ export default function CourseDetailClient({ course, topics, offerings, userRole
             ))}
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#202824] tracking-tight font-display leading-tight">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight font-display leading-tight">
             {course.title}
           </h1>
 
-          <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
+          <p className="text-sm sm:text-base text-stone-300 leading-relaxed">
             {course.description ||
               'A complete pedagogical masterclass built specifically to reverse-engineer top grading percentiles with structured lectures, quiz simulations, and live doubt resolution.'}
           </p>
 
           {course.teacherName && (
             <div className="flex items-center gap-3 pt-2">
-              <div className="w-10 h-10 rounded-full bg-[#29493e] text-[#b8e06a] flex items-center justify-center font-bold text-sm">
+              <div className="w-10 h-10 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 flex items-center justify-center font-bold text-sm">
                 {course.teacherName.charAt(0)}
               </div>
               <div>
-                <div className="text-xs text-neutral-500 font-medium">Course Instructor</div>
-                <div className="text-sm font-bold text-neutral-900">{course.teacherName}</div>
+                <div className="text-xs text-stone-400 font-medium">Course Instructor</div>
+                <div className="text-sm font-bold text-white">{course.teacherName}</div>
               </div>
             </div>
           )}
 
           {/* Key Metric Highlights */}
-          <div className="grid grid-cols-3 gap-3 pt-4 border-t border-neutral-200">
-            <div className="p-3 bg-white rounded-lg border border-neutral-200">
-              <div className="text-xs text-neutral-500">Modules</div>
-              <div className="text-lg font-bold text-neutral-900 font-mono">
+          <div className="grid grid-cols-3 gap-3 pt-4 border-t border-stone-800">
+            <div className="p-3 bg-[#121714] rounded-xl border border-stone-800">
+              <div className="text-xs text-stone-400">Modules</div>
+              <div className="text-lg font-bold text-white font-mono">
                 {topics.length} Units
               </div>
             </div>
-            <div className="p-3 bg-white rounded-lg border border-neutral-200">
-              <div className="text-xs text-neutral-500">Total Lessons</div>
-              <div className="text-lg font-bold text-neutral-900 font-mono">
+            <div className="p-3 bg-[#121714] rounded-xl border border-stone-800">
+              <div className="text-xs text-stone-400">Total Lessons</div>
+              <div className="text-lg font-bold text-white font-mono">
                 {topics.reduce((acc, t) => acc + t.lessons.length, 0)} Lectures
               </div>
             </div>
-            <div className="p-3 bg-white rounded-lg border border-neutral-200">
-              <div className="text-xs text-neutral-500">Format</div>
-              <div className="text-lg font-bold text-emerald-800">
+            <div className="p-3 bg-[#121714] rounded-xl border border-stone-800">
+              <div className="text-xs text-stone-400">Format</div>
+              <div className="text-lg font-bold text-emerald-400">
                 {course.courseCategory === 'LIVE' ? 'Live + Recorded' : 'Recorded'}
               </div>
             </div>
@@ -388,7 +388,7 @@ export default function CourseDetailClient({ course, topics, offerings, userRole
         </div>
 
         {/* Right: Interactive Trial Video Player Card (YouTube Player) */}
-        <div className="lg:col-span-5 bg-white rounded-xl border border-[#dedfd7] overflow-hidden shadow-sm sticky top-24">
+        <div className="lg:col-span-5 bg-[#121714] rounded-2xl border border-stone-800 overflow-hidden shadow-sm lg:sticky lg:top-24">
           <div className="aspect-video bg-neutral-950 relative flex items-center justify-center group overflow-hidden">
             {isPlayingTrial ? (
               <iframe
@@ -407,7 +407,7 @@ export default function CourseDetailClient({ course, topics, offerings, userRole
                 <div className="absolute inset-0 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px] opacity-15" />
 
                 <div className="relative z-10 space-y-3">
-                  <div className="w-16 h-16 rounded-full bg-emerald-600/90 text-white flex items-center justify-center mx-auto shadow-xl group-hover:scale-110 group-hover:bg-emerald-500 transition-all">
+                  <div className="w-16 h-16 rounded-full bg-emerald-500/90 text-stone-950 flex items-center justify-center mx-auto shadow-xl group-hover:scale-110 group-hover:bg-emerald-400 transition-all">
                     <PlayCircle className="w-9 h-9" />
                   </div>
                   <div>
@@ -428,14 +428,14 @@ export default function CourseDetailClient({ course, topics, offerings, userRole
 
           <div className="p-5 space-y-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-semibold">
+              <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-semibold">
                 <Video className="w-4 h-4" />
                 <span>Trial Video Available</span>
               </div>
               {isPlayingTrial && (
                 <button
                   onClick={() => setIsPlayingTrial(false)}
-                  className="text-[11px] text-stone-500 hover:text-stone-800 underline cursor-pointer"
+                  className="text-[11px] text-stone-400 hover:text-white underline cursor-pointer"
                 >
                   Close Video Player
                 </button>
@@ -443,8 +443,8 @@ export default function CourseDetailClient({ course, topics, offerings, userRole
             </div>
 
             <div className="flex items-baseline justify-between pt-1">
-              <span className="text-xs font-semibold text-neutral-500">Access from</span>
-              <span className="text-2xl font-extrabold text-neutral-900 font-mono">
+              <span className="text-xs font-semibold text-stone-400">Access from</span>
+              <span className="text-2xl font-extrabold text-white font-mono">
                 ₹{lowestRupees.toLocaleString('en-IN')}
               </span>
             </div>
@@ -453,14 +453,14 @@ export default function CourseDetailClient({ course, topics, offerings, userRole
               <div className="space-y-2">
                 <Link
                   href={`/learning/${course.id}`}
-                  className="w-full py-3 bg-emerald-700 hover:bg-emerald-600 text-white font-extrabold rounded-lg text-sm flex items-center justify-center gap-2 transition shadow"
+                  className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold rounded-xl text-sm flex items-center justify-center gap-2 transition shadow active:scale-95"
                 >
                   <PlayCircle className="w-4 h-4" />
                   <span>Stream Lectures (Staff Bypass)</span>
                 </Link>
                 <Link
                   href="/courses"
-                  className="w-full py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 font-semibold rounded-lg text-xs flex items-center justify-center gap-1.5 transition"
+                  className="w-full py-2 bg-stone-900 hover:bg-stone-800 text-stone-300 border border-stone-800 font-semibold rounded-xl text-xs flex items-center justify-center gap-1.5 transition"
                 >
                   <span>Edit in Course Studio</span>
                 </Link>
@@ -469,7 +469,7 @@ export default function CourseDetailClient({ course, topics, offerings, userRole
               defaultOffering && (
                 <Link
                   href={`/checkout/${defaultOffering.id}`}
-                  className="w-full py-3 bg-[#29493e] hover:bg-[#1f382f] text-white font-bold rounded-lg text-sm flex items-center justify-center gap-2 transition shadow"
+                  className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold rounded-xl text-sm flex items-center justify-center gap-2 transition shadow active:scale-95"
                 >
                   <span>Enroll in Batch</span>
                   <ArrowRight className="w-4 h-4" />
@@ -477,8 +477,8 @@ export default function CourseDetailClient({ course, topics, offerings, userRole
               )
             )}
 
-            <div className="flex items-center justify-center gap-2 text-xs text-neutral-500 pt-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
+            <div className="flex items-center justify-center gap-2 text-xs text-stone-400 pt-1 font-mono">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               <span>Full Term Access · Razorpay Secure Checkout</span>
             </div>
           </div>

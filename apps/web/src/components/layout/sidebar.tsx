@@ -136,6 +136,7 @@ export function Sidebar({
     ...(isSuperManager
       ? [{ title: 'User & Staff Directory', href: '/manager/users', icon: Users, badge: 'ROOT' }]
       : []),
+    { title: 'Course Studio', href: '/manager/courses', icon: FolderPlus },
     { title: 'Exam Operations', href: '/manager/exams', icon: ShieldCheck, badge: 'PROCTOR' },
     { title: 'Operations Console', href: '/manager', icon: Library },
   ];

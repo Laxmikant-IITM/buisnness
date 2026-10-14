@@ -81,7 +81,7 @@ export function Header({
   return (
     <header
       className={[
-        'h-16 w-full bg-[#0c100e] border-b border-stone-800 px-4 sm:px-6 flex items-center justify-between gap-4 z-20 shrink-0 select-none text-stone-200',
+        'h-16 w-full bg-white/95 dark:bg-[#1C1C1A]/95 backdrop-blur-xs border-b border-[#E8E6E1] dark:border-[#2D2D2A] px-4 sm:px-6 flex items-center justify-between gap-4 z-20 shrink-0 select-none text-[#1A1A19] dark:text-[#F5F3EF]',
         className,
       ]
         .filter(Boolean)
@@ -94,7 +94,7 @@ export function Header({
             type="button"
             onClick={onMobileMenuToggle}
             aria-label="Open mobile navigation menu"
-            className="lg:hidden p-2 -ml-2 rounded-lg text-stone-400 hover:bg-stone-800 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="lg:hidden p-2 -ml-2 rounded-lg text-[#8C8C87] hover:bg-[#F5F3EF] dark:hover:bg-[#2D2D2A] hover:text-[#1A1A19] dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E05A33]"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -106,15 +106,15 @@ export function Header({
 
             return (
               <React.Fragment key={crumb.label + idx}>
-                {idx > 0 && <ChevronRight className="w-3.5 h-3.5 text-stone-500 shrink-0" />}
+                {idx > 0 && <ChevronRight className="w-3.5 h-3.5 text-[#B5B3AD] shrink-0" />}
                 {isLast || !crumb.href ? (
-                  <span className="font-semibold text-white truncate font-display">
+                  <span className="font-semibold text-[#1A1A19] dark:text-[#F5F3EF] truncate font-display">
                     {crumb.label}
                   </span>
                 ) : (
                   <Link
                     href={crumb.href}
-                    className="text-stone-400 hover:text-white transition-colors truncate"
+                    className="text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white transition-colors truncate"
                   >
                     {crumb.label}
                   </Link>
@@ -132,11 +132,11 @@ export function Header({
           type="button"
           onClick={onSearchClick}
           aria-label="Search courses, exams, and notes"
-          className="flex items-center gap-2 h-9 px-3 text-xs text-stone-400 bg-stone-900/90 hover:bg-stone-850 hover:text-white border border-stone-800 rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+          className="hidden md:flex items-center gap-2 h-9 px-3 text-xs text-[#8C8C87] bg-[#F5F3EF] dark:bg-[#242422] hover:bg-[#EDEBE5] dark:hover:bg-[#2D2D2A] hover:text-[#1A1A19] dark:hover:text-white border border-[#E8E6E1] dark:border-[#2D2D2A] rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E05A33]"
         >
-          <Search className="w-3.5 h-3.5 text-stone-400" />
-          <span className="hidden md:inline">Search curriculum...</span>
-          <kbd className="hidden md:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-stone-400 bg-stone-950 border border-stone-800 rounded shadow-xs">
+          <Search className="w-3.5 h-3.5 text-[#8C8C87]" />
+          <span>Search curriculum...</span>
+          <kbd className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-[#8C8C87] bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] rounded shadow-xs">
             ⌘K
           </kbd>
         </button>
@@ -145,18 +145,20 @@ export function Header({
         <RoleSwitcher currentRole={user.role} />
 
         {/* Theme appearance toggle */}
-        <ThemeToggle />
+        <div className="hidden sm:block">
+          <ThemeToggle />
+        </div>
 
         {/* Notifications button */}
         <button
           type="button"
           aria-label={`Notifications (${notificationCount} unread)`}
-          className="relative p-2 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer"
+          className="relative p-2 rounded-lg text-[#8C8C87] hover:text-[#1A1A19] dark:hover:text-white hover:bg-[#F5F3EF] dark:hover:bg-[#242422] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E05A33] cursor-pointer"
         >
           <Bell className="w-4 h-4" />
           {notificationCount > 0 && (
             <span
-              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-[#0c100e]"
+              className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#E05A33] ring-2 ring-white dark:ring-[#1C1C1A]"
               aria-hidden="true"
             />
           )}
@@ -164,7 +166,7 @@ export function Header({
 
         {/* User Avatar & Dropdown */}
         <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-2 p-1 rounded-xl bg-stone-900 border border-stone-800 hover:border-emerald-500/50 transition-all cursor-pointer">
+          <DropdownMenuTrigger className="flex items-center gap-2 p-1 rounded-xl bg-[#F5F3EF] dark:bg-[#242422] border border-[#E8E6E1] dark:border-[#2D2D2A] hover:border-[#E05A33]/50 transition-all cursor-pointer">
             <Avatar
               name={user.name}
               src={user.avatarUrl}
@@ -172,22 +174,22 @@ export function Header({
               status="online"
             />
             <div className="hidden xl:flex flex-col text-left pr-1">
-              <span className="text-xs font-bold text-white font-display truncate max-w-[110px]">{user.name}</span>
-              <span className="text-[10px] text-stone-400 font-mono -mt-0.5">{user.role || 'STUDENT'}</span>
+              <span className="text-xs font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display truncate max-w-[110px]">{user.name}</span>
+              <span className="text-[10px] text-[#8C8C87] font-mono -mt-0.5">{user.role || 'STUDENT'}</span>
             </div>
-            <ChevronDown className="w-3.5 h-3.5 text-stone-400 mr-1 hidden sm:inline" />
+            <ChevronDown className="w-3.5 h-3.5 text-[#8C8C87] mr-1 hidden sm:inline" />
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="right" className="w-64 bg-[#0f1411] border border-stone-800 text-stone-200 shadow-2xl p-1.5">
-            <div className="px-3 py-2 border-b border-stone-800">
-              <p className="text-xs font-bold text-white font-display truncate">
+          <DropdownMenuContent align="right" className="w-64 bg-white dark:bg-[#1C1C1A] border border-[#E8E6E1] dark:border-[#2D2D2A] text-[#1A1A19] dark:text-[#F5F3EF] shadow-xl p-1.5">
+            <div className="px-3 py-2 border-b border-[#E8E6E1] dark:border-[#2D2D2A]">
+              <p className="text-xs font-bold text-[#1A1A19] dark:text-[#F5F3EF] font-display truncate">
                 {user.name}
               </p>
-              <p className="text-[11px] text-stone-400 font-mono truncate">
+              <p className="text-[11px] text-[#8C8C87] font-mono truncate">
                 {user.email}
               </p>
               {user.role && (
-                <span className="inline-block mt-1 px-1.5 py-0.5 text-[9px] font-semibold rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono">
+                <span className="inline-block mt-1 px-1.5 py-0.5 text-[9px] font-semibold rounded bg-[#FDF0EB] dark:bg-[#3A150C] text-[#E05A33] border border-[#F5B8A3] dark:border-[#7D2F1A] font-mono">
                   {user.role}
                 </span>
               )}
@@ -196,7 +198,7 @@ export function Header({
             <DropdownMenuLabel>Account & Settings</DropdownMenuLabel>
 
             <DropdownMenuItem
-              icon={<User className="w-4 h-4 text-emerald-400" />}
+              icon={<User className="w-4 h-4 text-[#E05A33]" />}
               onClick={() => {}}
             >
               <Link href="/profile" className="w-full">My Profile & ID</Link>

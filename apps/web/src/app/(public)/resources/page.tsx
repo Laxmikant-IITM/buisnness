@@ -43,24 +43,26 @@ const RESOURCES = [
 
 export default function ResourcesPage() {
   return (
-    <div className="min-h-screen bg-[#0c100d] text-stone-100 flex flex-col justify-between selection:bg-emerald-800 selection:text-white">
+    <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#111110] text-[#1A1A19] dark:text-[#F5F3EF] flex flex-col justify-between selection:bg-[#FDF0EB] selection:text-[#E05A33]">
       <SiteNavbar />
 
       <main className="max-w-6xl w-full mx-auto px-4 py-12 space-y-10">
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <Badge variant="brand">Academic Library</Badge>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white font-display tracking-tight">
+        <div className="text-center max-w-xl mx-auto space-y-2">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#E05A33] font-semibold">
+            ACADEMIC VAULT
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1A1A19] dark:text-[#F5F3EF] font-display tracking-tight">
             Study Resources & Formula Sheets
           </h1>
-          <p className="text-stone-400 text-sm">
-            Curated study notes, previous year question papers (PYQs), and algorithmic cheat sheets for all IIT Madras BS Degree cohorts.
+          <p className="text-xs sm:text-sm text-[#8C8C87]">
+            Official syllabus notes, formula sheets, and past term solved papers.
           </p>
         </div>
 
         <div className="space-y-8">
           {RESOURCES.map((section) => (
             <div key={section.category} className="space-y-3">
-              <h2 className="text-sm font-mono font-bold uppercase tracking-wider text-emerald-400">
+              <h2 className="text-xs font-mono font-bold uppercase tracking-wider text-[#E05A33]">
                 {section.category}
               </h2>
 
@@ -68,19 +70,19 @@ export default function ResourcesPage() {
                 {section.items.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-xl border border-stone-800 bg-stone-950/60 backdrop-blur-sm flex items-center justify-between gap-4 hover:border-emerald-600/50 transition"
+                    className="p-4 rounded-2xl border border-[#E8E6E1] dark:border-[#2D2D2A] bg-white dark:bg-[#1C1C1A] flex items-center justify-between gap-4 hover:border-[#E05A33]/50 transition shadow-xs"
                   >
                     <div className="flex items-center gap-3 truncate">
-                      <div className="p-2.5 rounded-lg bg-stone-900 border border-stone-800 text-emerald-400">
+                      <div className="p-2.5 rounded-xl bg-[#FDF0EB] dark:bg-[#3A150C] border border-[#F5B8A3] dark:border-[#7D2F1A] text-[#E05A33]">
                         <FileText className="w-5 h-5" />
                       </div>
                       <div className="truncate">
-                        <h3 className="text-sm font-bold text-white truncate">{item.title}</h3>
-                        <div className="flex items-center gap-2 text-xs text-stone-500 font-mono mt-0.5">
+                        <h3 className="text-sm font-bold text-[#1A1A19] dark:text-[#F5F3EF] truncate font-display">{item.title}</h3>
+                        <div className="flex items-center gap-2 text-xs text-[#8C8C87] font-mono mt-0.5">
                           <span>{item.type}</span>
                           <span>·</span>
                           <span>{item.size}</span>
-                          <span className="px-1.5 py-0.2 rounded bg-stone-900 text-emerald-300 border border-stone-800 text-[10px]">
+                          <span className="px-1.5 py-0.5 rounded bg-[#F5F3EF] dark:bg-[#242422] text-[#4A4A46] dark:text-[#B5B3AD] border border-[#E8E6E1] dark:border-[#2D2D2A] text-[10px]">
                             {item.tag}
                           </span>
                         </div>
@@ -89,9 +91,9 @@ export default function ResourcesPage() {
 
                     <a
                       href="#download"
-                      className="px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-emerald-950 hover:text-emerald-300 border border-stone-800 text-xs font-semibold text-stone-300 flex items-center gap-1.5 transition shrink-0"
+                      className="px-3.5 py-1.5 rounded-xl bg-[#F5F3EF] hover:bg-[#FDF0EB] dark:bg-[#242422] dark:hover:bg-[#3A150C] hover:text-[#E05A33] border border-[#E8E6E1] dark:border-[#2D2D2A] text-xs font-bold text-[#1A1A19] dark:text-[#F5F3EF] flex items-center gap-1.5 transition shrink-0 cursor-pointer"
                     >
-                      <Download className="w-3.5 h-3.5" />
+                      <Download className="w-3.5 h-3.5 text-[#E05A33]" />
                       <span>Download</span>
                     </a>
                   </div>
@@ -102,8 +104,8 @@ export default function ResourcesPage() {
         </div>
       </main>
 
-      <footer className="border-t border-stone-900 py-6 text-center text-xs text-stone-600">
-        IIT Madras BS Companion Study Hub · Free Community Academic Resources
+      <footer className="border-t border-[#E8E6E1] dark:border-[#2D2D2A] py-6 text-center text-xs text-[#8C8C87] font-mono">
+        IIT Madras BS Companion Study Hub · Academic Resources
       </footer>
     </div>
   );

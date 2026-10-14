@@ -194,7 +194,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
       : FALLBACK_TOPICS;
 
   return (
-    <div className="min-h-screen bg-[#f8f9f5] text-[#1e2722]">
+    <div className="min-h-screen bg-[#090d0b] text-stone-100 font-sans selection:bg-emerald-800 selection:text-white pb-20 lg:pb-0">
       {/* Unified Site Navbar */}
       <SiteNavbar />
 
